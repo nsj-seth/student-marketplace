@@ -111,13 +111,16 @@ export async function listPublicProducts(filters: {
   businessType?: "STUDENT_BUSINESS" | "OTHER_BUSINESS";
   availability?: "OPEN" | "UNAVAILABLE";
   stock?: "IN_STOCK" | "OUT_OF_STOCK";
+  fulfilment?: "PICKUP" | "SELLER_DELIVERY";
+  minPrice?: number;
+  maxPrice?: number;
+  sort?: "NEWEST" | "PRICE_LOW_TO_HIGH" | "PRICE_HIGH_TO_LOW" | "NAME_A_TO_Z";
 }) {
   const supabase = getSupabaseAdminClient();
   let query = supabase
     .from("products")
     .select(productFields)
-    .in("status", ["ACTIVE", "OUT_OF_STOCK"])
-    .order("created_at", { ascending: false });
+    .in("status", ["ACTIVE", "OUT_OF_STOCK"]);
 
   if (filters.search) {
     const safeSearch = filters.search.replace(/[%_,()]/g, " ").trim();
@@ -127,6 +130,22 @@ export async function listPublicProducts(filters: {
   if (filters.business) query = query.eq("business_id", filters.business);
   if (filters.stock === "IN_STOCK") query = query.eq("status", "ACTIVE").gt("stock_quantity", 0);
   if (filters.stock === "OUT_OF_STOCK") query = query.eq("status", "OUT_OF_STOCK");
+  if (filters.minPrice !== undefined) query = query.gte("price", filters.minPrice);
+  if (filters.maxPrice !== undefined) query = query.lte("price", filters.maxPrice);
+
+  switch (filters.sort) {
+    case "PRICE_LOW_TO_HIGH":
+      query = query.order("price", { ascending: true }).order("created_at", { ascending: false });
+      break;
+    case "PRICE_HIGH_TO_LOW":
+      query = query.order("price", { ascending: false }).order("created_at", { ascending: false });
+      break;
+    case "NAME_A_TO_Z":
+      query = query.order("name", { ascending: true }).order("created_at", { ascending: false });
+      break;
+    default:
+      query = query.order("created_at", { ascending: false });
+  }
 
   const { data, error } = await query;
   if (error) throw new Error(`Unable to load public products: ${error.message}`);
@@ -135,6 +154,8 @@ export async function listPublicProducts(filters: {
   if (filters.university) products = products.filter((product) => product.business.university_id === filters.university);
   if (filters.businessType) products = products.filter((product) => product.business.business_type === filters.businessType);
   if (filters.availability) products = products.filter((product) => product.business.availability_status === filters.availability);
+  if (filters.fulfilment === "PICKUP") products = products.filter((product) => product.business.pickup_enabled);
+  if (filters.fulfilment === "SELLER_DELIVERY") products = products.filter((product) => product.business.seller_delivery_enabled);
   return products;
 }
 

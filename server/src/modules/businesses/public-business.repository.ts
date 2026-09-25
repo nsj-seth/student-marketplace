@@ -96,24 +96,33 @@ export async function listPublicBusinesses(filters: {
   university?: string;
   businessType?: "STUDENT_BUSINESS" | "OTHER_BUSINESS";
   availability?: "OPEN" | "UNAVAILABLE";
+  fulfilment?: "PICKUP" | "SELLER_DELIVERY";
+  sort?: "NEWEST" | "NAME_A_TO_Z";
 }) {
   const supabase = getSupabaseAdminClient();
   let query = supabase
     .from("businesses")
     .select(publicBusinessFields)
-    .eq("status", "ACTIVE")
-    .order("approved_at", { ascending: false });
+    .eq("status", "ACTIVE");
 
   if (filters.search) {
     const safeSearch = filters.search.replace(/[%_,()]/g, " ").trim();
     if (safeSearch) {
-      query = query.or(`name.ilike.%${safeSearch}%,description.ilike.%${safeSearch}%`);
+      query = query.or(`name.ilike.%${safeSearch}%,description.ilike.%${safeSearch}%,location_text.ilike.%${safeSearch}%`);
     }
   }
 
   if (filters.businessType) query = query.eq("business_type", filters.businessType);
   if (filters.availability) query = query.eq("availability_status", filters.availability);
   if (filters.university) query = query.eq("university_id", filters.university);
+  if (filters.fulfilment === "PICKUP") query = query.eq("pickup_enabled", true);
+  if (filters.fulfilment === "SELLER_DELIVERY") query = query.eq("seller_delivery_enabled", true);
+
+  if (filters.sort === "NAME_A_TO_Z") {
+    query = query.order("name", { ascending: true }).order("approved_at", { ascending: false });
+  } else {
+    query = query.order("approved_at", { ascending: false });
+  }
 
   const { data, error } = await query;
   if (error) throw new Error(`Unable to load public businesses: ${error.message}`);

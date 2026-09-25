@@ -11,10 +11,12 @@ import { publicBusinessRouter } from "../modules/businesses/public-business.rout
 import { sellerProductRouter } from "../modules/products/product.routes.js";
 import { publicProductRouter } from "../modules/products/public-product.routes.js";
 import { healthRouter } from "./health.routes.js";
+import { marketplaceRouter } from "../modules/marketplace/marketplace.routes.js";
 
 export const apiRouter = Router();
 
 apiRouter.use("/health", healthRouter);
+apiRouter.use("/marketplace", marketplaceRouter);
 apiRouter.use("/me", profileRouter);
 apiRouter.use("/universities", universityRouter);
 apiRouter.use("/categories", categoryRouter);

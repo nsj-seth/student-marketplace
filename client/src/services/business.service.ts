@@ -95,6 +95,8 @@ export interface PublicBusinessFilters {
   university?: string;
   businessType?: BusinessType;
   availability?: BusinessAvailability;
+  fulfilment?: "PICKUP" | "SELLER_DELIVERY";
+  sort?: "NEWEST" | "NAME_A_TO_Z";
 }
 
 export function getPublicBusinesses(filters: PublicBusinessFilters = {}) {
@@ -104,6 +106,8 @@ export function getPublicBusinesses(filters: PublicBusinessFilters = {}) {
   if (filters.university) params.set("university", filters.university);
   if (filters.businessType) params.set("businessType", filters.businessType);
   if (filters.availability) params.set("availability", filters.availability);
+  if (filters.fulfilment) params.set("fulfilment", filters.fulfilment);
+  if (filters.sort) params.set("sort", filters.sort);
 
   const suffix = params.toString() ? `?${params.toString()}` : "";
   return apiRequest<PublicBusiness[]>(`/businesses${suffix}`);

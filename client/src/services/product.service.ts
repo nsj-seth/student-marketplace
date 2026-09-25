@@ -125,6 +125,10 @@ export interface PublicProductFilters {
   businessType?: "STUDENT_BUSINESS" | "OTHER_BUSINESS";
   availability?: "OPEN" | "UNAVAILABLE";
   stock?: "IN_STOCK" | "OUT_OF_STOCK";
+  fulfilment?: "PICKUP" | "SELLER_DELIVERY";
+  minPrice?: number;
+  maxPrice?: number;
+  sort?: "NEWEST" | "PRICE_LOW_TO_HIGH" | "PRICE_HIGH_TO_LOW" | "NAME_A_TO_Z";
 }
 
 export function getPublicProducts(filters: PublicProductFilters = {}) {
@@ -136,6 +140,10 @@ export function getPublicProducts(filters: PublicProductFilters = {}) {
   if (filters.businessType) params.set("businessType", filters.businessType);
   if (filters.availability) params.set("availability", filters.availability);
   if (filters.stock) params.set("stock", filters.stock);
+  if (filters.fulfilment) params.set("fulfilment", filters.fulfilment);
+  if (filters.minPrice !== undefined) params.set("minPrice", String(filters.minPrice));
+  if (filters.maxPrice !== undefined) params.set("maxPrice", String(filters.maxPrice));
+  if (filters.sort) params.set("sort", filters.sort);
   const suffix = params.toString() ? `?${params.toString()}` : "";
   return apiRequest<PublicProduct[]>(`/products${suffix}`);
 }
