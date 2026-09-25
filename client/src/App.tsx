@@ -20,6 +20,11 @@ import { MyBusinessesPage } from "./pages/seller/MyBusinessesPage";
 import { ManageBusinessPage } from "./pages/seller/ManageBusinessPage";
 import { BusinessesPage } from "./pages/marketplace/BusinessesPage";
 import { BusinessStorefrontPage } from "./pages/marketplace/BusinessStorefrontPage";
+import { ProductsPage } from "./pages/marketplace/ProductsPage";
+import { ProductDetailsPage } from "./pages/marketplace/ProductDetailsPage";
+import { ProductListPage } from "./pages/seller/ProductListPage";
+import { ProductEditorPage } from "./pages/seller/ProductEditorPage";
+import { ProductImagesPage } from "./pages/seller/ProductImagesPage";
 
 export default function App() {
   return (
@@ -28,6 +33,8 @@ export default function App() {
       <Route path="/reference-data" element={<ReferenceDataPage />} />
       <Route path="/businesses" element={<BusinessesPage />} />
       <Route path="/businesses/:slug" element={<BusinessStorefrontPage />} />
+      <Route path="/products" element={<ProductsPage />} />
+      <Route path="/products/:id/:slug?" element={<ProductDetailsPage />} />
       <Route path="/register" element={<RegisterPage />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/forgot-password" element={<ForgotPasswordPage />} />
@@ -49,6 +56,10 @@ export default function App() {
         <Route path="/seller-test" element={<AccessPage role="SELLER" />} />
         <Route path="/seller/businesses" element={<MyBusinessesPage />} />
         <Route path="/seller/businesses/:id" element={<ManageBusinessPage />} />
+        <Route path="/seller/businesses/:businessId/products" element={<ProductListPage />} />
+        <Route path="/seller/businesses/:businessId/products/new" element={<ProductEditorPage />} />
+        <Route path="/seller/businesses/:businessId/products/:productId" element={<ProductEditorPage />} />
+        <Route path="/seller/businesses/:businessId/products/:productId/images" element={<ProductImagesPage />} />
       </Route>
 
       <Route element={<RoleRoute allowedRoles={["ADMIN"]} />}>

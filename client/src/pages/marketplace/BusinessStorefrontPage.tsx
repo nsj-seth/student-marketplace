@@ -2,15 +2,22 @@ import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { supabase } from "../../lib/supabase";
 import { getPublicBusiness, type PublicBusiness } from "../../services/business.service";
+import { getPublicProducts, type PublicProduct } from "../../services/product.service";
 
 function getLogoUrl(path: string | null) {
   if (!path) return null;
   return supabase.storage.from("business-logos").getPublicUrl(path).data.publicUrl;
 }
 
+function getProductImageUrl(path: string | null) {
+  if (!path) return null;
+  return supabase.storage.from("product-images").getPublicUrl(path).data.publicUrl;
+}
+
 export function BusinessStorefrontPage() {
   const { slug } = useParams();
   const [business, setBusiness] = useState<PublicBusiness | null>(null);
+  const [products, setProducts] = useState<PublicProduct[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
@@ -21,7 +28,12 @@ export function BusinessStorefrontPage() {
       if (!slug) return;
       try {
         const response = await getPublicBusiness(slug);
-        if (active) setBusiness(response.data ?? null);
+        const loadedBusiness = response.data ?? null;
+        if (active) setBusiness(loadedBusiness);
+        if (loadedBusiness) {
+          const productResponse = await getPublicProducts({ business: loadedBusiness.id });
+          if (active) setProducts(productResponse.data ?? []);
+        }
       } catch (err) {
         if (active) setError(err instanceof Error ? err.message : "Unable to load storefront.");
       } finally {
@@ -96,7 +108,25 @@ export function BusinessStorefrontPage() {
 
         <section className="storefront-placeholder">
           <h2>Products</h2>
-          <p>Products will appear here after the Product Management phase.</p>
+          {products.length === 0 ? <p>No public products are available from this business yet.</p> : (
+            <div className="product-market-grid">
+              {products.map((product) => {
+                const image = product.images.find((item) => item.is_primary) ?? product.images[0] ?? null;
+                const productImageUrl = getProductImageUrl(image?.storage_path ?? null);
+                return (
+                  <article className="product-market-card" key={product.id}>
+                    {productImageUrl ? <img src={productImageUrl} alt={image?.alt_text ?? product.name} /> : <div className="product-market-card__empty">No image</div>}
+                    <div className="product-market-card__body">
+                      <h3>{product.name}</h3>
+                      <p className="product-price">GH₵{product.price.toFixed(2)}</p>
+                      <p>{product.status === "OUT_OF_STOCK" ? "Out of stock" : "In stock"}</p>
+                      <Link className="button-link" to={`/products/${product.id}/${product.slug}`}>View product</Link>
+                    </div>
+                  </article>
+                );
+              })}
+            </div>
+          )}
         </section>
 
         <section className="storefront-placeholder">

@@ -40,9 +40,9 @@ export function HomePage() {
   return (
     <main className="page-shell">
       <section className="card">
-        <span className="eyebrow">Phase 07B</span>
+        <span className="eyebrow">Phase 08C</span>
         <h1>Student Marketplace</h1>
-        <p>Approved businesses now have public storefronts, while sellers can continue managing their own business details and availability.</p>
+        <p>Products are now publicly discoverable alongside approved business storefronts.</p>
 
         <div className={`status status--${connection}`}>
           <span className="status__dot" aria-hidden="true" />
@@ -50,9 +50,8 @@ export function HomePage() {
         </div>
 
         <div className="actions">
-          <Link className="button-link" to="/businesses">
-            Browse businesses
-          </Link>
+          <Link className="button-link" to="/products">Browse products</Link>
+          <Link className="button-link button-link--secondary" to="/businesses">Browse businesses</Link>
           <Link className="button-link button-link--secondary" to="/reference-data">
             Universities & categories
           </Link>

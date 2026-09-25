@@ -228,6 +228,7 @@ export function ManageBusinessPage() {
         {error && <p className="message message--error">{error}</p>}
 
         <div className="actions">
+          <Link className="button-link" to={`/seller/businesses/${business.id}/products`}>Manage products</Link>
           <Link className="button-link button-link--secondary" to="/seller/businesses">Back to my businesses</Link>
           <Link className="button-link button-link--secondary" to="/">Back home</Link>
         </div>
