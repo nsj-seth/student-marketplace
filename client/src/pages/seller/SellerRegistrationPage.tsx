@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
 import {
   createSellerApplication,
   getMySellerApplications,
@@ -12,6 +13,7 @@ function businessTypeLabel(type: BusinessType) {
 }
 
 export function SellerRegistrationPage() {
+  const { refreshRoles } = useAuth();
   const [businessType, setBusinessType] = useState<BusinessType>("STUDENT_BUSINESS");
   const [applications, setApplications] = useState<SellerApplication[]>([]);
   const [loading, setLoading] = useState(true);
@@ -22,7 +24,11 @@ export function SellerRegistrationPage() {
   async function loadApplications() {
     try {
       const response = await getMySellerApplications();
-      setApplications(response.data ?? []);
+      const nextApplications = response.data ?? [];
+      setApplications(nextApplications);
+      if (nextApplications.some((application) => application.status === "APPROVED")) {
+        await refreshRoles();
+      }
     } catch (err) {
       setError(err instanceof Error ? err.message : "Unable to load applications.");
     } finally {
@@ -62,7 +68,7 @@ export function SellerRegistrationPage() {
   return (
     <main className="wide-shell">
       <section className="wide-card card">
-        <span className="eyebrow">Phase 05C</span>
+        <span className="eyebrow">Phase 06</span>
         <h1>Become a seller</h1>
         <p>
           Start a seller application by choosing the type of business you want to register.
@@ -129,6 +135,17 @@ export function SellerRegistrationPage() {
                             <Link to={`/sell/applications/${application.id}/student-verification`}>Verify student email</Link>
                           )}
                           <Link to={`/sell/applications/${application.id}/business-details`}>Business details</Link>
+                        </div>
+                      ) : application.status === "APPROVED" ? (
+                        <div>
+                          <strong>Approved</strong>
+                          <span>Your business has been created and SELLER access has been granted.</span>
+                          {application.review_note && <span>Admin note: {application.review_note}</span>}
+                        </div>
+                      ) : application.status === "REJECTED" ? (
+                        <div>
+                          <strong>Rejected</strong>
+                          {application.review_note && <span>Reason: {application.review_note}</span>}
                         </div>
                       ) : (
                         application.status

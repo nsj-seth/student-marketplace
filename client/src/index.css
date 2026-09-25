@@ -298,3 +298,32 @@ select:focus {
 .logo-preview { width: 120px; height: 120px; object-fit: cover; border-radius: 12px; border: 1px solid #d1d5db; margin: 0.75rem 0; }
 fieldset { border: 1px solid #d1d5db; border-radius: 10px; padding: 1rem; }
 textarea { width: 100%; resize: vertical; }
+
+.detail-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+  margin: 24px 0;
+}
+
+.review-panel {
+  margin-top: 24px;
+  padding: 18px;
+  border: 1px solid #e4e7ec;
+  border-radius: 12px;
+  background: #fafafa;
+}
+
+.danger-button {
+  background: #b42318;
+}
+
+.admin-application-list {
+  margin-top: 24px;
+}
+
+@media (max-width: 780px) {
+  .detail-grid {
+    grid-template-columns: 1fr;
+  }
+}

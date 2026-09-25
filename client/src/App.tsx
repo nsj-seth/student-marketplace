@@ -4,6 +4,8 @@ import { RoleRoute } from "./components/auth/RoleRoute";
 import { AccessPage } from "./pages/access/AccessPage";
 import { ForbiddenPage } from "./pages/access/ForbiddenPage";
 import { AdminReferenceDataPage } from "./pages/admin/AdminReferenceDataPage";
+import { AdminSellerApplicationsPage } from "./pages/admin/AdminSellerApplicationsPage";
+import { AdminSellerApplicationDetailPage } from "./pages/admin/AdminSellerApplicationDetailPage";
 import { ForgotPasswordPage } from "./pages/auth/ForgotPasswordPage";
 import { LoginPage } from "./pages/auth/LoginPage";
 import { RegisterPage } from "./pages/auth/RegisterPage";
@@ -44,6 +46,8 @@ export default function App() {
       <Route element={<RoleRoute allowedRoles={["ADMIN"]} />}>
         <Route path="/admin-test" element={<AccessPage role="ADMIN" />} />
         <Route path="/admin/reference-data" element={<AdminReferenceDataPage />} />
+        <Route path="/admin/seller-applications" element={<AdminSellerApplicationsPage />} />
+        <Route path="/admin/seller-applications/:id" element={<AdminSellerApplicationDetailPage />} />
       </Route>
     </Routes>
   );

@@ -40,9 +40,9 @@ export function HomePage() {
   return (
     <main className="page-shell">
       <section className="card">
-        <span className="eyebrow">Phase 05A</span>
+        <span className="eyebrow">Phase 06</span>
         <h1>Student Marketplace</h1>
-        <p>Seller onboarding has started. Users can now begin a Student Business or Other Business application.</p>
+        <p>Seller applications can now be reviewed by admins. Approved applicants receive a real business and SELLER access.</p>
 
         <div className={`status status--${connection}`}>
           <span className="status__dot" aria-hidden="true" />
@@ -71,6 +71,7 @@ export function HomePage() {
                 <>
                   <Link to="/admin-test">Admin test</Link>
                   <Link to="/admin/reference-data">Manage reference data</Link>
+                  <Link to="/admin/seller-applications">Review seller applications</Link>
                 </>
               )}
               <button type="button" className="secondary-button" onClick={() => void logout()}>
