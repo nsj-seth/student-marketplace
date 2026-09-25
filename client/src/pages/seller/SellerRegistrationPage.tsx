@@ -68,7 +68,7 @@ export function SellerRegistrationPage() {
   return (
     <main className="wide-shell">
       <section className="wide-card card">
-        <span className="eyebrow">Phase 06</span>
+        <span className="eyebrow">Phase 07A</span>
         <h1>Become a seller</h1>
         <p>
           Start a seller application by choosing the type of business you want to register.
@@ -140,6 +140,7 @@ export function SellerRegistrationPage() {
                         <div>
                           <strong>Approved</strong>
                           <span>Your business has been created and SELLER access has been granted.</span>
+                          <div className="actions"><Link to="/seller/businesses">Manage my businesses</Link></div>
                           {application.review_note && <span>Admin note: {application.review_note}</span>}
                         </div>
                       ) : application.status === "REJECTED" ? (

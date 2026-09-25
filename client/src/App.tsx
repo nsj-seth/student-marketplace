@@ -16,12 +16,18 @@ import { ReferenceDataPage } from "./pages/reference/ReferenceDataPage";
 import { SellerRegistrationPage } from "./pages/seller/SellerRegistrationPage";
 import { BusinessApplicationPage } from "./pages/seller/BusinessApplicationPage";
 import { StudentVerificationPage } from "./pages/seller/StudentVerificationPage";
+import { MyBusinessesPage } from "./pages/seller/MyBusinessesPage";
+import { ManageBusinessPage } from "./pages/seller/ManageBusinessPage";
+import { BusinessesPage } from "./pages/marketplace/BusinessesPage";
+import { BusinessStorefrontPage } from "./pages/marketplace/BusinessStorefrontPage";
 
 export default function App() {
   return (
     <Routes>
       <Route path="/" element={<HomePage />} />
       <Route path="/reference-data" element={<ReferenceDataPage />} />
+      <Route path="/businesses" element={<BusinessesPage />} />
+      <Route path="/businesses/:slug" element={<BusinessStorefrontPage />} />
       <Route path="/register" element={<RegisterPage />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/forgot-password" element={<ForgotPasswordPage />} />
@@ -41,6 +47,8 @@ export default function App() {
 
       <Route element={<RoleRoute allowedRoles={["SELLER"]} />}>
         <Route path="/seller-test" element={<AccessPage role="SELLER" />} />
+        <Route path="/seller/businesses" element={<MyBusinessesPage />} />
+        <Route path="/seller/businesses/:id" element={<ManageBusinessPage />} />
       </Route>
 
       <Route element={<RoleRoute allowedRoles={["ADMIN"]} />}>

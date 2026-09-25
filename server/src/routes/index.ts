@@ -6,6 +6,8 @@ import { roleRouter } from "../modules/roles/role.routes.js";
 import { sellerApplicationRouter } from "../modules/seller-applications/seller-application.routes.js";
 import { studentVerificationRouter } from "../modules/student-verifications/student-verification.routes.js";
 import { adminUniversityRouter, universityRouter } from "../modules/universities/university.routes.js";
+import { sellerBusinessRouter } from "../modules/businesses/business.routes.js";
+import { publicBusinessRouter } from "../modules/businesses/public-business.routes.js";
 import { healthRouter } from "./health.routes.js";
 
 export const apiRouter = Router();
@@ -19,4 +21,6 @@ apiRouter.use("/student-verifications", studentVerificationRouter);
 apiRouter.use("/admin/universities", adminUniversityRouter);
 apiRouter.use("/admin/categories", adminCategoryRouter);
 apiRouter.use("/admin/seller-applications", adminSellerApplicationRouter);
+apiRouter.use("/businesses", publicBusinessRouter);
+apiRouter.use("/seller/businesses", sellerBusinessRouter);
 apiRouter.use(roleRouter);

@@ -40,9 +40,9 @@ export function HomePage() {
   return (
     <main className="page-shell">
       <section className="card">
-        <span className="eyebrow">Phase 06</span>
+        <span className="eyebrow">Phase 07B</span>
         <h1>Student Marketplace</h1>
-        <p>Seller applications can now be reviewed by admins. Approved applicants receive a real business and SELLER access.</p>
+        <p>Approved businesses now have public storefronts, while sellers can continue managing their own business details and availability.</p>
 
         <div className={`status status--${connection}`}>
           <span className="status__dot" aria-hidden="true" />
@@ -50,6 +50,9 @@ export function HomePage() {
         </div>
 
         <div className="actions">
+          <Link className="button-link" to="/businesses">
+            Browse businesses
+          </Link>
           <Link className="button-link button-link--secondary" to="/reference-data">
             Universities & categories
           </Link>
@@ -66,7 +69,10 @@ export function HomePage() {
               <Link className="button-link" to="/profile">My profile</Link>
               <Link className="button-link" to="/sell">Become a seller</Link>
               <Link className="button-link button-link--secondary" to="/customer-test">Customer test</Link>
-              {roles.includes("SELLER") && <Link to="/seller-test">Seller test</Link>}
+              {roles.includes("SELLER") && (<>
+                <Link to="/seller/businesses">My businesses</Link>
+                <Link to="/seller-test">Seller test</Link>
+              </>)}
               {roles.includes("ADMIN") && (
                 <>
                   <Link to="/admin-test">Admin test</Link>
