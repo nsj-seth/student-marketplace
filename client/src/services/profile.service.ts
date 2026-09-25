@@ -1,3 +1,4 @@
+import type { AppRole } from "./role.service";
 import { apiRequest } from "./api";
 
 export interface CurrentProfile {
@@ -6,6 +7,7 @@ export interface CurrentProfile {
   emailVerified: boolean;
   fullName: string;
   avatarPath: string | null;
+  roles: AppRole[];
   createdAt: string;
   updatedAt: string;
 }

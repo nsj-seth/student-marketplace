@@ -1,13 +1,20 @@
 import type { User } from "@supabase/supabase-js";
+import { findRolesByUserId } from "../roles/role.repository.js";
 import { findProfileById, updateProfileName } from "./profile.repository.js";
 
-function toProfileResponse(user: User, profile: Awaited<ReturnType<typeof findProfileById>>) {
+async function toProfileResponse(
+  user: User,
+  profile: Awaited<ReturnType<typeof findProfileById>>
+) {
+  const roles = await findRolesByUserId(user.id);
+
   return {
     id: user.id,
     email: user.email ?? null,
     emailVerified: Boolean(user.email_confirmed_at),
     fullName: profile.full_name,
     avatarPath: profile.avatar_path,
+    roles,
     createdAt: profile.created_at,
     updatedAt: profile.updated_at
   };

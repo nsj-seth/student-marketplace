@@ -7,7 +7,7 @@ import { getApiHealth } from "../services/health.service";
 type ConnectionState = "checking" | "connected" | "failed";
 
 export function HomePage() {
-  const { user, loading } = useAuth();
+  const { user, roles, loading } = useAuth();
   const [connection, setConnection] = useState<ConnectionState>("checking");
 
   useEffect(() => {
@@ -40,9 +40,9 @@ export function HomePage() {
   return (
     <main className="page-shell">
       <section className="card">
-        <span className="eyebrow">Phase 02</span>
+        <span className="eyebrow">Phase 03</span>
         <h1>Student Marketplace</h1>
-        <p>Authentication and application profiles are now connected to Supabase.</p>
+        <p>Authentication, profiles, roles, and server-side authorization are connected.</p>
 
         <div className={`status status--${connection}`}>
           <span className="status__dot" aria-hidden="true" />
@@ -60,6 +60,9 @@ export function HomePage() {
           {!loading && user && (
             <>
               <Link className="button-link" to="/profile">My profile</Link>
+              <Link className="button-link button-link--secondary" to="/customer-test">Customer test</Link>
+              {roles.includes("SELLER") && <Link to="/seller-test">Seller test</Link>}
+              {roles.includes("ADMIN") && <Link to="/admin-test">Admin test</Link>}
               <button type="button" className="secondary-button" onClick={() => void logout()}>
                 Logout
               </button>
@@ -67,7 +70,12 @@ export function HomePage() {
           )}
         </div>
 
-        {user && <p className="account-line">Signed in as {user.email}</p>}
+        {user && (
+          <>
+            <p className="account-line">Signed in as {user.email}</p>
+            <p className="account-line">Roles: {roles.length ? roles.join(", ") : "None"}</p>
+          </>
+        )}
       </section>
     </main>
   );

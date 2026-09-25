@@ -1,34 +1,23 @@
-# Student Marketplace API — Phase 02
+# Student Marketplace API — Phase 03
 
-This cumulative snapshot contains the Phase 01 Express foundation plus authentication-aware profile endpoints.
+Cumulative backend snapshot through authentication, profiles, roles, and authorization.
 
-## Added in Phase 02
+## Current capabilities
+- Express + TypeScript foundation
+- Supabase Auth token verification
+- Protected `GET /api/me` and `PATCH /api/me`
+- Multi-role model: `CUSTOMER`, `SELLER`, `ADMIN`
+- New users automatically receive `CUSTOMER`
+- Server-side `requireRole(...)` middleware
+- Permission-test routes for customer/seller/admin access
 
-- Supabase Auth token verification middleware
-- `profiles` table migration + automatic profile creation trigger
-- `GET /api/me`
-- `PATCH /api/me`
-- Basic profile RLS policies
+## Migrations
+Run migrations in numeric order. For an existing Phase 02 database, run only the new migration:
 
-## Setup
+`supabase/migrations/003_roles_permissions.sql`
 
-1. Create a Supabase project.
-2. Run migrations in order:
-   - `supabase/migrations/001_database_foundation.sql`
-   - `supabase/migrations/002_auth_profiles.sql`
-3. Copy `.env.example` to `.env`.
-4. Put your real Supabase URL, publishable/anon key and server secret/service-role key in `.env`.
-5. Run `npm install`.
-6. Run `npm run dev`.
+The migration also safely adds `profiles.avatar_path` if an older database was missing it.
 
-## Endpoints
-
-- `GET /api/health` — public
-- `GET /api/me` — authenticated
-- `PATCH /api/me` — authenticated
-
-Authenticated routes expect:
-
-`Authorization: Bearer <supabase-access-token>`
-
-Never put the Supabase secret/service-role key in the frontend.
+## Role assignment
+There is intentionally no public endpoint that lets a user grant themselves SELLER or ADMIN.
+Seller access will later be granted by the seller-approval workflow. ADMIN should be bootstrapped manually for development or by a trusted administrative process.

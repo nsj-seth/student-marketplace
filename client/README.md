@@ -1,23 +1,12 @@
-# Student Marketplace Web — Phase 02
+# Student Marketplace Web — Phase 03
 
-This cumulative snapshot contains the Phase 01 frontend plus Supabase authentication and basic profile UI.
+Cumulative frontend snapshot through authentication, profiles, roles, and authorization.
 
-## Added in Phase 02
+The UI remains intentionally minimal while the marketplace functionality is being built.
 
-- Registration
-- Login/logout
-- Email confirmation-compatible signup
-- Forgot/reset password
-- Auth session context
-- Protected routes
-- Profile view/edit through the Express API
+## Role verification pages
+- `/customer-test`
+- `/seller-test`
+- `/admin-test`
 
-## Setup
-
-1. Copy `.env.example` to `.env`.
-2. Set `VITE_SUPABASE_URL` and `VITE_SUPABASE_PUBLISHABLE_KEY` from the same Supabase project used by the API.
-3. Keep `VITE_API_URL=http://localhost:5000/api` locally.
-4. Run `npm install`.
-5. Run `npm run dev`.
-
-Never put a Supabase secret/service-role key in this frontend.
+Frontend route guards improve UX, but the Express API remains the real authorization boundary.
