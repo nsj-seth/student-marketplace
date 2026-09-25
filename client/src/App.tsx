@@ -11,6 +11,9 @@ import { ResetPasswordPage } from "./pages/auth/ResetPasswordPage";
 import { HomePage } from "./pages/HomePage";
 import { ProfilePage } from "./pages/profile/ProfilePage";
 import { ReferenceDataPage } from "./pages/reference/ReferenceDataPage";
+import { SellerRegistrationPage } from "./pages/seller/SellerRegistrationPage";
+import { BusinessApplicationPage } from "./pages/seller/BusinessApplicationPage";
+import { StudentVerificationPage } from "./pages/seller/StudentVerificationPage";
 
 export default function App() {
   return (
@@ -25,6 +28,9 @@ export default function App() {
 
       <Route element={<ProtectedRoute />}>
         <Route path="/profile" element={<ProfilePage />} />
+        <Route path="/sell" element={<SellerRegistrationPage />} />
+        <Route path="/sell/applications/:id/student-verification" element={<StudentVerificationPage />} />
+        <Route path="/sell/applications/:id/business-details" element={<BusinessApplicationPage />} />
       </Route>
 
       <Route element={<RoleRoute allowedRoles={["CUSTOMER"]} />}>

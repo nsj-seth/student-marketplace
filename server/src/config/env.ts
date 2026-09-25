@@ -17,7 +17,10 @@ const envSchema = z.object({
   FRONTEND_URL: z.string().url().default("http://localhost:5173"),
   SUPABASE_URL: optionalUrl,
   SUPABASE_PUBLISHABLE_KEY: optionalString,
-  SUPABASE_SECRET_KEY: optionalString
+  SUPABASE_SECRET_KEY: optionalString,
+  VERIFICATION_CODE_SECRET: optionalString,
+  RESEND_API_KEY: optionalString,
+  EMAIL_FROM: optionalString
 });
 
 const parsed = envSchema.safeParse(process.env);

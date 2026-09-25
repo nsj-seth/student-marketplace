@@ -1,12 +1,5 @@
-# Student Marketplace Web
+# Student Marketplace Web — Phase 05B
 
-Cumulative frontend through **Phase 04 — Universities & Categories**.
+This cumulative frontend checkpoint adds the Student Business email verification flow.
 
-The UI remains intentionally minimal while marketplace functionality is built.
-
-## Phase 04 pages
-
-- `/reference-data` — public active universities and categories
-- `/admin/reference-data` — minimal ADMIN management screen
-
-Keep your existing `.env` file, run `npm install`, then `npm run dev`.
+After starting a Student Business draft at `/sell`, use the **Verify student email** link. In local development, if the backend email provider is not configured, the test code is displayed on the verification page.

@@ -40,9 +40,9 @@ export function HomePage() {
   return (
     <main className="page-shell">
       <section className="card">
-        <span className="eyebrow">Phase 04</span>
+        <span className="eyebrow">Phase 05A</span>
         <h1>Student Marketplace</h1>
-        <p>Universities and categories are now database-managed reference data.</p>
+        <p>Seller onboarding has started. Users can now begin a Student Business or Other Business application.</p>
 
         <div className={`status status--${connection}`}>
           <span className="status__dot" aria-hidden="true" />
@@ -64,6 +64,7 @@ export function HomePage() {
           {!loading && user && (
             <>
               <Link className="button-link" to="/profile">My profile</Link>
+              <Link className="button-link" to="/sell">Become a seller</Link>
               <Link className="button-link button-link--secondary" to="/customer-test">Customer test</Link>
               {roles.includes("SELLER") && <Link to="/seller-test">Seller test</Link>}
               {roles.includes("ADMIN") && (
