@@ -1,23 +1,33 @@
-# Student Marketplace API — Phase 03
+# Student Marketplace API
 
-Cumulative backend snapshot through authentication, profiles, roles, and authorization.
+Cumulative backend through **Phase 04 — Universities & Categories**.
 
 ## Current capabilities
-- Express + TypeScript foundation
+
+- Express + TypeScript API foundation
 - Supabase Auth token verification
-- Protected `GET /api/me` and `PATCH /api/me`
-- Multi-role model: `CUSTOMER`, `SELLER`, `ADMIN`
-- New users automatically receive `CUSTOMER`
-- Server-side `requireRole(...)` middleware
-- Permission-test routes for customer/seller/admin access
+- Profiles
+- CUSTOMER / SELLER / ADMIN role model and server-side authorization
+- Public active university/category endpoints
+- Admin university/category management endpoints
+- Supabase SQL migrations through `004_universities_categories.sql`
 
-## Migrations
-Run migrations in numeric order. For an existing Phase 02 database, run only the new migration:
+## Run locally
 
-`supabase/migrations/003_roles_permissions.sql`
+1. Keep your existing `.env` file when replacing this folder.
+2. Run `npm install`.
+3. Run migration `004_universities_categories.sql` in Supabase SQL Editor if 001–003 are already applied.
+4. Start with `npm run dev`.
 
-The migration also safely adds `profiles.avatar_path` if an older database was missing it.
+## Phase 04 endpoints
 
-## Role assignment
-There is intentionally no public endpoint that lets a user grant themselves SELLER or ADMIN.
-Seller access will later be granted by the seller-approval workflow. ADMIN should be bootstrapped manually for development or by a trusted administrative process.
+- `GET /api/universities`
+- `GET /api/categories`
+- `GET /api/admin/universities` — ADMIN
+- `POST /api/admin/universities` — ADMIN
+- `PATCH /api/admin/universities/:id` — ADMIN
+- `DELETE /api/admin/universities/:id` — ADMIN (soft-disables)
+- `GET /api/admin/categories` — ADMIN
+- `POST /api/admin/categories` — ADMIN
+- `PATCH /api/admin/categories/:id` — ADMIN
+- `DELETE /api/admin/categories/:id` — ADMIN (soft-disables)

@@ -1,12 +1,12 @@
-# Student Marketplace Web — Phase 03
+# Student Marketplace Web
 
-Cumulative frontend snapshot through authentication, profiles, roles, and authorization.
+Cumulative frontend through **Phase 04 — Universities & Categories**.
 
-The UI remains intentionally minimal while the marketplace functionality is being built.
+The UI remains intentionally minimal while marketplace functionality is built.
 
-## Role verification pages
-- `/customer-test`
-- `/seller-test`
-- `/admin-test`
+## Phase 04 pages
 
-Frontend route guards improve UX, but the Express API remains the real authorization boundary.
+- `/reference-data` — public active universities and categories
+- `/admin/reference-data` — minimal ADMIN management screen
+
+Keep your existing `.env` file, run `npm install`, then `npm run dev`.

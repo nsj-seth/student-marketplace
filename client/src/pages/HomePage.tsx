@@ -40,9 +40,9 @@ export function HomePage() {
   return (
     <main className="page-shell">
       <section className="card">
-        <span className="eyebrow">Phase 03</span>
+        <span className="eyebrow">Phase 04</span>
         <h1>Student Marketplace</h1>
-        <p>Authentication, profiles, roles, and server-side authorization are connected.</p>
+        <p>Universities and categories are now database-managed reference data.</p>
 
         <div className={`status status--${connection}`}>
           <span className="status__dot" aria-hidden="true" />
@@ -50,6 +50,10 @@ export function HomePage() {
         </div>
 
         <div className="actions">
+          <Link className="button-link button-link--secondary" to="/reference-data">
+            Universities & categories
+          </Link>
+
           {!loading && !user && (
             <>
               <Link className="button-link" to="/register">Register</Link>
@@ -62,7 +66,12 @@ export function HomePage() {
               <Link className="button-link" to="/profile">My profile</Link>
               <Link className="button-link button-link--secondary" to="/customer-test">Customer test</Link>
               {roles.includes("SELLER") && <Link to="/seller-test">Seller test</Link>}
-              {roles.includes("ADMIN") && <Link to="/admin-test">Admin test</Link>}
+              {roles.includes("ADMIN") && (
+                <>
+                  <Link to="/admin-test">Admin test</Link>
+                  <Link to="/admin/reference-data">Manage reference data</Link>
+                </>
+              )}
               <button type="button" className="secondary-button" onClick={() => void logout()}>
                 Logout
               </button>

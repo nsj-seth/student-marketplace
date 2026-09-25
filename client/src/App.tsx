@@ -3,17 +3,20 @@ import { ProtectedRoute } from "./components/auth/ProtectedRoute";
 import { RoleRoute } from "./components/auth/RoleRoute";
 import { AccessPage } from "./pages/access/AccessPage";
 import { ForbiddenPage } from "./pages/access/ForbiddenPage";
+import { AdminReferenceDataPage } from "./pages/admin/AdminReferenceDataPage";
 import { ForgotPasswordPage } from "./pages/auth/ForgotPasswordPage";
 import { LoginPage } from "./pages/auth/LoginPage";
 import { RegisterPage } from "./pages/auth/RegisterPage";
 import { ResetPasswordPage } from "./pages/auth/ResetPasswordPage";
 import { HomePage } from "./pages/HomePage";
 import { ProfilePage } from "./pages/profile/ProfilePage";
+import { ReferenceDataPage } from "./pages/reference/ReferenceDataPage";
 
 export default function App() {
   return (
     <Routes>
       <Route path="/" element={<HomePage />} />
+      <Route path="/reference-data" element={<ReferenceDataPage />} />
       <Route path="/register" element={<RegisterPage />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/forgot-password" element={<ForgotPasswordPage />} />
@@ -34,6 +37,7 @@ export default function App() {
 
       <Route element={<RoleRoute allowedRoles={["ADMIN"]} />}>
         <Route path="/admin-test" element={<AccessPage role="ADMIN" />} />
+        <Route path="/admin/reference-data" element={<AdminReferenceDataPage />} />
       </Route>
     </Routes>
   );
