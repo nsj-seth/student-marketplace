@@ -18,6 +18,7 @@ import { checkoutRouter } from "../modules/checkout/checkout.routes.js";
 import { orderRouter } from "../modules/orders/order.routes.js";
 import { sellerOrderRouter } from "../modules/seller-orders/seller-order.routes.js";
 import { reviewRouter } from "../modules/reviews/review.routes.js";
+import { notificationRouter } from "../modules/notifications/notification.routes.js";
 
 export const apiRouter = Router();
 
@@ -39,6 +40,7 @@ apiRouter.use("/checkout", checkoutRouter);
 apiRouter.use("/orders", orderRouter);
 apiRouter.use("/seller/orders", sellerOrderRouter);
 apiRouter.use("/reviews", reviewRouter);
+apiRouter.use("/notifications", notificationRouter);
 apiRouter.use("/seller/businesses/:businessId/products", sellerProductRouter);
 apiRouter.use("/seller/businesses", sellerBusinessRouter);
 apiRouter.use(roleRouter);

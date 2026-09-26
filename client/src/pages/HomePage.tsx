@@ -4,6 +4,7 @@ import { useAuth } from "../context/AuthContext";
 import { supabase } from "../lib/supabase";
 import { logout } from "../services/auth.service";
 import { getMarketplaceHome, type MarketplaceHomeData } from "../services/marketplace.service";
+import { getUnreadNotificationCount } from "../services/notification.service";
 import type { PublicProduct } from "../services/product.service";
 
 function productImage(product: PublicProduct) {
@@ -27,6 +28,7 @@ export function HomePage() {
   const [error, setError] = useState("");
   const [search, setSearch] = useState("");
   const [searchType, setSearchType] = useState<"products" | "businesses">("products");
+  const [unreadNotifications, setUnreadNotifications] = useState(0);
 
   useEffect(() => {
     getMarketplaceHome()
@@ -34,6 +36,17 @@ export function HomePage() {
       .catch((err) => setError(err instanceof Error ? err.message : "Unable to load marketplace."))
       .finally(() => setLoading(false));
   }, []);
+
+  useEffect(() => {
+    if (!user) {
+      setUnreadNotifications(0);
+      return;
+    }
+
+    getUnreadNotificationCount()
+      .then((response) => setUnreadNotifications(response.data?.count ?? 0))
+      .catch(() => setUnreadNotifications(0));
+  }, [user]);
 
   function submitSearch(event: FormEvent) {
     event.preventDefault();
@@ -55,6 +68,7 @@ export function HomePage() {
           {!authLoading && user && <Link to="/wishlist">Wishlist</Link>}
           {!authLoading && user && <Link to="/cart">Cart</Link>}
           {!authLoading && user && <Link to="/orders">Orders</Link>}
+          {!authLoading && user && <Link to="/notifications">Notifications{unreadNotifications > 0 ? ` (${unreadNotifications})` : ""}</Link>}
           {!authLoading && user && <Link to="/sell">Sell</Link>}
           {!authLoading && roles.includes("SELLER") && <Link to="/seller/businesses">My businesses</Link>}
           {!authLoading && roles.includes("SELLER") && <Link to="/seller/orders">Seller orders</Link>}

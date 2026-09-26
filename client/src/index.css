@@ -1288,3 +1288,13 @@ legend {
 .review-form { display: grid; gap: .75rem; }
 .review-form label { display: grid; gap: .35rem; }
 .review-form select, .review-form textarea { width: 100%; }
+
+
+/* Phase 17 notifications */
+.notification-list { display: grid; gap: 0.75rem; margin-top: 1rem; }
+.notification-card { width: 100%; text-align: left; border: 1px solid #dbe3ea; background: white; border-radius: 12px; padding: 1rem; cursor: pointer; color: inherit; }
+.notification-card--unread { border-color: #94a3b8; background: #f8fafc; }
+.notification-card > div { display: flex; align-items: center; gap: 0.5rem; }
+.notification-card p { margin: 0.45rem 0; }
+.notification-dot { width: 0.55rem; height: 0.55rem; border-radius: 999px; background: currentColor; display: inline-block; }
+.checkbox-row { display: inline-flex; align-items: center; gap: 0.5rem; margin: 0.75rem 0; }

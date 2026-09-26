@@ -33,6 +33,7 @@ import { CartPage } from "./pages/customer/CartPage";
 import { CheckoutPage } from "./pages/customer/CheckoutPage";
 import { MyOrdersPage } from "./pages/customer/MyOrdersPage";
 import { OrderDetailsPage } from "./pages/customer/OrderDetailsPage";
+import { NotificationsPage } from "./pages/customer/NotificationsPage";
 
 export default function App() {
   return (
@@ -59,6 +60,7 @@ export default function App() {
         <Route path="/checkout" element={<CheckoutPage />} />
         <Route path="/orders" element={<MyOrdersPage />} />
         <Route path="/orders/:id" element={<OrderDetailsPage />} />
+        <Route path="/notifications" element={<NotificationsPage />} />
       </Route>
 
       <Route element={<RoleRoute allowedRoles={["CUSTOMER"]} />}>
