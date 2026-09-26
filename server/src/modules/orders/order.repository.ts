@@ -63,8 +63,8 @@ interface HistoryRow {
 
 function deriveDisplayStatus(statuses: SellerOrderStatus[]): CustomerOrderDisplayStatus {
   if (statuses.length === 0 || statuses.every((status) => status === "PENDING")) return "PENDING";
-  if (statuses.every((status) => status === "COMPLETED")) return "COMPLETED";
-  if (statuses.every((status) => status === "REJECTED" || status === "CANCELLED")) return "CANCELLED";
+  const terminal = statuses.every((status) => ["COMPLETED", "REJECTED", "CANCELLED"].includes(status));
+  if (terminal) return statuses.some((status) => status === "COMPLETED") ? "COMPLETED" : "CANCELLED";
   return "IN_PROGRESS";
 }
 

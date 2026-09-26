@@ -16,6 +16,7 @@ import { wishlistRouter } from "../modules/wishlist/wishlist.routes.js";
 import { cartRouter } from "../modules/cart/cart.routes.js";
 import { checkoutRouter } from "../modules/checkout/checkout.routes.js";
 import { orderRouter } from "../modules/orders/order.routes.js";
+import { sellerOrderRouter } from "../modules/seller-orders/seller-order.routes.js";
 
 export const apiRouter = Router();
 
@@ -35,6 +36,7 @@ apiRouter.use("/wishlist", wishlistRouter);
 apiRouter.use("/cart", cartRouter);
 apiRouter.use("/checkout", checkoutRouter);
 apiRouter.use("/orders", orderRouter);
+apiRouter.use("/seller/orders", sellerOrderRouter);
 apiRouter.use("/seller/businesses/:businessId/products", sellerProductRouter);
 apiRouter.use("/seller/businesses", sellerBusinessRouter);
 apiRouter.use(roleRouter);

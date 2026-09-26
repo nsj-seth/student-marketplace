@@ -25,6 +25,8 @@ import { ProductDetailsPage } from "./pages/marketplace/ProductDetailsPage";
 import { ProductListPage } from "./pages/seller/ProductListPage";
 import { ProductEditorPage } from "./pages/seller/ProductEditorPage";
 import { ProductImagesPage } from "./pages/seller/ProductImagesPage";
+import { SellerOrdersPage } from "./pages/seller/SellerOrdersPage";
+import { SellerOrderDetailPage } from "./pages/seller/SellerOrderDetailPage";
 import { WishlistPage } from "./pages/customer/WishlistPage";
 import { CartPage } from "./pages/customer/CartPage";
 import { CheckoutPage } from "./pages/customer/CheckoutPage";
@@ -70,6 +72,8 @@ export default function App() {
         <Route path="/seller/businesses/:businessId/products/new" element={<ProductEditorPage />} />
         <Route path="/seller/businesses/:businessId/products/:productId" element={<ProductEditorPage />} />
         <Route path="/seller/businesses/:businessId/products/:productId/images" element={<ProductImagesPage />} />
+        <Route path="/seller/orders" element={<SellerOrdersPage />} />
+        <Route path="/seller/orders/:id" element={<SellerOrderDetailPage />} />
       </Route>
 
       <Route element={<RoleRoute allowedRoles={["ADMIN"]} />}>
