@@ -21,19 +21,23 @@ async function attachPublicDetails(rows: Array<Record<string, unknown>>): Promis
   const categoryIds = [...new Set(rows.map((row) => row.category_id as string))];
   const productIds = rows.map((row) => row.id as string);
 
-  const [businessResult, categoryResult, imageResult] = await Promise.all([
+  const [businessResult, categoryResult, imageResult, productReviewResult, businessReviewResult] = await Promise.all([
     supabase
       .from("businesses")
       .select("id, name, slug, business_type, availability_status, university_id, location_text, pickup_enabled, seller_delivery_enabled, logo_path, status")
       .in("id", businessIds)
       .eq("status", "ACTIVE"),
     supabase.from("categories").select("id, name, slug, is_active").in("id", categoryIds),
-    supabase.from("product_images").select(imageFields).in("product_id", productIds).order("sort_order", { ascending: true }).order("created_at", { ascending: true })
+    supabase.from("product_images").select(imageFields).in("product_id", productIds).order("sort_order", { ascending: true }).order("created_at", { ascending: true }),
+    supabase.from("reviews").select("product_id, rating").in("product_id", productIds).eq("target_type", "PRODUCT").eq("status", "ACTIVE"),
+    supabase.from("reviews").select("business_id, rating").in("business_id", businessIds).eq("target_type", "BUSINESS").eq("status", "ACTIVE")
   ]);
 
   if (businessResult.error) throw new Error(`Unable to load product businesses: ${businessResult.error.message}`);
   if (categoryResult.error) throw new Error(`Unable to load product categories: ${categoryResult.error.message}`);
   if (imageResult.error) throw new Error(`Unable to load product images: ${imageResult.error.message}`);
+  if (productReviewResult.error) throw new Error(`Unable to load product ratings: ${productReviewResult.error.message}`);
+  if (businessReviewResult.error) throw new Error(`Unable to load business ratings: ${businessReviewResult.error.message}`);
 
   const businessRows = (businessResult.data ?? []) as Array<Record<string, unknown>>;
   const universityIds = [...new Set(businessRows.map((row) => row.university_id).filter(Boolean))] as string[];
@@ -47,6 +51,19 @@ async function attachPublicDetails(rows: Array<Record<string, unknown>>): Promis
   const universities = new Map(universityRows.map((row) => [row.id as string, row]));
   const businesses = new Map(businessRows.map((row) => [row.id as string, row]));
   const categories = new Map((categoryResult.data ?? []).map((row) => [row.id as string, row]));
+  const productRatings = new Map<string, { sum: number; count: number }>();
+  for (const row of productReviewResult.data ?? []) {
+    const key = row.product_id as string;
+    const current = productRatings.get(key) ?? { sum: 0, count: 0 };
+    current.sum += Number(row.rating); current.count += 1; productRatings.set(key, current);
+  }
+  const businessRatings = new Map<string, { sum: number; count: number }>();
+  for (const row of businessReviewResult.data ?? []) {
+    const key = row.business_id as string;
+    const current = businessRatings.get(key) ?? { sum: 0, count: 0 };
+    current.sum += Number(row.rating); current.count += 1; businessRatings.set(key, current);
+  }
+
   const imagesByProduct = new Map<string, PublicProductImage[]>();
   for (const row of imageResult.data ?? []) {
     const image = normalizeImage(row as Record<string, unknown>);
@@ -65,6 +82,9 @@ async function attachPublicDetails(rows: Array<Record<string, unknown>>): Promis
     const universityId = (businessRow.university_id as string | null) ?? null;
     const universityRow = universityId ? universities.get(universityId) : undefined;
 
+    const productRating = productRatings.get(row.id as string);
+    const businessRating = businessRatings.get(row.business_id as string);
+
     result.push({
       id: row.id as string,
       business_id: row.business_id as string,
@@ -77,6 +97,8 @@ async function attachPublicDetails(rows: Array<Record<string, unknown>>): Promis
       status: row.status as "ACTIVE" | "OUT_OF_STOCK",
       created_at: row.created_at as string,
       updated_at: row.updated_at as string,
+      rating: productRating ? Math.round((productRating.sum / productRating.count) * 10) / 10 : null,
+      review_count: productRating?.count ?? 0,
       category: { id: categoryRow.id, name: categoryRow.name, slug: categoryRow.slug },
       business: {
         id: businessRow.id as string,
@@ -89,6 +111,8 @@ async function attachPublicDetails(rows: Array<Record<string, unknown>>): Promis
         pickup_enabled: Boolean(businessRow.pickup_enabled),
         seller_delivery_enabled: Boolean(businessRow.seller_delivery_enabled),
         logo_path: (businessRow.logo_path as string | null) ?? null,
+        rating: businessRating ? Math.round((businessRating.sum / businessRating.count) * 10) / 10 : null,
+        review_count: businessRating?.count ?? 0,
         university: universityRow ? {
           id: universityRow.id as string,
           name: universityRow.name as string,

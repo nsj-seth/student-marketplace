@@ -100,6 +100,8 @@ export interface PublicProduct {
   status: "ACTIVE" | "OUT_OF_STOCK";
   created_at: string;
   updated_at: string;
+  rating: number | null;
+  review_count: number;
   category: { id: string; name: string; slug: string } | null;
   business: {
     id: string;
@@ -112,6 +114,8 @@ export interface PublicProduct {
     pickup_enabled: boolean;
     seller_delivery_enabled: boolean;
     logo_path: string | null;
+    rating: number | null;
+    review_count: number;
     university: null | { id: string; name: string; short_name: string | null; slug: string };
   };
   images: ProductImage[];

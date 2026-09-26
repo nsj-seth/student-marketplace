@@ -154,6 +154,7 @@ export function BusinessesPage() {
                   </div>
                   <h2>{business.name}</h2>
                   <p>{business.description}</p>
+                  {business.review_count > 0 && <p><strong>★ {business.rating?.toFixed(1)}</strong> ({business.review_count} review{business.review_count === 1 ? "" : "s"})</p>}
                   <p><strong>Location:</strong> {business.university?.short_name || business.university?.name || business.location_text}</p>
                   <p><strong>Categories:</strong> {business.categories.map((item) => item.name).join(", ") || "None"}</p>
                   <p><strong>Fulfilment:</strong> {business.pickup_enabled ? "Pickup" : ""}{business.pickup_enabled && business.seller_delivery_enabled ? " · " : ""}{business.seller_delivery_enabled ? "Seller delivery" : ""}</p>

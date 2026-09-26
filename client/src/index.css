@@ -1169,3 +1169,122 @@ legend {
     grid-template-columns: 1fr;
   }
 }
+
+/* Phase 15 — Customer order tracking polish */
+.muted-text {
+  color: #667085;
+  margin: 0.35rem 0 0;
+}
+
+.order-summary-strip,
+.order-overview-panel {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.75rem;
+  margin: 1rem 0;
+}
+
+.order-summary-strip > span,
+.order-overview-panel > div {
+  padding: 0.75rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  background: #fafbfc;
+}
+
+.order-overview-panel span {
+  display: block;
+  color: #667085;
+  font-size: 0.85rem;
+  margin-bottom: 0.3rem;
+}
+
+.order-overview-panel strong {
+  font-size: 1.2rem;
+}
+
+.customer-business-progress {
+  display: grid !important;
+  grid-template-columns: minmax(150px, 1.2fr) minmax(190px, 2fr) auto;
+  gap: 1rem;
+  align-items: center;
+}
+
+.customer-business-progress__status {
+  display: grid;
+  gap: 0.4rem;
+}
+
+.progress-track {
+  width: 100%;
+  height: 8px;
+  background: #e9edf2;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: #344054;
+  border-radius: inherit;
+  transition: width 180ms ease;
+}
+
+.progress-track--large {
+  height: 10px;
+}
+
+.seller-progress-block {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.75rem;
+  align-items: center;
+  margin: 0.75rem 0 1rem;
+}
+
+.seller-progress-label {
+  margin: 0.25rem 0 0;
+  color: #667085;
+}
+
+.order-rejection-box {
+  border: 1px solid #f4c7c3;
+  background: #fff7f6;
+  border-radius: 10px;
+  padding: 0.9rem 1rem;
+  margin: 0.75rem 0 1rem;
+}
+
+.order-rejection-box p {
+  margin: 0.35rem 0 0;
+}
+
+.status-chip--partially_completed {
+  background: #fff7e6;
+  color: #8a4b08;
+}
+
+@media (max-width: 760px) {
+  .order-summary-strip,
+  .order-overview-panel {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .customer-business-progress {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Phase 16: verified reviews */
+.reviews-panel { margin-top: 1.5rem; }
+.review-summary { display: flex; flex-wrap: wrap; gap: .75rem; align-items: center; margin-bottom: 1rem; }
+.review-stars { letter-spacing: .08em; }
+.review-list { display: grid; gap: .75rem; }
+.review-card, .review-form-card { border: 1px solid #d8dee8; border-radius: .75rem; padding: 1rem; background: #fff; }
+.review-card__heading { display: flex; justify-content: space-between; gap: 1rem; }
+.review-card small { color: #5d6674; }
+.order-review-panel { border-top: 1px solid #d8dee8; padding-top: 1.5rem; }
+.review-form-card { margin-top: 1rem; }
+.review-form { display: grid; gap: .75rem; }
+.review-form label { display: grid; gap: .35rem; }
+.review-form select, .review-form textarea { width: 100%; }

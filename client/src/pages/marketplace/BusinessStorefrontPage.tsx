@@ -3,6 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import { supabase } from "../../lib/supabase";
 import { getPublicBusiness, type PublicBusiness } from "../../services/business.service";
 import { getPublicProducts, type PublicProduct } from "../../services/product.service";
+import { PublicReviewsPanel } from "../../components/reviews/PublicReviewsPanel";
 
 function getLogoUrl(path: string | null) {
   if (!path) return null;
@@ -129,10 +130,7 @@ export function BusinessStorefrontPage() {
           )}
         </section>
 
-        <section className="storefront-placeholder">
-          <h2>Reviews & rating</h2>
-          <p>Verified reviews and ratings will appear here after the Reviews phase.</p>
-        </section>
+        <PublicReviewsPanel targetType="BUSINESS" targetId={business.id} />
 
         <div className="actions">
           <Link className="button-link button-link--secondary" to="/businesses">Browse businesses</Link>

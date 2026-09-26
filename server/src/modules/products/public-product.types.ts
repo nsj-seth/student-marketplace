@@ -20,6 +20,8 @@ export interface PublicProduct {
   status: PublicProductStatus;
   created_at: string;
   updated_at: string;
+  rating: number | null;
+  review_count: number;
   category: { id: string; name: string; slug: string } | null;
   business: {
     id: string;
@@ -32,6 +34,8 @@ export interface PublicProduct {
     pickup_enabled: boolean;
     seller_delivery_enabled: boolean;
     logo_path: string | null;
+    rating: number | null;
+    review_count: number;
     university: null | { id: string; name: string; short_name: string | null; slug: string };
   };
   images: PublicProductImage[];

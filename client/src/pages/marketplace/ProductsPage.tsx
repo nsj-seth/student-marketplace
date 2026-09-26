@@ -185,6 +185,7 @@ export function ProductsPage() {
                   <span className="eyebrow">{product.category?.name ?? "Product"}</span>
                   <h2>{product.name}</h2>
                   <p className="product-price">{money(product.price)}</p>
+                  {product.review_count > 0 && <p><strong>★ {product.rating?.toFixed(1)}</strong> ({product.review_count} review{product.review_count === 1 ? "" : "s"})</p>}
                   <p>Sold by <Link to={`/businesses/${product.business.slug}`}>{product.business.name}</Link></p>
                   <p>{product.business.university?.short_name || product.business.location_text}</p>
                   <p>{product.business.pickup_enabled ? "Pickup" : ""}{product.business.pickup_enabled && product.business.seller_delivery_enabled ? " · " : ""}{product.business.seller_delivery_enabled ? "Seller delivery" : ""}</p>

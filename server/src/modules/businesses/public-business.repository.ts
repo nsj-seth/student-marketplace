@@ -67,6 +67,21 @@ async function attachPublicRelations(rows: PublicBusinessRecord[]) {
     universityRows = (data ?? []) as typeof universityRows;
   }
 
+  const { data: reviewRows, error: reviewError } = await supabase
+    .from("reviews")
+    .select("business_id, rating")
+    .in("business_id", businessIds)
+    .eq("target_type", "BUSINESS")
+    .eq("status", "ACTIVE");
+  if (reviewError) throw new Error(`Unable to load business ratings: ${reviewError.message}`);
+
+  const ratingMap = new Map<string, { sum: number; count: number }>();
+  for (const review of reviewRows ?? []) {
+    const key = review.business_id as string;
+    const current = ratingMap.get(key) ?? { sum: 0, count: 0 };
+    current.sum += Number(review.rating); current.count += 1; ratingMap.set(key, current);
+  }
+
   const categoryMap = new Map<string, Array<{ id: string; name: string; slug: string }>>();
   for (const relation of categoryRows ?? []) {
     const raw = relation.categories as unknown;
@@ -82,12 +97,17 @@ async function attachPublicRelations(rows: PublicBusinessRecord[]) {
 
   const universityMap = new Map(universityRows.map((row) => [row.id, row]));
 
-  return rows.map((row) => ({
+  return rows.map((row) => {
+    const rating = ratingMap.get(row.id);
+    return ({
     ...row,
+    rating: rating ? Math.round((rating.sum / rating.count) * 10) / 10 : null,
+    review_count: rating?.count ?? 0,
     social_links: row.social_links ?? {},
     categories: categoryMap.get(row.id) ?? [],
     university: row.university_id ? universityMap.get(row.university_id) ?? null : null
-  }));
+  });
+  });
 }
 
 export async function listPublicBusinesses(filters: {

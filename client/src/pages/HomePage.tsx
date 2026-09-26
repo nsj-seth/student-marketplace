@@ -58,6 +58,7 @@ export function HomePage() {
           {!authLoading && user && <Link to="/sell">Sell</Link>}
           {!authLoading && roles.includes("SELLER") && <Link to="/seller/businesses">My businesses</Link>}
           {!authLoading && roles.includes("SELLER") && <Link to="/seller/orders">Seller orders</Link>}
+          {!authLoading && roles.includes("SELLER") && <Link to="/seller/reviews">Reviews</Link>}
           {!authLoading && roles.includes("ADMIN") && <Link to="/admin/seller-applications">Admin</Link>}
           {!authLoading && user && <button className="nav-button" onClick={() => void logout()}>Logout</button>}
         </nav>
@@ -95,7 +96,7 @@ export function HomePage() {
               <div className="home-business-grid">
                 {data.featuredBusinesses.map((business) => {
                   const logo = businessLogo(business.logo_path);
-                  return <article className="home-business-card" key={business.id}>{logo ? <img src={logo} alt="" /> : <div className="home-image-empty">No logo</div>}<div><span className="eyebrow">{business.business_type === "STUDENT_BUSINESS" ? "Student business" : "Business"}</span><h3>{business.name}</h3><p>{business.location_text}</p><Link to={`/businesses/${business.slug}`}>View storefront</Link></div></article>;
+                  return <article className="home-business-card" key={business.id}>{logo ? <img src={logo} alt="" /> : <div className="home-image-empty">No logo</div>}<div><span className="eyebrow">{business.business_type === "STUDENT_BUSINESS" ? "Student business" : "Business"}</span><h3>{business.name}</h3><p>{business.location_text}</p>{business.review_count > 0 && <p>★ {business.rating?.toFixed(1)} ({business.review_count})</p>}<Link to={`/businesses/${business.slug}`}>View storefront</Link></div></article>;
                 })}
               </div>
             </section>
@@ -107,7 +108,7 @@ export function HomePage() {
               <div className="home-product-grid">
                 {data.featuredProducts.map((product) => {
                   const image = productImage(product);
-                  return <article className="home-product-card" key={product.id}>{image ? <img src={image} alt={product.name} /> : <div className="home-image-empty">No image</div>}<div><span className="eyebrow">{product.category?.name ?? "Product"}</span><h3>{product.name}</h3><strong>{money(product.price)}</strong><p>{product.business.name}</p><Link to={`/products/${product.id}/${product.slug}`}>View product</Link></div></article>;
+                  return <article className="home-product-card" key={product.id}>{image ? <img src={image} alt={product.name} /> : <div className="home-image-empty">No image</div>}<div><span className="eyebrow">{product.category?.name ?? "Product"}</span><h3>{product.name}</h3><strong>{money(product.price)}</strong><p>{product.business.name}</p>{product.review_count > 0 && <p>★ {product.rating?.toFixed(1)} ({product.review_count})</p>}<Link to={`/products/${product.id}/${product.slug}`}>View product</Link></div></article>;
                 })}
               </div>
             </section>
@@ -118,7 +119,7 @@ export function HomePage() {
             <div className="home-product-grid">
               {data.newProducts.map((product) => {
                 const image = productImage(product);
-                return <article className="home-product-card" key={product.id}>{image ? <img src={image} alt={product.name} /> : <div className="home-image-empty">No image</div>}<div><span className="eyebrow">{product.category?.name ?? "Product"}</span><h3>{product.name}</h3><strong>{money(product.price)}</strong><p>{product.business.name}</p><Link to={`/products/${product.id}/${product.slug}`}>View product</Link></div></article>;
+                return <article className="home-product-card" key={product.id}>{image ? <img src={image} alt={product.name} /> : <div className="home-image-empty">No image</div>}<div><span className="eyebrow">{product.category?.name ?? "Product"}</span><h3>{product.name}</h3><strong>{money(product.price)}</strong><p>{product.business.name}</p>{product.review_count > 0 && <p>★ {product.rating?.toFixed(1)} ({product.review_count})</p>}<Link to={`/products/${product.id}/${product.slug}`}>View product</Link></div></article>;
               })}
             </div>
           </section>
@@ -128,7 +129,7 @@ export function HomePage() {
             <div className="home-business-grid">
               {data.newBusinesses.map((business) => {
                 const logo = businessLogo(business.logo_path);
-                return <article className="home-business-card" key={business.id}>{logo ? <img src={logo} alt="" /> : <div className="home-image-empty">No logo</div>}<div><span className="eyebrow">{business.business_type === "STUDENT_BUSINESS" ? "Student business" : "Business"}</span><h3>{business.name}</h3><p>{business.university?.short_name || business.location_text}</p><Link to={`/businesses/${business.slug}`}>View storefront</Link></div></article>;
+                return <article className="home-business-card" key={business.id}>{logo ? <img src={logo} alt="" /> : <div className="home-image-empty">No logo</div>}<div><span className="eyebrow">{business.business_type === "STUDENT_BUSINESS" ? "Student business" : "Business"}</span><h3>{business.name}</h3><p>{business.university?.short_name || business.location_text}</p>{business.review_count > 0 && <p>★ {business.rating?.toFixed(1)} ({business.review_count})</p>}<Link to={`/businesses/${business.slug}`}>View storefront</Link></div></article>;
               })}
             </div>
           </section>

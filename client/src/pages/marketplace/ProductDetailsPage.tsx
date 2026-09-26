@@ -5,6 +5,7 @@ import { supabase } from "../../lib/supabase";
 import { getPublicProduct, type PublicProduct } from "../../services/product.service";
 import { addToWishlist, getWishlistStatus, removeFromWishlist } from "../../services/wishlist.service";
 import { addToCart } from "../../services/cart.service";
+import { PublicReviewsPanel } from "../../components/reviews/PublicReviewsPanel";
 
 function imageUrl(path: string) {
   return supabase.storage.from("product-images").getPublicUrl(path).data.publicUrl;
@@ -161,6 +162,9 @@ export function ProductDetailsPage() {
           </div>
           {user && <p className="account-line"><Link to="/wishlist">View my wishlist</Link> • <Link to="/cart">View my cart</Link></p>}
         </div>
+      </section>
+      <section className="card wide-card">
+        <PublicReviewsPanel targetType="PRODUCT" targetId={product.id} />
       </section>
     </main>
   );

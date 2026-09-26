@@ -85,6 +85,8 @@ export interface PublicBusiness {
   approved_at: string;
   created_at: string;
   updated_at: string;
+  rating: number | null;
+  review_count: number;
   categories: Array<{ id: string; name: string; slug: string }>;
   university: null | { id: string; name: string; short_name: string | null; slug: string };
 }

@@ -10,7 +10,23 @@ export type SellerOrderStatus =
   | "REJECTED"
   | "CANCELLED";
 
-export type CustomerOrderDisplayStatus = "PENDING" | "IN_PROGRESS" | "COMPLETED" | "CANCELLED";
+export type CustomerOrderDisplayStatus =
+  | "PENDING"
+  | "IN_PROGRESS"
+  | "PARTIALLY_COMPLETED"
+  | "COMPLETED"
+  | "CANCELLED";
+
+export interface CustomerOrderBusinessSummary {
+  id: string;
+  name: string;
+  seller_order_number: string;
+  status: SellerOrderStatus;
+  subtotal: number;
+  progress_percent: number;
+  progress_label: string;
+  rejection_reason: string | null;
+}
 
 export interface CustomerOrderListItem {
   id: string;
@@ -18,14 +34,13 @@ export interface CustomerOrderListItem {
   total: number;
   status: string;
   display_status: CustomerOrderDisplayStatus;
+  status_summary: string;
   created_at: string;
-  businesses: Array<{
-    id: string;
-    name: string;
-    seller_order_number: string;
-    status: SellerOrderStatus;
-    subtotal: number;
-  }>;
+  seller_order_count: number;
+  completed_count: number;
+  rejected_count: number;
+  active_count: number;
+  businesses: CustomerOrderBusinessSummary[];
 }
 
 export interface CustomerOrderDetail extends CustomerOrderListItem {
@@ -44,6 +59,9 @@ export interface CustomerOrderDetail extends CustomerOrderListItem {
     subtotal: number;
     created_at: string;
     updated_at: string;
+    progress_percent: number;
+    progress_label: string;
+    rejection_reason: string | null;
     items: Array<{
       id: string;
       product_id: string;

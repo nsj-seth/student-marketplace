@@ -63,9 +63,47 @@ interface HistoryRow {
 
 function deriveDisplayStatus(statuses: SellerOrderStatus[]): CustomerOrderDisplayStatus {
   if (statuses.length === 0 || statuses.every((status) => status === "PENDING")) return "PENDING";
-  const terminal = statuses.every((status) => ["COMPLETED", "REJECTED", "CANCELLED"].includes(status));
-  if (terminal) return statuses.some((status) => status === "COMPLETED") ? "COMPLETED" : "CANCELLED";
+
+  const completed = statuses.filter((status) => status === "COMPLETED").length;
+  const failed = statuses.filter((status) => status === "REJECTED" || status === "CANCELLED").length;
+  const terminal = completed + failed === statuses.length;
+
+  if (completed === statuses.length) return "COMPLETED";
+  if (terminal && completed > 0 && failed > 0) return "PARTIALLY_COMPLETED";
+  if (terminal && completed === 0) return "CANCELLED";
   return "IN_PROGRESS";
+}
+
+function getStatusSummary(status: CustomerOrderDisplayStatus): string {
+  switch (status) {
+    case "PENDING": return "Waiting for sellers to respond.";
+    case "IN_PROGRESS": return "Your order is being processed by its sellers.";
+    case "PARTIALLY_COMPLETED": return "Some seller orders were completed while others could not be fulfilled.";
+    case "COMPLETED": return "All seller orders are complete.";
+    case "CANCELLED": return "This order could not be completed.";
+  }
+}
+
+function getSellerProgress(status: SellerOrderStatus, fulfilment: "PICKUP" | "SELLER_DELIVERY") {
+  switch (status) {
+    case "PENDING": return { percent: 0, label: "Waiting for seller response" };
+    case "ACCEPTED": return { percent: 25, label: "Order accepted" };
+    case "PREPARING": return { percent: 50, label: "Being prepared" };
+    case "READY": return { percent: 75, label: "Ready for pickup" };
+    case "OUT_FOR_DELIVERY": return { percent: 75, label: "Out for delivery" };
+    case "COMPLETED": return { percent: 100, label: "Completed" };
+    case "REJECTED": return { percent: 100, label: "Seller could not fulfil this order" };
+    case "CANCELLED": return { percent: 100, label: "Cancelled" };
+    default: return { percent: fulfilment === "PICKUP" ? 0 : 0, label: "Pending" };
+  }
+}
+
+function getCounts(statuses: SellerOrderStatus[]) {
+  return {
+    completed: statuses.filter((status) => status === "COMPLETED").length,
+    rejected: statuses.filter((status) => status === "REJECTED" || status === "CANCELLED").length,
+    active: statuses.filter((status) => !["COMPLETED", "REJECTED", "CANCELLED"].includes(status)).length
+  };
 }
 
 export async function createOrderFromCart(userId: string, input: CheckoutValidationInput): Promise<CreatedOrderSummary> {
@@ -127,20 +165,35 @@ export async function listCustomerOrders(userId: string): Promise<CustomerOrderL
 
   return orders.map((order) => {
     const children = sellerOrders.filter((sellerOrder) => sellerOrder.order_id === order.id);
+    const statuses = children.map((child) => child.status);
+    const displayStatus = deriveDisplayStatus(statuses);
+    const counts = getCounts(statuses);
+
     return {
       id: order.id,
       order_number: order.order_number,
       total: Number(order.total),
       status: order.status,
-      display_status: deriveDisplayStatus(children.map((child) => child.status)),
+      display_status: displayStatus,
+      status_summary: getStatusSummary(displayStatus),
       created_at: order.created_at,
-      businesses: children.map((child) => ({
-        id: child.business_id,
-        name: child.business_name_snapshot,
-        seller_order_number: child.seller_order_number,
-        status: child.status,
-        subtotal: Number(child.subtotal)
-      }))
+      seller_order_count: children.length,
+      completed_count: counts.completed,
+      rejected_count: counts.rejected,
+      active_count: counts.active,
+      businesses: children.map((child) => {
+        const progress = getSellerProgress(child.status, child.fulfilment_method);
+        return {
+          id: child.business_id,
+          name: child.business_name_snapshot,
+          seller_order_number: child.seller_order_number,
+          status: child.status,
+          subtotal: Number(child.subtotal),
+          progress_percent: progress.percent,
+          progress_label: progress.label,
+          rejection_reason: null
+        };
+      })
     };
   });
 }
@@ -191,7 +244,12 @@ export async function getCustomerOrder(userId: string, orderId: string): Promise
     history = (historyData ?? []) as HistoryRow[];
   }
 
-  const sellerDetails = sellerOrders.map((sellerOrder) => ({
+  const sellerDetails = sellerOrders.map((sellerOrder) => {
+    const sellerHistory = history.filter((entry) => entry.seller_order_id === sellerOrder.id);
+    const progress = getSellerProgress(sellerOrder.status, sellerOrder.fulfilment_method);
+    const rejectionEntry = [...sellerHistory].reverse().find((entry) => entry.status === "REJECTED" || entry.status === "CANCELLED");
+
+    return {
     id: sellerOrder.id,
     seller_order_number: sellerOrder.seller_order_number,
     business_id: sellerOrder.business_id,
@@ -201,6 +259,9 @@ export async function getCustomerOrder(userId: string, orderId: string): Promise
     subtotal: Number(sellerOrder.subtotal),
     created_at: sellerOrder.created_at,
     updated_at: sellerOrder.updated_at,
+    progress_percent: progress.percent,
+    progress_label: progress.label,
+    rejection_reason: rejectionEntry?.note ?? null,
     items: items
       .filter((item) => item.seller_order_id === sellerOrder.id)
       .map((item) => ({
@@ -212,34 +273,45 @@ export async function getCustomerOrder(userId: string, orderId: string): Promise
         quantity: item.quantity,
         subtotal: Number(item.subtotal)
       })),
-    timeline: history
-      .filter((entry) => entry.seller_order_id === sellerOrder.id)
-      .map((entry) => ({
-        id: entry.id,
-        status: entry.status,
-        note: entry.note,
-        created_at: entry.created_at
-      }))
-  }));
+    timeline: sellerHistory.map((entry) => ({
+      id: entry.id,
+      status: entry.status,
+      note: entry.note,
+      created_at: entry.created_at
+    }))
+  };
+  });
+
+  const statuses = sellerOrders.map((sellerOrder) => sellerOrder.status);
+  const displayStatus = deriveDisplayStatus(statuses);
+  const counts = getCounts(statuses);
 
   return {
     id: order.id,
     order_number: order.order_number,
     total: Number(order.total),
     status: order.status,
-    display_status: deriveDisplayStatus(sellerOrders.map((sellerOrder) => sellerOrder.status)),
+    display_status: displayStatus,
+    status_summary: getStatusSummary(displayStatus),
     created_at: order.created_at,
+    seller_order_count: sellerOrders.length,
+    completed_count: counts.completed,
+    rejected_count: counts.rejected,
+    active_count: counts.active,
     customer_full_name: order.customer_full_name,
     customer_phone: order.customer_phone,
     customer_location: order.customer_location,
     customer_note: order.customer_note,
     updated_at: order.updated_at,
-    businesses: sellerOrders.map((sellerOrder) => ({
+    businesses: sellerDetails.map((sellerOrder) => ({
       id: sellerOrder.business_id,
-      name: sellerOrder.business_name_snapshot,
+      name: sellerOrder.business_name,
       seller_order_number: sellerOrder.seller_order_number,
       status: sellerOrder.status,
-      subtotal: Number(sellerOrder.subtotal)
+      subtotal: sellerOrder.subtotal,
+      progress_percent: sellerOrder.progress_percent,
+      progress_label: sellerOrder.progress_label,
+      rejection_reason: sellerOrder.rejection_reason
     })),
     seller_orders: sellerDetails
   };

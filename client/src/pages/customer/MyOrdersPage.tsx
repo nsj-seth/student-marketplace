@@ -44,18 +44,34 @@ export function MyOrdersPage() {
                 <div>
                   <span className="eyebrow">{dateTime(order.created_at)}</span>
                   <h2>{order.order_number}</h2>
+                  <p className="muted-text">{order.status_summary}</p>
                 </div>
                 <span className={`status-chip status-chip--${order.display_status.toLowerCase()}`}>
                   {label(order.display_status)}
                 </span>
               </div>
 
+              <div className="order-summary-strip">
+                <span><strong>{order.seller_order_count}</strong> seller order{order.seller_order_count === 1 ? "" : "s"}</span>
+                <span><strong>{order.active_count}</strong> active</span>
+                <span><strong>{order.completed_count}</strong> completed</span>
+                {order.rejected_count > 0 && <span><strong>{order.rejected_count}</strong> not fulfilled</span>}
+              </div>
+
               <div className="order-business-summary">
                 {order.businesses.map((business) => (
-                  <div key={business.seller_order_number}>
-                    <strong>{business.name}</strong>
-                    <span>{business.seller_order_number}</span>
-                    <span>{label(business.status)}</span>
+                  <div key={business.seller_order_number} className="customer-business-progress">
+                    <div>
+                      <strong>{business.name}</strong>
+                      <span>{business.seller_order_number}</span>
+                    </div>
+                    <div className="customer-business-progress__status">
+                      <span>{business.progress_label}</span>
+                      <div className="progress-track" aria-label={`${business.name} order progress`}>
+                        <div className="progress-fill" style={{ width: `${business.progress_percent}%` }} />
+                      </div>
+                    </div>
+                    <span className="status-chip">{label(business.status)}</span>
                   </div>
                 ))}
               </div>
