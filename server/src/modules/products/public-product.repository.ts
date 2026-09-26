@@ -173,3 +173,17 @@ export async function findPublicProductById(productId: string) {
   const [product] = await attachPublicDetails([data as Record<string, unknown>]);
   return product ?? null;
 }
+
+export async function listPublicProductsByIds(productIds: string[]) {
+  if (!productIds.length) return [];
+
+  const supabase = getSupabaseAdminClient();
+  const { data, error } = await supabase
+    .from("products")
+    .select(productFields)
+    .in("id", productIds)
+    .in("status", ["ACTIVE", "OUT_OF_STOCK"]);
+
+  if (error) throw new Error(`Unable to load public products: ${error.message}`);
+  return attachPublicDetails((data ?? []) as Array<Record<string, unknown>>);
+}

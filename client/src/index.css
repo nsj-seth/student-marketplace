@@ -753,3 +753,88 @@ legend {
   .home-product-grid, .home-business-grid { grid-template-columns: 1fr; }
   .section-heading { align-items: flex-start; flex-direction: column; }
 }
+
+/* Phase 12 — Cart */
+.cart-groups {
+  display: grid;
+  gap: 1.25rem;
+  margin-top: 1.5rem;
+}
+
+.cart-group {
+  border: 1px solid #dbe3ea;
+  border-radius: 12px;
+  padding: 1rem;
+}
+
+.cart-item {
+  display: grid;
+  grid-template-columns: 72px minmax(180px, 1fr) auto auto auto;
+  gap: 1rem;
+  align-items: center;
+  padding: 1rem 0;
+  border-top: 1px solid #e5e7eb;
+}
+
+.cart-item img,
+.cart-image-empty {
+  width: 72px;
+  height: 72px;
+  object-fit: cover;
+  border-radius: 10px;
+  background: #eef2f7;
+}
+
+.cart-image-empty {
+  display: grid;
+  place-items: center;
+  font-size: 0.75rem;
+  text-align: center;
+}
+
+.cart-item-main p {
+  margin: 0.25rem 0;
+}
+
+.cart-quantity {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.cart-quantity button {
+  min-width: 2.2rem;
+  padding: 0.45rem 0.65rem;
+}
+
+.cart-summary {
+  margin-top: 1.5rem;
+  margin-left: auto;
+  max-width: 420px;
+  padding: 1.25rem;
+  border: 1px solid #dbe3ea;
+  border-radius: 12px;
+}
+
+.cart-summary > div {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.2rem;
+  margin-bottom: 0.75rem;
+}
+
+.empty-state {
+  padding: 2rem 0;
+}
+
+@media (max-width: 760px) {
+  .cart-item {
+    grid-template-columns: 64px 1fr;
+  }
+
+  .cart-item > strong,
+  .cart-item > button,
+  .cart-quantity {
+    grid-column: 2;
+  }
+}

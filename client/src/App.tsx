@@ -25,6 +25,8 @@ import { ProductDetailsPage } from "./pages/marketplace/ProductDetailsPage";
 import { ProductListPage } from "./pages/seller/ProductListPage";
 import { ProductEditorPage } from "./pages/seller/ProductEditorPage";
 import { ProductImagesPage } from "./pages/seller/ProductImagesPage";
+import { WishlistPage } from "./pages/customer/WishlistPage";
+import { CartPage } from "./pages/customer/CartPage";
 
 export default function App() {
   return (
@@ -46,6 +48,8 @@ export default function App() {
         <Route path="/sell" element={<SellerRegistrationPage />} />
         <Route path="/sell/applications/:id/student-verification" element={<StudentVerificationPage />} />
         <Route path="/sell/applications/:id/business-details" element={<BusinessApplicationPage />} />
+        <Route path="/wishlist" element={<WishlistPage />} />
+        <Route path="/cart" element={<CartPage />} />
       </Route>
 
       <Route element={<RoleRoute allowedRoles={["CUSTOMER"]} />}>

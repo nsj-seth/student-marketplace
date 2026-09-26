@@ -1,7 +1,10 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link, useParams } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
 import { supabase } from "../../lib/supabase";
 import { getPublicProduct, type PublicProduct } from "../../services/product.service";
+import { addToWishlist, getWishlistStatus, removeFromWishlist } from "../../services/wishlist.service";
+import { addToCart } from "../../services/cart.service";
 
 function imageUrl(path: string) {
   return supabase.storage.from("product-images").getPublicUrl(path).data.publicUrl;
@@ -9,10 +12,17 @@ function imageUrl(path: string) {
 
 export function ProductDetailsPage() {
   const { id } = useParams();
+  const { user } = useAuth();
   const [product, setProduct] = useState<PublicProduct | null>(null);
   const [selectedImageId, setSelectedImageId] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [wishlisted, setWishlisted] = useState(false);
+  const [wishlistLoading, setWishlistLoading] = useState(false);
+  const [wishlistError, setWishlistError] = useState("");
+  const [cartLoading, setCartLoading] = useState(false);
+  const [cartMessage, setCartMessage] = useState("");
+  const [cartError, setCartError] = useState("");
 
   useEffect(() => {
     let active = true;
@@ -34,6 +44,60 @@ export function ProductDetailsPage() {
     void load();
     return () => { active = false; };
   }, [id]);
+
+  useEffect(() => {
+    if (!id || !user) {
+      setWishlisted(false);
+      return;
+    }
+
+    let active = true;
+    void getWishlistStatus(id)
+      .then((response) => {
+        if (active) setWishlisted(Boolean(response.data?.wishlisted));
+      })
+      .catch(() => {
+        if (active) setWishlisted(false);
+      });
+
+    return () => { active = false; };
+  }, [id, user]);
+
+  async function toggleWishlist() {
+    if (!id || !user) return;
+    setWishlistLoading(true);
+    setWishlistError("");
+    try {
+      if (wishlisted) {
+        await removeFromWishlist(id);
+        setWishlisted(false);
+      } else {
+        await addToWishlist(id);
+        setWishlisted(true);
+      }
+    } catch (err) {
+      setWishlistError(err instanceof Error ? err.message : "Unable to update wishlist.");
+    } finally {
+      setWishlistLoading(false);
+    }
+  }
+
+
+  async function handleAddToCart() {
+    if (!id || !user) return;
+    setCartLoading(true);
+    setCartMessage("");
+    setCartError("");
+    try {
+      const response = await addToCart(id, 1);
+      const quantity = response.data?.total_quantity ?? 1;
+      setCartMessage(`Added to cart. Cart now has ${quantity} item(s).`);
+    } catch (err) {
+      setCartError(err instanceof Error ? err.message : "Unable to add to cart.");
+    } finally {
+      setCartLoading(false);
+    }
+  }
 
   const selectedImage = useMemo(
     () => product?.images.find((image) => image.id === selectedImageId) ?? product?.images[0] ?? null,
@@ -77,11 +141,25 @@ export function ProductDetailsPage() {
             <Link to={`/businesses/${product.business.slug}`}>View storefront</Link>
           </section>
 
+          {wishlistError && <p className="message message--error">{wishlistError}</p>}
+          {cartError && <p className="message message--error">{cartError}</p>}
+          {cartMessage && <p className="message message--success">{cartMessage} <Link to="/cart">View cart</Link></p>}
           <div className="actions">
-            <button type="button" disabled={unavailable} title="Cart functionality will be added in Phase 12">{unavailable ? "Currently unavailable" : "Add to cart (coming soon)"}</button>
+            {user ? (
+              <button type="button" disabled={unavailable || cartLoading} onClick={() => void handleAddToCart()}>{unavailable ? "Currently unavailable" : cartLoading ? "Adding..." : "Add to cart"}</button>
+            ) : (
+              <Link className="button-link" to="/login">Login to add to cart</Link>
+            )}
+            {user ? (
+              <button type="button" className="secondary-button" disabled={wishlistLoading} onClick={() => void toggleWishlist()}>
+                {wishlistLoading ? "Saving..." : wishlisted ? "Remove from wishlist" : "Add to wishlist"}
+              </button>
+            ) : (
+              <Link className="button-link button-link--secondary" to="/login">Login to save</Link>
+            )}
             <Link className="button-link button-link--secondary" to="/products">Back to products</Link>
           </div>
-          <p className="account-line">Cart and wishlist actions will be activated in their dedicated phases.</p>
+          {user && <p className="account-line"><Link to="/wishlist">View my wishlist</Link> • <Link to="/cart">View my cart</Link></p>}
         </div>
       </section>
     </main>
