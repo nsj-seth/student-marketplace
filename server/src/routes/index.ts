@@ -19,6 +19,7 @@ import { orderRouter } from "../modules/orders/order.routes.js";
 import { sellerOrderRouter } from "../modules/seller-orders/seller-order.routes.js";
 import { reviewRouter } from "../modules/reviews/review.routes.js";
 import { notificationRouter } from "../modules/notifications/notification.routes.js";
+import { adminReportRouter, reportRouter } from "../modules/reports/report.routes.js";
 
 export const apiRouter = Router();
 
@@ -41,6 +42,8 @@ apiRouter.use("/orders", orderRouter);
 apiRouter.use("/seller/orders", sellerOrderRouter);
 apiRouter.use("/reviews", reviewRouter);
 apiRouter.use("/notifications", notificationRouter);
+apiRouter.use("/reports", reportRouter);
+apiRouter.use("/admin/reports", adminReportRouter);
 apiRouter.use("/seller/businesses/:businessId/products", sellerProductRouter);
 apiRouter.use("/seller/businesses", sellerBusinessRouter);
 apiRouter.use(roleRouter);

@@ -69,11 +69,13 @@ export function HomePage() {
           {!authLoading && user && <Link to="/cart">Cart</Link>}
           {!authLoading && user && <Link to="/orders">Orders</Link>}
           {!authLoading && user && <Link to="/notifications">Notifications{unreadNotifications > 0 ? ` (${unreadNotifications})` : ""}</Link>}
+          {!authLoading && user && <Link to="/reports">My reports</Link>}
           {!authLoading && user && <Link to="/sell">Sell</Link>}
           {!authLoading && roles.includes("SELLER") && <Link to="/seller/businesses">My businesses</Link>}
           {!authLoading && roles.includes("SELLER") && <Link to="/seller/orders">Seller orders</Link>}
           {!authLoading && roles.includes("SELLER") && <Link to="/seller/reviews">Reviews</Link>}
           {!authLoading && roles.includes("ADMIN") && <Link to="/admin/seller-applications">Admin</Link>}
+          {!authLoading && roles.includes("ADMIN") && <Link to="/admin/reports">Reports</Link>}
           {!authLoading && user && <button className="nav-button" onClick={() => void logout()}>Logout</button>}
         </nav>
       </header>

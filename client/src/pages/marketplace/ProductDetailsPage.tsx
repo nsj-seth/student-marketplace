@@ -6,6 +6,7 @@ import { getPublicProduct, type PublicProduct } from "../../services/product.ser
 import { addToWishlist, getWishlistStatus, removeFromWishlist } from "../../services/wishlist.service";
 import { addToCart } from "../../services/cart.service";
 import { PublicReviewsPanel } from "../../components/reviews/PublicReviewsPanel";
+import { ReportForm } from "../../components/reports/ReportForm";
 
 function imageUrl(path: string) {
   return supabase.storage.from("product-images").getPublicUrl(path).data.publicUrl;
@@ -165,6 +166,7 @@ export function ProductDetailsPage() {
       </section>
       <section className="card wide-card">
         <PublicReviewsPanel targetType="PRODUCT" targetId={product.id} />
+        <ReportForm targetType="PRODUCT" targetId={product.id} label="Product" />
       </section>
     </main>
   );

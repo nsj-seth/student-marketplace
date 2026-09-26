@@ -1,5 +1,5 @@
 import type { RequestHandler } from "express";
-import { getSupabaseAuthClient } from "../lib/supabase.js";
+import { getSupabaseAdminClient, getSupabaseAuthClient } from "../lib/supabase.js";
 
 export const requireAuth: RequestHandler = async (req, res, next) => {
   try {
@@ -33,6 +33,26 @@ export const requireAuth: RequestHandler = async (req, res, next) => {
         success: false,
         message: "Your session is invalid or has expired.",
         code: "INVALID_SESSION"
+      });
+      return;
+    }
+
+    const adminClient = getSupabaseAdminClient();
+    const { data: profile, error: profileError } = await adminClient
+      .from("profiles")
+      .select("account_status")
+      .eq("id", data.user.id)
+      .maybeSingle();
+
+    if (profileError) {
+      throw new Error(`Unable to verify account status: ${profileError.message}`);
+    }
+
+    if (profile?.account_status === "SUSPENDED") {
+      res.status(403).json({
+        success: false,
+        message: "This account has been suspended.",
+        code: "ACCOUNT_SUSPENDED"
       });
       return;
     }

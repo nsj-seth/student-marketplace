@@ -4,6 +4,7 @@ import { supabase } from "../../lib/supabase";
 import { getPublicBusiness, type PublicBusiness } from "../../services/business.service";
 import { getPublicProducts, type PublicProduct } from "../../services/product.service";
 import { PublicReviewsPanel } from "../../components/reviews/PublicReviewsPanel";
+import { ReportForm } from "../../components/reports/ReportForm";
 
 function getLogoUrl(path: string | null) {
   if (!path) return null;
@@ -131,6 +132,11 @@ export function BusinessStorefrontPage() {
         </section>
 
         <PublicReviewsPanel targetType="BUSINESS" targetId={business.id} />
+
+        <div className="storefront-report-grid">
+          <ReportForm targetType="BUSINESS" targetId={business.id} label="Business" />
+          <ReportForm targetType="SELLER" targetId={business.id} label="Seller" />
+        </div>
 
         <div className="actions">
           <Link className="button-link button-link--secondary" to="/businesses">Browse businesses</Link>

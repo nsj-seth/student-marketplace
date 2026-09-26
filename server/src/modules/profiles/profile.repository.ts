@@ -4,6 +4,7 @@ export interface ProfileRecord {
   id: string;
   full_name: string;
   avatar_path: string | null;
+  account_status?: "ACTIVE" | "SUSPENDED";
   created_at: string;
   updated_at: string;
 }

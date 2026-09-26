@@ -34,6 +34,8 @@ import { CheckoutPage } from "./pages/customer/CheckoutPage";
 import { MyOrdersPage } from "./pages/customer/MyOrdersPage";
 import { OrderDetailsPage } from "./pages/customer/OrderDetailsPage";
 import { NotificationsPage } from "./pages/customer/NotificationsPage";
+import { MyReportsPage } from "./pages/customer/MyReportsPage";
+import { AdminReportsPage } from "./pages/admin/AdminReportsPage";
 
 export default function App() {
   return (
@@ -61,6 +63,7 @@ export default function App() {
         <Route path="/orders" element={<MyOrdersPage />} />
         <Route path="/orders/:id" element={<OrderDetailsPage />} />
         <Route path="/notifications" element={<NotificationsPage />} />
+        <Route path="/reports" element={<MyReportsPage />} />
       </Route>
 
       <Route element={<RoleRoute allowedRoles={["CUSTOMER"]} />}>
@@ -85,6 +88,7 @@ export default function App() {
         <Route path="/admin/reference-data" element={<AdminReferenceDataPage />} />
         <Route path="/admin/seller-applications" element={<AdminSellerApplicationsPage />} />
         <Route path="/admin/seller-applications/:id" element={<AdminSellerApplicationDetailPage />} />
+        <Route path="/admin/reports" element={<AdminReportsPage />} />
       </Route>
     </Routes>
   );
