@@ -123,8 +123,8 @@ export function CartPage() {
 
             <section className="cart-summary">
               <div><span>Total</span><strong>{money(cart.total)}</strong></div>
-              <p>Checkout and fulfilment selection will be added in the next checkout phase.</p>
-              <button type="button" disabled>Checkout (coming next)</button>
+              <p>Review your customer details and choose fulfilment for each business.</p>
+              <Link className="button-link" to="/checkout">Continue to checkout</Link>
               <button type="button" className="secondary-button" onClick={() => void clear()}>Clear cart</button>
             </section>
           </>

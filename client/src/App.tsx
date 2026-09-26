@@ -27,6 +27,9 @@ import { ProductEditorPage } from "./pages/seller/ProductEditorPage";
 import { ProductImagesPage } from "./pages/seller/ProductImagesPage";
 import { WishlistPage } from "./pages/customer/WishlistPage";
 import { CartPage } from "./pages/customer/CartPage";
+import { CheckoutPage } from "./pages/customer/CheckoutPage";
+import { MyOrdersPage } from "./pages/customer/MyOrdersPage";
+import { OrderDetailsPage } from "./pages/customer/OrderDetailsPage";
 
 export default function App() {
   return (
@@ -50,6 +53,9 @@ export default function App() {
         <Route path="/sell/applications/:id/business-details" element={<BusinessApplicationPage />} />
         <Route path="/wishlist" element={<WishlistPage />} />
         <Route path="/cart" element={<CartPage />} />
+        <Route path="/checkout" element={<CheckoutPage />} />
+        <Route path="/orders" element={<MyOrdersPage />} />
+        <Route path="/orders/:id" element={<OrderDetailsPage />} />
       </Route>
 
       <Route element={<RoleRoute allowedRoles={["CUSTOMER"]} />}>

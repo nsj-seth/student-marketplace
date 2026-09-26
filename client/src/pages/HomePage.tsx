@@ -54,6 +54,7 @@ export function HomePage() {
           {!authLoading && user && <Link to="/profile">My profile</Link>}
           {!authLoading && user && <Link to="/wishlist">Wishlist</Link>}
           {!authLoading && user && <Link to="/cart">Cart</Link>}
+          {!authLoading && user && <Link to="/orders">Orders</Link>}
           {!authLoading && user && <Link to="/sell">Sell</Link>}
           {!authLoading && roles.includes("SELLER") && <Link to="/seller/businesses">My businesses</Link>}
           {!authLoading && roles.includes("ADMIN") && <Link to="/admin/seller-applications">Admin</Link>}

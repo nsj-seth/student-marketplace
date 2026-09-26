@@ -14,6 +14,8 @@ import { healthRouter } from "./health.routes.js";
 import { marketplaceRouter } from "../modules/marketplace/marketplace.routes.js";
 import { wishlistRouter } from "../modules/wishlist/wishlist.routes.js";
 import { cartRouter } from "../modules/cart/cart.routes.js";
+import { checkoutRouter } from "../modules/checkout/checkout.routes.js";
+import { orderRouter } from "../modules/orders/order.routes.js";
 
 export const apiRouter = Router();
 
@@ -31,6 +33,8 @@ apiRouter.use("/businesses", publicBusinessRouter);
 apiRouter.use("/products", publicProductRouter);
 apiRouter.use("/wishlist", wishlistRouter);
 apiRouter.use("/cart", cartRouter);
+apiRouter.use("/checkout", checkoutRouter);
+apiRouter.use("/orders", orderRouter);
 apiRouter.use("/seller/businesses/:businessId/products", sellerProductRouter);
 apiRouter.use("/seller/businesses", sellerBusinessRouter);
 apiRouter.use(roleRouter);
