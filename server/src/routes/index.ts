@@ -20,6 +20,12 @@ import { sellerOrderRouter } from "../modules/seller-orders/seller-order.routes.
 import { reviewRouter } from "../modules/reviews/review.routes.js";
 import { notificationRouter } from "../modules/notifications/notification.routes.js";
 import { adminReportRouter, reportRouter } from "../modules/reports/report.routes.js";
+import { adminUserRouter } from "../modules/admin-users/admin-user.routes.js";
+import { adminBusinessRouter } from "../modules/admin-businesses/admin-business.routes.js";
+import { adminProductRouter } from "../modules/admin-products/admin-product.routes.js";
+import { adminOrderRouter } from "../modules/admin-orders/admin-order.routes.js";
+import { adminDashboardRouter } from "../modules/admin-dashboard/admin-dashboard.routes.js";
+import { adminMarketplaceRouter } from "../modules/admin-marketplace/admin-marketplace.routes.js";
 
 export const apiRouter = Router();
 
@@ -44,6 +50,12 @@ apiRouter.use("/reviews", reviewRouter);
 apiRouter.use("/notifications", notificationRouter);
 apiRouter.use("/reports", reportRouter);
 apiRouter.use("/admin/reports", adminReportRouter);
+apiRouter.use("/admin/users", adminUserRouter);
+apiRouter.use("/admin/businesses", adminBusinessRouter);
+apiRouter.use("/admin/products", adminProductRouter);
+apiRouter.use("/admin/orders", adminOrderRouter);
+apiRouter.use("/admin/dashboard", adminDashboardRouter);
+apiRouter.use("/admin/marketplace", adminMarketplaceRouter);
 apiRouter.use("/seller/businesses/:businessId/products", sellerProductRouter);
 apiRouter.use("/seller/businesses", sellerBusinessRouter);
 apiRouter.use(roleRouter);

@@ -36,6 +36,13 @@ import { OrderDetailsPage } from "./pages/customer/OrderDetailsPage";
 import { NotificationsPage } from "./pages/customer/NotificationsPage";
 import { MyReportsPage } from "./pages/customer/MyReportsPage";
 import { AdminReportsPage } from "./pages/admin/AdminReportsPage";
+import { AdminUsersPage } from "./pages/admin/AdminUsersPage";
+import { AdminBusinessesPage } from "./pages/admin/AdminBusinessesPage";
+import { AdminProductsPage } from "./pages/admin/AdminProductsPage";
+import { AdminOrdersPage } from "./pages/admin/AdminOrdersPage";
+import { AdminOrderDetailPage } from "./pages/admin/AdminOrderDetailPage";
+import { AdminDashboardPage } from "./pages/admin/AdminDashboardPage";
+import { AdminMarketplacePage } from "./pages/admin/AdminMarketplacePage";
 
 export default function App() {
   return (
@@ -84,11 +91,18 @@ export default function App() {
       </Route>
 
       <Route element={<RoleRoute allowedRoles={["ADMIN"]} />}>
+        <Route path="/admin" element={<AdminDashboardPage />} />
+        <Route path="/admin/marketplace" element={<AdminMarketplacePage />} />
         <Route path="/admin-test" element={<AccessPage role="ADMIN" />} />
         <Route path="/admin/reference-data" element={<AdminReferenceDataPage />} />
         <Route path="/admin/seller-applications" element={<AdminSellerApplicationsPage />} />
         <Route path="/admin/seller-applications/:id" element={<AdminSellerApplicationDetailPage />} />
         <Route path="/admin/reports" element={<AdminReportsPage />} />
+        <Route path="/admin/users" element={<AdminUsersPage />} />
+        <Route path="/admin/businesses" element={<AdminBusinessesPage />} />
+        <Route path="/admin/products" element={<AdminProductsPage />} />
+        <Route path="/admin/orders" element={<AdminOrdersPage />} />
+        <Route path="/admin/orders/:id" element={<AdminOrderDetailPage />} />
       </Route>
     </Routes>
   );

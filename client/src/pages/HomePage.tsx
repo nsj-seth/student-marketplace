@@ -74,7 +74,9 @@ export function HomePage() {
           {!authLoading && roles.includes("SELLER") && <Link to="/seller/businesses">My businesses</Link>}
           {!authLoading && roles.includes("SELLER") && <Link to="/seller/orders">Seller orders</Link>}
           {!authLoading && roles.includes("SELLER") && <Link to="/seller/reviews">Reviews</Link>}
-          {!authLoading && roles.includes("ADMIN") && <Link to="/admin/seller-applications">Admin</Link>}
+          {!authLoading && roles.includes("ADMIN") && <Link to="/admin">Admin</Link>}
+          {!authLoading && roles.includes("ADMIN") && <Link to="/admin/users">Users</Link>}
+          {!authLoading && roles.includes("ADMIN") && <Link to="/admin/orders">Admin orders</Link>}
           {!authLoading && roles.includes("ADMIN") && <Link to="/admin/reports">Reports</Link>}
           {!authLoading && user && <button className="nav-button" onClick={() => void logout()}>Logout</button>}
         </nav>
