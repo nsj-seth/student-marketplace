@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { Search, Sparkles, Store } from "lucide-react";
+import { Search, Sparkles } from "lucide-react";
 import { AdminPageHeader } from "../../components/admin/AdminUi";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
