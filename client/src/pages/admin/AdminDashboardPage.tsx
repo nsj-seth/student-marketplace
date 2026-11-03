@@ -12,7 +12,6 @@ import {
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { AdminMetricCard, AdminPageHeader } from "../../components/admin/AdminUi";
-import { Badge } from "@/components/ui/badge";
 import { getAdminDashboard, type AdminDashboardData } from "../../services/admin-dashboard.service";
 
 function money(value: number) {
