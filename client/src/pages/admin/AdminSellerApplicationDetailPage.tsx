@@ -46,11 +46,11 @@ export function AdminSellerApplicationDetailPage() {
     }
   }
 
-  if (loading) return <main className="page-shell"><section className="card"><p>Loading application...</p></section></main>;
-  if (!application) return <main className="page-shell"><section className="card"><p>{error ?? "Application not found."}</p><Link to="/admin/seller-applications">Back</Link></section></main>;
+  if (loading) return <main className="page-shell admin-management-page"><section className="card"><p>Loading application...</p></section></main>;
+  if (!application) return <main className="page-shell admin-management-page"><section className="card"><p>{error ?? "Application not found."}</p><Link to="/admin/seller-applications">Back</Link></section></main>;
 
   return (
-    <main className="wide-shell">
+    <main className="wide-shell admin-management-page">
       <section className="wide-card card">
         <span className="eyebrow">Phase 06</span>
         <h1>{application.business_name ?? "Seller application"}</h1>
