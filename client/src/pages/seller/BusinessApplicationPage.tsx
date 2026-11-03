@@ -1,5 +1,19 @@
 import { useEffect, useMemo, useState } from "react";
+import {
+  ArrowLeft,
+  BadgeCheck,
+  Building2,
+  CheckCircle2,
+  ImageIcon,
+  MapPin,
+  Phone,
+  Save,
+  Send,
+  Truck
+} from "lucide-react";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import { Badge } from "@/components/ui/badge";
+import { Input } from "@/components/ui/input";
 import { useAuth } from "../../context/AuthContext";
 import { supabase } from "../../lib/supabase";
 import { getCategories, type Category } from "../../services/category.service";
@@ -44,11 +58,13 @@ export function BusinessApplicationPage() {
   useEffect(() => {
     async function load() {
       if (!id) return;
+
       try {
         const [appResponse, categoryResponse] = await Promise.all([
           getMySellerApplication(id),
           getCategories()
         ]);
+
         const app = appResponse.data ?? null;
         setApplication(app);
         setCategories(categoryResponse.data ?? []);
@@ -68,7 +84,9 @@ export function BusinessApplicationPage() {
           setLogoPath(app.logo_path);
 
           if (app.logo_path) {
-            const { data } = supabase.storage.from("business-logos").getPublicUrl(app.logo_path);
+            const { data } = supabase.storage
+              .from("business-logos")
+              .getPublicUrl(app.logo_path);
             setLogoPreview(data.publicUrl);
           }
 
@@ -80,29 +98,70 @@ export function BusinessApplicationPage() {
           }
         }
       } catch (err) {
-        setError(err instanceof Error ? err.message : "Unable to load the business application.");
+        setError(
+          err instanceof Error
+            ? err.message
+            : "Unable to load the business application."
+        );
       } finally {
         setLoading(false);
       }
     }
+
     void load();
   }, [id]);
 
   const canSubmit = useMemo(() => {
     return Boolean(
       isDraft &&
-      businessName.trim() &&
-      description.trim().length >= 20 &&
-      locationText.trim() &&
-      contactPhone.trim() &&
-      selectedCategoryIds.length > 0 &&
-      logoPath &&
-      (pickupEnabled || sellerDeliveryEnabled) &&
-      studentVerified
+        businessName.trim() &&
+        description.trim().length >= 20 &&
+        locationText.trim() &&
+        contactPhone.trim() &&
+        selectedCategoryIds.length > 0 &&
+        logoPath &&
+        (pickupEnabled || sellerDeliveryEnabled) &&
+        studentVerified
     );
-  }, [isDraft, businessName, description, locationText, contactPhone, selectedCategoryIds, logoPath, pickupEnabled, sellerDeliveryEnabled, studentVerified]);
+  }, [
+    isDraft,
+    businessName,
+    description,
+    locationText,
+    contactPhone,
+    selectedCategoryIds,
+    logoPath,
+    pickupEnabled,
+    sellerDeliveryEnabled,
+    studentVerified
+  ]);
 
-  async function handleLogoChange(event: React.ChangeEvent<HTMLInputElement>) {
+  const readiness = useMemo(
+    () => [
+      { label: "Business name", ready: Boolean(businessName.trim()) },
+      { label: "Description", ready: description.trim().length >= 20 },
+      { label: "Location & phone", ready: Boolean(locationText.trim() && contactPhone.trim()) },
+      { label: "Category", ready: selectedCategoryIds.length > 0 },
+      { label: "Fulfilment", ready: pickupEnabled || sellerDeliveryEnabled },
+      { label: "Business logo", ready: Boolean(logoPath) },
+      { label: "Verification", ready: Boolean(studentVerified) }
+    ],
+    [
+      businessName,
+      description,
+      locationText,
+      contactPhone,
+      selectedCategoryIds,
+      pickupEnabled,
+      sellerDeliveryEnabled,
+      logoPath,
+      studentVerified
+    ]
+  );
+
+  async function handleLogoChange(
+    event: React.ChangeEvent<HTMLInputElement>
+  ) {
     const file = event.target.files?.[0];
     if (!file || !id || !user) return;
 
@@ -110,6 +169,7 @@ export function BusinessApplicationPage() {
       setError("Logo must be a JPG, PNG, or WebP image.");
       return;
     }
+
     if (file.size > 2 * 1024 * 1024) {
       setError("Logo must be 2 MB or smaller.");
       return;
@@ -117,23 +177,35 @@ export function BusinessApplicationPage() {
 
     setUploading(true);
     setError(null);
+
     try {
       const extension = file.name.split(".").pop()?.toLowerCase() || "png";
-      const path = `${user.id}/${id}/logo-${Date.now()}.${extension}`;
+      const path =
+        user.id + "/" + id + "/logo-" + Date.now() + "." + extension;
+
       const { error: uploadError } = await supabase.storage
         .from("business-logos")
-        .upload(path, file, { upsert: false, contentType: file.type });
+        .upload(path, file, {
+          upsert: false,
+          contentType: file.type
+        });
 
       if (uploadError) throw uploadError;
 
-      if (logoPath?.startsWith(`${user.id}/${id}/`)) {
+      if (logoPath?.startsWith(user.id + "/" + id + "/")) {
         await supabase.storage.from("business-logos").remove([logoPath]);
       }
 
       setLogoPath(path);
-      const { data } = supabase.storage.from("business-logos").getPublicUrl(path);
+
+      const { data } = supabase.storage
+        .from("business-logos")
+        .getPublicUrl(path);
       setLogoPreview(data.publicUrl);
-      setMessage("Logo uploaded. Save the application details to keep this selection.");
+
+      setMessage(
+        "Logo uploaded. Save the application details to keep this selection."
+      );
     } catch (err) {
       setError(err instanceof Error ? err.message : "Unable to upload logo.");
     } finally {
@@ -154,9 +226,11 @@ export function BusinessApplicationPage() {
   async function handleSave(event: React.FormEvent) {
     event.preventDefault();
     if (!id) return;
+
     setSaving(true);
     setMessage(null);
     setError(null);
+
     try {
       const response = await saveSellerApplicationDetails(id, {
         businessName,
@@ -169,10 +243,15 @@ export function BusinessApplicationPage() {
         logoPath,
         socialLinks: { instagram, facebook, whatsapp, website }
       });
+
       if (response.data) setApplication(response.data);
       setMessage("Business application details saved.");
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Unable to save application details.");
+      setError(
+        err instanceof Error
+          ? err.message
+          : "Unable to save application details."
+      );
     } finally {
       setSaving(false);
     }
@@ -180,111 +259,388 @@ export function BusinessApplicationPage() {
 
   async function handleSubmit() {
     if (!id) return;
+
     setSubmitting(true);
     setMessage(null);
     setError(null);
+
     try {
       const response = await submitSellerApplication(id);
       if (response.data) setApplication(response.data);
       setMessage("Application submitted for admin review.");
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Unable to submit application.");
+      setError(
+        err instanceof Error ? err.message : "Unable to submit application."
+      );
     } finally {
       setSubmitting(false);
     }
   }
 
-  if (loading) return <main className="shell"><section className="card"><p>Loading application...</p></section></main>;
-  if (!application) return <main className="shell"><section className="card"><h1>Application not found</h1><Link to="/sell">Back to seller registration</Link></section></main>;
+  if (loading) {
+    return (
+      <main className="min-h-screen bg-background pb-16">
+        <div className="mx-auto mt-8 w-[min(1080px,calc(100%-32px))]">
+          <div className="h-[520px] animate-pulse rounded-3xl bg-muted" />
+        </div>
+      </main>
+    );
+  }
+
+  if (!application) {
+    return (
+      <main className="min-h-screen bg-background pb-16">
+        <section className="mx-auto mt-8 w-[min(720px,calc(100%-32px))] rounded-2xl border border-border bg-card p-8 text-center shadow-sm">
+          <Building2 className="mx-auto size-8 text-primary" />
+          <h1 className="mt-4 text-2xl font-bold">Application not found</h1>
+          <Link
+            className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-primary"
+            to="/sell"
+          >
+            <ArrowLeft className="size-4" />
+            Back to seller registration
+          </Link>
+        </section>
+      </main>
+    );
+  }
 
   return (
-    <main className="wide-shell">
-      <section className="wide-card card">
-        <span className="eyebrow">Phase 05C</span>
-        <h1>Business application</h1>
-        <p>Status: <strong>{application.status}</strong></p>
+    <main className="min-h-screen bg-background pb-16 text-foreground">
+      <div className="mx-auto mt-5 w-[min(1080px,calc(100%-32px))]">
+        <section className="flex flex-col gap-5 rounded-[1.75rem] border border-border bg-gradient-to-br from-violet-50 via-white to-fuchsia-50 p-6 shadow-sm sm:flex-row sm:items-end sm:justify-between sm:p-8">
+          <div>
+            <Badge variant="secondary" className="mb-3 gap-1.5">
+              <Building2 className="size-3.5" />
+              Seller onboarding · Business details
+            </Badge>
+            <h1 className="text-3xl font-bold tracking-[-.04em]">
+              Business application
+            </h1>
+            <p className="mt-2 max-w-2xl text-sm leading-6 text-muted-foreground">
+              Add the information customers will see on your storefront, then submit it for admin review.
+            </p>
+          </div>
 
-        {application.business_type === "STUDENT_BUSINESS" && studentVerified === false && (
-          <div className="message message--error">
-            Student email verification is required before submission. {" "}
-            <Link to={`/sell/applications/${application.id}/student-verification`}>Verify now</Link>
+          <Badge variant={application.status === "DRAFT" ? "secondary" : "warning"}>
+            {application.status}
+          </Badge>
+        </section>
+
+        {application.business_type === "STUDENT_BUSINESS" &&
+          studentVerified === false && (
+            <div className="mt-5 flex gap-3 rounded-xl border border-red-200 bg-red-50 p-4">
+              <BadgeCheck className="mt-0.5 size-4 shrink-0 text-red-600" />
+              <div>
+                <strong className="text-sm text-red-800">
+                  Student verification required
+                </strong>
+                <p className="mt-1 text-sm text-red-700">
+                  Verify your student email before submitting this application.
+                </p>
+                <Link
+                  className="mt-2 inline-flex text-sm font-semibold text-red-800 underline"
+                  to={
+                    "/sell/applications/" +
+                    application.id +
+                    "/student-verification"
+                  }
+                >
+                  Verify now
+                </Link>
+              </div>
+            </div>
+          )}
+
+        {message && (
+          <div className="mt-5 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700">
+            {message}
           </div>
         )}
 
-        <form className="compact-form" onSubmit={handleSave}>
-          <label>
-            Business name
-            <input value={businessName} onChange={(e) => setBusinessName(e.target.value)} disabled={!isDraft} required />
-          </label>
+        {error && (
+          <div className="mt-5 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+            {error}
+          </div>
+        )}
 
-          <label>
-            Description
-            <textarea value={description} onChange={(e) => setDescription(e.target.value)} disabled={!isDraft} rows={5} required />
-          </label>
+        <form
+          className="mt-6 grid gap-6 lg:grid-cols-[minmax(0,1fr)_340px]"
+          onSubmit={handleSave}
+        >
+          <div className="space-y-5">
+            <section className="rounded-2xl border border-border bg-card p-5 shadow-sm">
+              <h2 className="text-lg font-semibold">Business identity</h2>
 
-          <label>
-            Location
-            <input value={locationText} onChange={(e) => setLocationText(e.target.value)} disabled={!isDraft} placeholder="e.g. KNUST, Ayeduase" required />
-          </label>
+              <div className="mt-5 grid gap-4 sm:grid-cols-2">
+                <label className="grid gap-1.5 text-xs font-semibold text-muted-foreground sm:col-span-2">
+                  Business name
+                  <Input
+                    value={businessName}
+                    onChange={(event) => setBusinessName(event.target.value)}
+                    disabled={!isDraft}
+                    required
+                  />
+                </label>
 
-          <label>
-            Contact phone
-            <input value={contactPhone} onChange={(e) => setContactPhone(e.target.value)} disabled={!isDraft} required />
-          </label>
+                <label className="grid gap-1.5 text-xs font-semibold text-muted-foreground sm:col-span-2">
+                  Description
+                  <textarea
+                    data-ui="application-description"
+                    value={description}
+                    onChange={(event) => setDescription(event.target.value)}
+                    disabled={!isDraft}
+                    rows={5}
+                    required
+                    className="w-full rounded-xl border border-input bg-background px-3 py-2.5 text-sm text-foreground outline-none transition focus:border-ring focus:ring-4 focus:ring-ring/15 disabled:opacity-60"
+                  />
+                  <span className="font-normal">
+                    At least 20 characters.
+                  </span>
+                </label>
 
-          <fieldset disabled={!isDraft}>
-            <legend>Categories (choose up to 5)</legend>
-            <div className="checkbox-grid">
-              {categories.map((category) => (
-                <label key={category.id} className="checkbox-row">
+                <label className="grid gap-1.5 text-xs font-semibold text-muted-foreground">
+                  Location
+                  <div className="relative">
+                    <MapPin className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
+                    <Input
+                      className="pl-9"
+                      value={locationText}
+                      onChange={(event) => setLocationText(event.target.value)}
+                      disabled={!isDraft}
+                      placeholder="e.g. KNUST, Ayeduase"
+                      required
+                    />
+                  </div>
+                </label>
+
+                <label className="grid gap-1.5 text-xs font-semibold text-muted-foreground">
+                  Contact phone
+                  <div className="relative">
+                    <Phone className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
+                    <Input
+                      className="pl-9"
+                      value={contactPhone}
+                      onChange={(event) => setContactPhone(event.target.value)}
+                      disabled={!isDraft}
+                      required
+                    />
+                  </div>
+                </label>
+              </div>
+            </section>
+
+            <section className="rounded-2xl border border-border bg-card p-5 shadow-sm">
+              <h2 className="text-lg font-semibold">Categories</h2>
+              <p className="mt-1 text-sm text-muted-foreground">
+                Choose up to 5 categories that best describe your business.
+              </p>
+
+              <div className="mt-4 grid gap-2 sm:grid-cols-2">
+                {categories.map((category) => (
+                  <label
+                    key={category.id}
+                    className="flex items-center gap-3 rounded-xl border border-border bg-background p-3 text-sm font-medium"
+                  >
+                    <input
+                      type="checkbox"
+                      checked={selectedCategoryIds.includes(category.id)}
+                      onChange={() => toggleCategory(category.id)}
+                      disabled={!isDraft}
+                      className="size-4 accent-violet-600"
+                    />
+                    {category.name}
+                  </label>
+                ))}
+              </div>
+            </section>
+
+            <section className="rounded-2xl border border-border bg-card p-5 shadow-sm">
+              <h2 className="text-lg font-semibold">Fulfilment</h2>
+
+              <div className="mt-4 grid gap-3 sm:grid-cols-2">
+                <label className="flex items-start gap-3 rounded-xl border border-border bg-background p-4">
                   <input
                     type="checkbox"
-                    checked={selectedCategoryIds.includes(category.id)}
-                    onChange={() => toggleCategory(category.id)}
+                    checked={pickupEnabled}
+                    onChange={(event) => setPickupEnabled(event.target.checked)}
+                    disabled={!isDraft}
+                    className="mt-1 size-4 accent-violet-600"
                   />
-                  {category.name}
+                  <span>
+                    <strong className="block text-sm">Customer Pickup</strong>
+                    <small className="mt-1 block text-xs leading-5 text-muted-foreground">
+                      Customers can collect orders directly from you.
+                    </small>
+                  </span>
                 </label>
-              ))}
-            </div>
-          </fieldset>
 
-          <fieldset disabled={!isDraft}>
-            <legend>Fulfilment</legend>
-            <label className="checkbox-row"><input type="checkbox" checked={pickupEnabled} onChange={(e) => setPickupEnabled(e.target.checked)} /> Customer Pickup</label>
-            <label className="checkbox-row"><input type="checkbox" checked={sellerDeliveryEnabled} onChange={(e) => setSellerDeliveryEnabled(e.target.checked)} /> Seller Delivery</label>
-          </fieldset>
+                <label className="flex items-start gap-3 rounded-xl border border-border bg-background p-4">
+                  <input
+                    type="checkbox"
+                    checked={sellerDeliveryEnabled}
+                    onChange={(event) =>
+                      setSellerDeliveryEnabled(event.target.checked)
+                    }
+                    disabled={!isDraft}
+                    className="mt-1 size-4 accent-violet-600"
+                  />
+                  <span>
+                    <strong className="flex items-center gap-1.5 text-sm">
+                      <Truck className="size-4" />
+                      Seller Delivery
+                    </strong>
+                    <small className="mt-1 block text-xs leading-5 text-muted-foreground">
+                      You can arrange delivery directly with customers.
+                    </small>
+                  </span>
+                </label>
+              </div>
+            </section>
 
-          <label>
-            Business logo (JPG, PNG or WebP, max 2 MB)
-            <input type="file" accept="image/jpeg,image/png,image/webp" onChange={handleLogoChange} disabled={!isDraft || uploading} />
-          </label>
-          {logoPreview && <img src={logoPreview} alt="Business logo preview" className="logo-preview" />}
-          {uploading && <p>Uploading logo...</p>}
+            <section className="rounded-2xl border border-border bg-card p-5 shadow-sm">
+              <h2 className="text-lg font-semibold">Social & contact links</h2>
 
-          <h2>Optional contact/social links</h2>
-          <label>Instagram<input value={instagram} onChange={(e) => setInstagram(e.target.value)} disabled={!isDraft} /></label>
-          <label>Facebook<input value={facebook} onChange={(e) => setFacebook(e.target.value)} disabled={!isDraft} /></label>
-          <label>WhatsApp<input value={whatsapp} onChange={(e) => setWhatsapp(e.target.value)} disabled={!isDraft} /></label>
-          <label>Website<input type="url" value={website} onChange={(e) => setWebsite(e.target.value)} disabled={!isDraft} /></label>
+              <div className="mt-4 grid gap-4 sm:grid-cols-2">
+                <label className="grid gap-1.5 text-xs font-semibold text-muted-foreground">
+                  Instagram
+                  <Input
+                    value={instagram}
+                    onChange={(event) => setInstagram(event.target.value)}
+                    disabled={!isDraft}
+                  />
+                </label>
+                <label className="grid gap-1.5 text-xs font-semibold text-muted-foreground">
+                  Facebook
+                  <Input
+                    value={facebook}
+                    onChange={(event) => setFacebook(event.target.value)}
+                    disabled={!isDraft}
+                  />
+                </label>
+                <label className="grid gap-1.5 text-xs font-semibold text-muted-foreground">
+                  WhatsApp
+                  <Input
+                    value={whatsapp}
+                    onChange={(event) => setWhatsapp(event.target.value)}
+                    disabled={!isDraft}
+                  />
+                </label>
+                <label className="grid gap-1.5 text-xs font-semibold text-muted-foreground">
+                  Website
+                  <Input
+                    type="url"
+                    value={website}
+                    onChange={(event) => setWebsite(event.target.value)}
+                    disabled={!isDraft}
+                  />
+                </label>
+              </div>
+            </section>
+          </div>
 
-          {isDraft && <button type="submit" disabled={saving || uploading}>{saving ? "Saving..." : "Save details"}</button>}
+          <aside className="space-y-5 lg:sticky lg:top-[92px] lg:self-start">
+            <section className="rounded-2xl border border-border bg-card p-5 shadow-sm">
+              <div className="flex items-center gap-2">
+                <ImageIcon className="size-5 text-primary" />
+                <h2 className="text-lg font-semibold">Business logo</h2>
+              </div>
+
+              <div className="mt-4 grid aspect-square place-items-center overflow-hidden rounded-2xl border border-dashed border-border bg-muted/30">
+                {logoPreview ? (
+                  <img
+                    src={logoPreview}
+                    alt="Business logo preview"
+                    className="h-full w-full object-cover"
+                  />
+                ) : (
+                  <ImageIcon className="size-8 text-muted-foreground" />
+                )}
+              </div>
+
+              <label className="mt-4 grid gap-1.5 text-xs font-semibold text-muted-foreground">
+                Upload logo
+                <input
+                  type="file"
+                  accept="image/jpeg,image/png,image/webp"
+                  onChange={handleLogoChange}
+                  disabled={!isDraft || uploading}
+                  className="block w-full text-sm"
+                />
+              </label>
+              <p className="mt-2 text-xs leading-5 text-muted-foreground">
+                JPG, PNG or WebP. Maximum 2 MB.
+              </p>
+            </section>
+
+            <section className="rounded-2xl border border-border bg-card p-5 shadow-sm">
+              <span className="text-xs font-bold uppercase tracking-[.14em] text-primary">
+                Submission readiness
+              </span>
+
+              <div className="mt-4 space-y-2">
+                {readiness.map((item) => (
+                  <div
+                    key={item.label}
+                    className="flex items-center justify-between gap-3 rounded-xl bg-muted/40 px-3 py-2.5"
+                  >
+                    <span className="text-sm text-muted-foreground">
+                      {item.label}
+                    </span>
+                    <CheckCircle2
+                      className={
+                        "size-4 " +
+                        (item.ready
+                          ? "text-emerald-600"
+                          : "text-muted-foreground/30")
+                      }
+                    />
+                  </div>
+                ))}
+              </div>
+
+              {isDraft && (
+                <>
+                  <button
+                    data-ui="application-save"
+                    type="submit"
+                    disabled={saving || uploading}
+                    className="mt-5 inline-flex h-11 w-full items-center justify-center gap-2 rounded-xl border border-border bg-background px-4 text-sm font-semibold text-foreground disabled:opacity-50"
+                  >
+                    <Save className="size-4" />
+                    {saving ? "Saving..." : "Save details"}
+                  </button>
+
+                  <button
+                    data-ui="application-submit"
+                    type="button"
+                    onClick={() => void handleSubmit()}
+                    disabled={
+                      !canSubmit || submitting || saving || uploading
+                    }
+                    className="mt-3 inline-flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-primary px-4 text-sm font-semibold text-primary-foreground disabled:opacity-50"
+                  >
+                    <Send className="size-4" />
+                    {submitting
+                      ? "Submitting..."
+                      : "Submit for admin review"}
+                  </button>
+                </>
+              )}
+            </section>
+          </aside>
         </form>
 
-        {isDraft && (
-          <div className="actions">
-            <button type="button" onClick={handleSubmit} disabled={!canSubmit || submitting || saving || uploading}>
-              {submitting ? "Submitting..." : "Submit for admin review"}
-            </button>
-          </div>
-        )}
-
-        {message && <p className="message message--success">{message}</p>}
-        {error && <p className="message message--error">{error}</p>}
-
-        <div className="actions">
-          <button className="button-link button-link--secondary" type="button" onClick={() => navigate("/sell")}>Back to seller registration</button>
-        </div>
-      </section>
+        <button
+          data-ui="application-back"
+          type="button"
+          onClick={() => navigate("/sell")}
+          className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-primary"
+        >
+          <ArrowLeft className="size-4" />
+          Back to seller registration
+        </button>
+      </div>
     </main>
   );
 }
