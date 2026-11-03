@@ -12,8 +12,9 @@ function handleKnownError(error: unknown, res: Response) {
     REVIEW_ALREADY_EXISTS: 409,
     BUSINESS_NOT_FOUND: 404
   };
-  if (!status[error.name]) return false;
-  res.status(status[error.name]).json({ success: false, message: error.message, code: error.name });
+  const httpStatus = status[error.name];
+  if (!httpStatus) return false;
+  res.status(httpStatus).json({ success: false, message: error.message, code: error.name });
   return true;
 }
 
