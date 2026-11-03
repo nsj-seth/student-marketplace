@@ -15,10 +15,10 @@ export function AdminOrderDetailPage() {
     getAdminOrder(id).then((response) => setOrder(response.data ?? null)).catch((err) => setError(err instanceof Error ? err.message : "Unable to load order.")).finally(() => setLoading(false));
   }, [id]);
 
-  if (loading) return <main className="wide-shell"><section className="card wide-card"><p>Loading order...</p></section></main>;
-  if (error || !order) return <main className="wide-shell"><section className="card wide-card"><p className="message message--error">{error || "Order not found."}</p><Link to="/admin/orders">Back to orders</Link></section></main>;
+  if (loading) return <main className="wide-shell admin-management-page"><section className="card wide-card"><p>Loading order...</p></section></main>;
+  if (error || !order) return <main className="wide-shell admin-management-page"><section className="card wide-card"><p className="message message--error">{error || "Order not found."}</p><Link to="/admin/orders">Back to orders</Link></section></main>;
 
-  return <main className="wide-shell"><section className="card wide-card">
+  return <main className="wide-shell admin-management-page"><section className="card wide-card">
     <span className="eyebrow">Admin order review</span><h1>{order.order_number}</h1><p><strong>Status:</strong> {order.display_status.replaceAll("_", " ")} · <strong>Total:</strong> {money(order.total)}</p>
     <div className="order-customer-block"><h2>Customer</h2><p><strong>{order.customer_name}</strong></p><p>{order.customer_phone}</p><p>{order.customer_location}</p>{order.customer_note && <p><strong>Note:</strong> {order.customer_note}</p>}<p>Placed {dateTime(order.created_at)}</p></div>
     <h2>Seller orders</h2>
