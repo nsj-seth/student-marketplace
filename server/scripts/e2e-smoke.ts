@@ -40,9 +40,20 @@ async function signIn(email: string, password: string) {
   return data.session.access_token;
 }
 
-async function request(path: string, token?: string, expected = 200) {
+async function request(
+  path: string,
+  token?: string,
+  expected = 200,
+  options?: { method?: string; body?: unknown }
+) {
+  const headers: Record<string, string> = {};
+  if (token) headers.Authorization = `Bearer ${token}`;
+  if (options?.body !== undefined) headers["Content-Type"] = "application/json";
+
   const response = await fetch(`${API_BASE}${path}`, {
-    headers: token ? { Authorization: `Bearer ${token}` } : undefined
+    method: options?.method ?? "GET",
+    headers,
+    body: options?.body !== undefined ? JSON.stringify(options.body) : undefined
   });
 
   let body: any = null;
@@ -56,9 +67,15 @@ async function request(path: string, token?: string, expected = 200) {
   return { response, body, expected };
 }
 
-async function checkStatus(name: string, path: string, expected: number, token?: string) {
+async function checkStatus(
+  name: string,
+  path: string,
+  expected: number,
+  token?: string,
+  options?: { method?: string; body?: unknown }
+) {
   try {
-    const { response, body } = await request(path, token, expected);
+    const { response, body } = await request(path, token, expected, options);
     const ok = response.status === expected;
     record(
       name,
@@ -128,7 +145,28 @@ async function main() {
     await checkStatus("Customer profile", "/me", 200, customerToken);
     await checkStatus("Customer wishlist", "/wishlist", 200, customerToken);
     await checkStatus("Customer cart", "/cart", 200, customerToken);
-    await checkStatus("Checkout preview", "/checkout/preview", 200, customerToken);
+
+    const publicRows = Array.isArray(products.body?.data) ? products.body.data : [];
+    const checkoutProduct = publicRows.find((product: any) =>
+      product?.status === "ACTIVE" &&
+      Number(product?.stock_quantity) > 0 &&
+      product?.business?.availability_status === "OPEN" &&
+      (product?.business?.pickup_enabled || product?.business?.seller_delivery_enabled)
+    );
+
+    if (checkoutProduct?.id) {
+      await checkStatus("Reset demo customer cart", "/cart", 200, customerToken, { method: "DELETE" });
+      await checkStatus(
+        "Add valid checkout product",
+        "/cart/items",
+        201,
+        customerToken,
+        { method: "POST", body: { productId: checkoutProduct.id, quantity: 1 } }
+      );
+      await checkStatus("Checkout preview", "/checkout/preview", 200, customerToken);
+    } else {
+      record("Checkout preview", false, "No public in-stock product from an OPEN business was available for the smoke test");
+    }
     await checkStatus("Customer order history", "/orders", 200, customerToken);
     await checkStatus("Customer notifications", "/notifications", 200, customerToken);
     await checkStatus("Unread notification count", "/notifications/unread-count", 200, customerToken);
