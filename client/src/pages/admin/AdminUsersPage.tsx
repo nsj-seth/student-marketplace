@@ -1,5 +1,8 @@
 import { FormEvent, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Search, ShieldCheck, UserRound, Users } from "lucide-react";
+import { AdminEmptyState, AdminPageHeader } from "../../components/admin/AdminUi";
+import { Badge } from "@/components/ui/badge";
+import { Input } from "@/components/ui/input";
 import { useAuth } from "../../context/AuthContext";
 import {
   getAdminUsers,
@@ -12,6 +15,9 @@ import {
 function formatDate(value: string | null) {
   return value ? new Date(value).toLocaleString() : "—";
 }
+
+const selectClass =
+  "h-10 w-full rounded-xl border border-input bg-background px-3 text-sm text-foreground outline-none transition focus:border-ring focus:ring-4 focus:ring-ring/15";
 
 export function AdminUsersPage() {
   const { user: currentUser } = useAuth();
@@ -60,11 +66,17 @@ export function AdminUsersPage() {
 
   async function confirmStatusChange() {
     if (!selected) return;
-    const targetStatus: AccountStatus = selected.account_status === "ACTIVE" ? "SUSPENDED" : "ACTIVE";
+    const targetStatus: AccountStatus =
+      selected.account_status === "ACTIVE" ? "SUSPENDED" : "ACTIVE";
+
     setSaving(true);
     setError("");
     try {
-      await setAdminUserStatus(selected.id, targetStatus, targetStatus === "SUSPENDED" ? reason : "");
+      await setAdminUserStatus(
+        selected.id,
+        targetStatus,
+        targetStatus === "SUSPENDED" ? reason : ""
+      );
       setSelected(null);
       setReason("");
       await load(page);
@@ -76,108 +88,238 @@ export function AdminUsersPage() {
   }
 
   return (
-    <main className="wide-shell admin-management-page">
-      <section className="card wide-card">
-        <span className="eyebrow">Admin management</span>
-        <h1>Users</h1>
-        <p>Search accounts, inspect roles, and suspend or reactivate non-admin users.</p>
+    <main className="min-h-screen bg-background p-5 text-foreground sm:p-6">
+      <AdminPageHeader
+        eyebrow="Admin management"
+        title="Users"
+        description="Search accounts, inspect roles, and suspend or reactivate non-admin users."
+        icon={<Users className="size-3.5" />}
+      />
 
-        <form className="admin-user-filters" onSubmit={submitSearch}>
-          <label>
-            Search
-            <input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Name or email" />
-          </label>
-          <label>
-            Status
-            <select value={status} onChange={(e) => setStatus(e.target.value as "" | AccountStatus)}>
-              <option value="">All</option>
-              <option value="ACTIVE">Active</option>
-              <option value="SUSPENDED">Suspended</option>
-            </select>
-          </label>
-          <label>
-            Role
-            <select value={role} onChange={(e) => setRole(e.target.value as "" | AppRole)}>
-              <option value="">All</option>
-              <option value="CUSTOMER">Customer</option>
-              <option value="SELLER">Seller</option>
-              <option value="ADMIN">Admin</option>
-            </select>
-          </label>
-          <button type="submit">Search</button>
-        </form>
-
-        {error && <p className="message message--error">{error}</p>}
-        <p><strong>{total}</strong> matching user{total === 1 ? "" : "s"}</p>
-
-        {loading ? <p>Loading users...</p> : users.length === 0 ? <p>No users match these filters.</p> : (
-          <div className="admin-user-list">
-            {users.map((account) => {
-              const isAdmin = account.roles.includes("ADMIN");
-              const isSelf = account.id === currentUser?.id;
-              return (
-                <article className="admin-user-card" key={account.id}>
-                  <div className="admin-user-card__heading">
-                    <div>
-                      <strong>{account.full_name}</strong>
-                      <p>{account.email ?? "No email available"}</p>
-                    </div>
-                    <span className={`status-chip ${account.account_status === "SUSPENDED" ? "status-chip--danger" : ""}`}>{account.account_status}</span>
-                  </div>
-                  <p><strong>Roles:</strong> {account.roles.join(", ") || "None"}</p>
-                  <p><strong>Joined:</strong> {formatDate(account.created_at)}</p>
-                  <p><strong>Last sign in:</strong> {formatDate(account.last_sign_in_at)}</p>
-                  {account.suspension_reason && <p><strong>Suspension reason:</strong> {account.suspension_reason}</p>}
-                  <div className="actions">
-                    <button
-                      type="button"
-                      className={account.account_status === "ACTIVE" ? "danger-button" : undefined}
-                      disabled={isAdmin || isSelf}
-                      onClick={() => { setSelected(account); setReason(""); }}
-                    >
-                      {account.account_status === "ACTIVE" ? "Suspend" : "Reactivate"}
-                    </button>
-                    {(isAdmin || isSelf) && account.account_status === "ACTIVE" && <small>Admin accounts are protected from suspension.</small>}
-                  </div>
-                </article>
-              );
-            })}
+      <form
+        className="mt-5 grid gap-3 rounded-2xl border border-border bg-card p-4 shadow-sm md:grid-cols-[minmax(0,1fr)_180px_180px_auto]"
+        onSubmit={submitSearch}
+      >
+        <label className="grid gap-1.5 text-xs font-semibold text-muted-foreground">
+          Search
+          <div className="relative">
+            <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
+            <Input
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className="pl-9"
+              placeholder="Name or email"
+            />
           </div>
-        )}
+        </label>
 
-        {totalPages > 1 && (
-          <div className="pagination-row">
-            <button type="button" disabled={page <= 1} onClick={() => void load(page - 1)}>Previous</button>
-            <span>Page {page} of {totalPages}</span>
-            <button type="button" disabled={page >= totalPages} onClick={() => void load(page + 1)}>Next</button>
-          </div>
-        )}
+        <label className="grid gap-1.5 text-xs font-semibold text-muted-foreground">
+          Status
+          <select className={selectClass} value={status} onChange={(e) => setStatus(e.target.value as "" | AccountStatus)}>
+            <option value="">All</option>
+            <option value="ACTIVE">Active</option>
+            <option value="SUSPENDED">Suspended</option>
+          </select>
+        </label>
 
-        {selected && (
-          <section className="moderation-panel">
-            <h2>{selected.account_status === "ACTIVE" ? "Suspend" : "Reactivate"} {selected.full_name}</h2>
-            {selected.account_status === "ACTIVE" ? (
-              <label>
-                Suspension reason
-                <textarea value={reason} maxLength={1000} onChange={(e) => setReason(e.target.value)} placeholder="Why is this account being suspended?" />
-              </label>
-            ) : (
-              <p>The user will be able to authenticate again. Suspended businesses are not automatically reactivated.</p>
-            )}
-            <div className="actions">
-              <button type="button" disabled={saving || (selected.account_status === "ACTIVE" && reason.trim().length < 3)} onClick={() => void confirmStatusChange()}>
-                {saving ? "Saving..." : selected.account_status === "ACTIVE" ? "Confirm suspension" : "Reactivate account"}
-              </button>
-              <button type="button" className="secondary-button" disabled={saving} onClick={() => { setSelected(null); setReason(""); }}>Cancel</button>
-            </div>
-          </section>
-        )}
+        <label className="grid gap-1.5 text-xs font-semibold text-muted-foreground">
+          Role
+          <select className={selectClass} value={role} onChange={(e) => setRole(e.target.value as "" | AppRole)}>
+            <option value="">All</option>
+            <option value="CUSTOMER">Customer</option>
+            <option value="SELLER">Seller</option>
+            <option value="ADMIN">Admin</option>
+          </select>
+        </label>
 
-        <div className="actions">
-          <Link className="button-link button-link--secondary" to="/">Home</Link>
-          <Link className="button-link button-link--secondary" to="/admin/reports">Reports</Link>
+        <button
+          data-ui="admin-user-search"
+          type="submit"
+          className="h-10 self-end rounded-xl bg-primary px-4 text-sm font-semibold text-primary-foreground"
+        >
+          Search
+        </button>
+      </form>
+
+      {error && (
+        <div className="mt-5 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+          {error}
         </div>
-      </section>
+      )}
+
+      <div className="mt-5 flex items-center justify-between">
+        <span className="text-sm text-muted-foreground">
+          <strong className="text-foreground">{total}</strong> matching user{total === 1 ? "" : "s"}
+        </span>
+      </div>
+
+      {loading ? (
+        <div className="mt-4 grid gap-4 xl:grid-cols-2">
+          {Array.from({ length: 4 }).map((_, index) => (
+            <div key={index} className="h-56 animate-pulse rounded-2xl bg-muted" />
+          ))}
+        </div>
+      ) : users.length === 0 ? (
+        <div className="mt-4">
+          <AdminEmptyState
+            icon={<Users className="size-6" />}
+            title="No users found"
+            description="No accounts match the current filters."
+          />
+        </div>
+      ) : (
+        <div className="mt-4 grid gap-4 xl:grid-cols-2">
+          {users.map((account) => {
+            const isAdmin = account.roles.includes("ADMIN");
+            const isSelf = account.id === currentUser?.id;
+            return (
+              <article key={account.id} className="rounded-2xl border border-border bg-card p-5 shadow-sm">
+                <div className="flex items-start justify-between gap-4">
+                  <div className="flex min-w-0 items-center gap-3">
+                    <span className="grid size-11 shrink-0 place-items-center rounded-xl bg-primary/10 text-sm font-bold text-primary">
+                      {(account.full_name?.[0] ?? account.email?.[0] ?? "U").toUpperCase()}
+                    </span>
+                    <div className="min-w-0">
+                      <strong className="block truncate text-base">{account.full_name}</strong>
+                      <span className="block truncate text-sm text-muted-foreground">{account.email ?? "No email available"}</span>
+                    </div>
+                  </div>
+                  <Badge variant={account.account_status === "SUSPENDED" ? "destructive" : "success"}>
+                    {account.account_status}
+                  </Badge>
+                </div>
+
+                <div className="mt-4 grid gap-3 sm:grid-cols-2">
+                  <div className="rounded-xl bg-muted/50 p-3">
+                    <span className="text-xs text-muted-foreground">Roles</span>
+                    <strong className="mt-1 block text-sm">{account.roles.join(", ") || "None"}</strong>
+                  </div>
+                  <div className="rounded-xl bg-muted/50 p-3">
+                    <span className="text-xs text-muted-foreground">Joined</span>
+                    <strong className="mt-1 block text-sm">{formatDate(account.created_at)}</strong>
+                  </div>
+                  <div className="rounded-xl bg-muted/50 p-3 sm:col-span-2">
+                    <span className="text-xs text-muted-foreground">Last sign in</span>
+                    <strong className="mt-1 block text-sm">{formatDate(account.last_sign_in_at)}</strong>
+                  </div>
+                </div>
+
+                {account.suspension_reason && (
+                  <div className="mt-4 rounded-xl border border-red-200 bg-red-50 p-3 text-sm text-red-700">
+                    <strong>Suspension reason:</strong> {account.suspension_reason}
+                  </div>
+                )}
+
+                <div className="mt-4 flex items-center justify-between gap-3 border-t border-border pt-4">
+                  {(isAdmin || isSelf) && account.account_status === "ACTIVE" ? (
+                    <span className="flex items-center gap-2 text-xs text-muted-foreground">
+                      <ShieldCheck className="size-4 text-emerald-600" />
+                      Admin accounts are protected from suspension.
+                    </span>
+                  ) : (
+                    <span className="text-xs text-muted-foreground">Account moderation</span>
+                  )}
+                  <button
+                    data-ui="admin-user-status"
+                    type="button"
+                    disabled={isAdmin || isSelf}
+                    onClick={() => { setSelected(account); setReason(""); }}
+                    className={
+                      "inline-flex h-9 items-center rounded-xl border px-3 text-xs font-semibold disabled:opacity-40 " +
+                      (account.account_status === "ACTIVE"
+                        ? "border-red-200 bg-red-50 text-red-700"
+                        : "border-emerald-200 bg-emerald-50 text-emerald-700")
+                    }
+                  >
+                    {account.account_status === "ACTIVE" ? "Suspend" : "Reactivate"}
+                  </button>
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      )}
+
+      {totalPages > 1 && (
+        <div className="mt-5 flex items-center justify-between rounded-2xl border border-border bg-card p-3 shadow-sm">
+          <button
+            data-ui="admin-users-prev"
+            type="button"
+            disabled={page <= 1}
+            onClick={() => void load(page - 1)}
+            className="rounded-xl border border-border bg-background px-3 py-2 text-sm font-semibold disabled:opacity-40"
+          >
+            Previous
+          </button>
+          <span className="text-sm text-muted-foreground">Page {page} of {totalPages}</span>
+          <button
+            data-ui="admin-users-next"
+            type="button"
+            disabled={page >= totalPages}
+            onClick={() => void load(page + 1)}
+            className="rounded-xl border border-border bg-background px-3 py-2 text-sm font-semibold disabled:opacity-40"
+          >
+            Next
+          </button>
+        </div>
+      )}
+
+      {selected && (
+        <section className="mt-5 rounded-2xl border border-border bg-card p-5 shadow-sm">
+          <div className="flex items-center gap-3">
+            <span className="grid size-10 place-items-center rounded-xl bg-primary/10 text-primary">
+              <UserRound className="size-5" />
+            </span>
+            <div>
+              <h2 className="text-lg font-semibold">
+                {selected.account_status === "ACTIVE" ? "Suspend" : "Reactivate"} {selected.full_name}
+              </h2>
+              <p className="mt-1 text-sm text-muted-foreground">
+                Confirm the account-status change below.
+              </p>
+            </div>
+          </div>
+
+          {selected.account_status === "ACTIVE" ? (
+            <label className="mt-4 grid gap-1.5 text-xs font-semibold text-muted-foreground">
+              Suspension reason
+              <textarea
+                data-ui="admin-user-reason"
+                value={reason}
+                maxLength={1000}
+                onChange={(e) => setReason(e.target.value)}
+                placeholder="Why is this account being suspended?"
+                className="min-h-28 w-full rounded-xl border border-input bg-background px-3 py-2.5 text-sm text-foreground outline-none focus:border-ring focus:ring-4 focus:ring-ring/15"
+              />
+            </label>
+          ) : (
+            <p className="mt-4 text-sm leading-6 text-muted-foreground">
+              The user will be able to authenticate again. Suspended businesses are not automatically reactivated.
+            </p>
+          )}
+
+          <div className="mt-4 flex flex-wrap gap-2">
+            <button
+              data-ui="admin-user-confirm"
+              type="button"
+              disabled={saving || (selected.account_status === "ACTIVE" && reason.trim().length < 3)}
+              onClick={() => void confirmStatusChange()}
+              className="h-10 rounded-xl bg-primary px-4 text-sm font-semibold text-primary-foreground disabled:opacity-50"
+            >
+              {saving ? "Saving..." : selected.account_status === "ACTIVE" ? "Confirm suspension" : "Reactivate account"}
+            </button>
+            <button
+              data-ui="admin-user-cancel"
+              type="button"
+              disabled={saving}
+              onClick={() => { setSelected(null); setReason(""); }}
+              className="h-10 rounded-xl border border-border bg-background px-4 text-sm font-semibold"
+            >
+              Cancel
+            </button>
+          </div>
+        </section>
+      )}
     </main>
   );
 }
