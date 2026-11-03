@@ -11,7 +11,8 @@
     "test": "tsx --test tests/**/*.test.ts",
     "check": "npm run typecheck && npm test && npm run build",
     "seed:demo": "tsx scripts/seed-demo.ts",
-    "seed:demo:images": "tsx scripts/seed-demo-images.ts"
+    "seed:demo:images": "tsx scripts/seed-demo-images.ts",
+    "test:e2e-smoke": "tsx scripts/e2e-smoke.ts"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.57.4",
