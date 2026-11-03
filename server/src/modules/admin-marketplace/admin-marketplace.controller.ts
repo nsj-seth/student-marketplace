@@ -1,4 +1,5 @@
 import type { RequestHandler } from "express";
+import { routeParam } from "../../utils/route-param.js";
 import { updateFeaturedSchema } from "./admin-marketplace.schema.js";
 import { getMarketplaceManagementData, setFeaturedBusiness, setFeaturedProduct } from "./admin-marketplace.service.js";
 
@@ -15,7 +16,7 @@ export const setFeaturedBusinessController: RequestHandler = async (req, res, ne
       res.status(400).json({ success: false, message: "Invalid featured setting.", code: "VALIDATION_ERROR" });
       return;
     }
-    res.json({ success: true, data: await setFeaturedBusiness(req.auth!.user.id, req.params.id, parsed.data.featured) });
+    res.json({ success: true, data: await setFeaturedBusiness(req.auth!.user.id, routeParam(req.params.id), parsed.data.featured) });
   } catch (error) {
     if (error instanceof Error && error.message === "BUSINESS_NOT_FOUND") {
       res.status(404).json({ success: false, message: "Business not found.", code: "BUSINESS_NOT_FOUND" });
@@ -36,7 +37,7 @@ export const setFeaturedProductController: RequestHandler = async (req, res, nex
       res.status(400).json({ success: false, message: "Invalid featured setting.", code: "VALIDATION_ERROR" });
       return;
     }
-    res.json({ success: true, data: await setFeaturedProduct(req.auth!.user.id, req.params.id, parsed.data.featured) });
+    res.json({ success: true, data: await setFeaturedProduct(req.auth!.user.id, routeParam(req.params.id), parsed.data.featured) });
   } catch (error) {
     if (error instanceof Error && error.message === "PRODUCT_NOT_FOUND") {
       res.status(404).json({ success: false, message: "Product not found.", code: "PRODUCT_NOT_FOUND" });
