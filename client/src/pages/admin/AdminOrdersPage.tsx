@@ -29,7 +29,7 @@ export function AdminOrdersPage() {
   useEffect(() => { void load(1); }, [submittedSearch, displayStatus, sellerStatus]);
   function submitSearch(event: FormEvent) { event.preventDefault(); setSubmittedSearch(search.trim()); }
 
-  return <main className="wide-shell"><section className="card wide-card">
+  return <main className="wide-shell admin-management-page"><section className="card wide-card">
     <span className="eyebrow">Admin management</span><h1>Orders</h1><p>Inspect every marketplace order and its seller-specific fulfilment progress.</p>
     <form className="admin-user-filters" onSubmit={submitSearch}>
       <label>Search<input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Order, customer, phone or business" /></label>

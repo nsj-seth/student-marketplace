@@ -37,7 +37,7 @@ export function AdminProductsPage() {
   }
 
   return (
-    <main className="wide-shell"><section className="card wide-card">
+    <main className="wide-shell admin-management-page"><section className="card wide-card">
       <span className="eyebrow">Admin management</span><h1>Products</h1><p>Search marketplace products and hide or restore listings without deleting order history.</p>
       <form className="admin-product-filters" onSubmit={submitSearch}>
         <label>Search<input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Product, business or owner" /></label>

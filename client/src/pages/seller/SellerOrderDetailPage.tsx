@@ -51,11 +51,11 @@ export function SellerOrderDetailPage() {
     } finally { setBusy(false); }
   }
 
-  if (loading) return <main className="wide-shell"><section className="card wide-card"><p>Loading seller order...</p></section></main>;
-  if (!order) return <main className="wide-shell"><section className="card wide-card"><h1>Seller order</h1><p className="message message--error">{error || "Order not found."}</p><Link to="/seller/orders">Back to orders</Link></section></main>;
+  if (loading) return <main className="wide-shell seller-hub-page"><section className="card wide-card"><p>Loading seller order...</p></section></main>;
+  if (!order) return <main className="wide-shell seller-hub-page"><section className="card wide-card"><h1>Seller order</h1><p className="message message--error">{error || "Order not found."}</p><Link to="/seller/orders">Back to orders</Link></section></main>;
 
   return (
-    <main className="wide-shell">
+    <main className="wide-shell seller-hub-page">
       <section className="card wide-card">
         <div className="section-heading">
           <div><span className="eyebrow">{order.business_name}</span><h1>{order.seller_order_number}</h1><p>Parent order: {order.parent_order_number}</p></div>

@@ -101,7 +101,7 @@ export function AdminReferenceDataPage() {
   }
 
   return (
-    <main className="wide-shell">
+    <main className="wide-shell admin-management-page">
       <section className="card wide-card">
         <span className="eyebrow">Admin · Phase 04</span>
         <h1>Universities & categories</h1>

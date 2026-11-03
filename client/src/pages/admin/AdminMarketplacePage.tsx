@@ -51,7 +51,7 @@ export function AdminMarketplacePage() {
   }
 
   return (
-    <main className="wide-shell">
+    <main className="wide-shell admin-management-page">
       <section className="card wide-card">
         <span className="eyebrow">Admin marketplace management</span>
         <h1>Featured listings</h1>

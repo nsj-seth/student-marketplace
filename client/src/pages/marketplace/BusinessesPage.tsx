@@ -5,171 +5,30 @@ import { getPublicBusinesses, type PublicBusiness, type PublicBusinessFilters } 
 import { getCategories, type Category } from "../../services/category.service";
 import { getUniversities, type University } from "../../services/university.service";
 
-function getLogoUrl(path: string | null) {
-  if (!path) return null;
-  return supabase.storage.from("business-logos").getPublicUrl(path).data.publicUrl;
-}
+function getLogoUrl(path: string | null) { if (!path) return null; return supabase.storage.from("business-logos").getPublicUrl(path).data.publicUrl; }
 
 export function BusinessesPage() {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const [businesses, setBusinesses] = useState<PublicBusiness[]>([]);
-  const [categories, setCategories] = useState<Category[]>([]);
-  const [universities, setUniversities] = useState<University[]>([]);
-  const [search, setSearch] = useState(() => searchParams.get("search") ?? "");
-  const [category, setCategory] = useState(() => searchParams.get("category") ?? "");
-  const [university, setUniversity] = useState(() => searchParams.get("university") ?? "");
-  const [businessType, setBusinessType] = useState(() => searchParams.get("businessType") ?? "");
-  const [availability, setAvailability] = useState(() => searchParams.get("availability") ?? "");
-  const [fulfilment, setFulfilment] = useState(() => searchParams.get("fulfilment") ?? "");
-  const [sort, setSort] = useState(() => searchParams.get("sort") ?? "NEWEST");
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
+  const [searchParams,setSearchParams]=useSearchParams(); const [businesses,setBusinesses]=useState<PublicBusiness[]>([]); const [categories,setCategories]=useState<Category[]>([]); const [universities,setUniversities]=useState<University[]>([]);
+  const [search,setSearch]=useState(()=>searchParams.get("search")??""); const [category,setCategory]=useState(()=>searchParams.get("category")??""); const [university,setUniversity]=useState(()=>searchParams.get("university")??"");
+  const [businessType,setBusinessType]=useState(()=>searchParams.get("businessType")??""); const [availability,setAvailability]=useState(()=>searchParams.get("availability")??""); const [fulfilment,setFulfilment]=useState(()=>searchParams.get("fulfilment")??""); const [sort,setSort]=useState(()=>searchParams.get("sort")??"NEWEST");
+  const [loading,setLoading]=useState(true); const [error,setError]=useState("");
+  function currentFilters(): PublicBusinessFilters { return { search:search.trim()||undefined, category:category||undefined, university:university||undefined, businessType:(businessType||undefined) as PublicBusinessFilters["businessType"], availability:(availability||undefined) as PublicBusinessFilters["availability"], fulfilment:(fulfilment||undefined) as PublicBusinessFilters["fulfilment"], sort:(sort||undefined) as PublicBusinessFilters["sort"] }; }
+  async function load(filters:PublicBusinessFilters){ setLoading(true); setError(""); try{const response=await getPublicBusinesses(filters); setBusinesses(response.data??[]);}catch(err){setError(err instanceof Error?err.message:"Unable to load businesses.");}finally{setLoading(false);} }
+  useEffect(()=>{ const initial:PublicBusinessFilters={search:searchParams.get("search")||undefined,category:searchParams.get("category")||undefined,university:searchParams.get("university")||undefined,businessType:(searchParams.get("businessType")||undefined) as PublicBusinessFilters["businessType"],availability:(searchParams.get("availability")||undefined) as PublicBusinessFilters["availability"],fulfilment:(searchParams.get("fulfilment")||undefined) as PublicBusinessFilters["fulfilment"],sort:(searchParams.get("sort")||"NEWEST") as PublicBusinessFilters["sort"]}; void load(initial); void Promise.all([getCategories(),getUniversities()]).then(([c,u])=>{setCategories(c.data??[]);setUniversities(u.data??[]);}).catch(()=>undefined);},[]);
+  function submit(e:FormEvent){e.preventDefault();const filters=currentFilters();const next=new URLSearchParams();Object.entries(filters).forEach(([key,value])=>{if(value!==undefined&&value!=="")next.set(key,String(value));});setSearchParams(next);void load(filters);}
+  function clearFilters(){setSearch("");setCategory("");setUniversity("");setBusinessType("");setAvailability("");setFulfilment("");setSort("NEWEST");setSearchParams(new URLSearchParams());void load({sort:"NEWEST"});}
 
-  function currentFilters(): PublicBusinessFilters {
-    return {
-      search: search.trim() || undefined,
-      category: category || undefined,
-      university: university || undefined,
-      businessType: (businessType || undefined) as PublicBusinessFilters["businessType"],
-      availability: (availability || undefined) as PublicBusinessFilters["availability"],
-      fulfilment: (fulfilment || undefined) as PublicBusinessFilters["fulfilment"],
-      sort: (sort || undefined) as PublicBusinessFilters["sort"]
-    };
-  }
-
-  async function load(filters: PublicBusinessFilters) {
-    setLoading(true);
-    setError("");
-    try {
-      const response = await getPublicBusinesses(filters);
-      setBusinesses(response.data ?? []);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Unable to load businesses.");
-    } finally {
-      setLoading(false);
-    }
-  }
-
-  useEffect(() => {
-    const initial: PublicBusinessFilters = {
-      search: searchParams.get("search") || undefined,
-      category: searchParams.get("category") || undefined,
-      university: searchParams.get("university") || undefined,
-      businessType: (searchParams.get("businessType") || undefined) as PublicBusinessFilters["businessType"],
-      availability: (searchParams.get("availability") || undefined) as PublicBusinessFilters["availability"],
-      fulfilment: (searchParams.get("fulfilment") || undefined) as PublicBusinessFilters["fulfilment"],
-      sort: (searchParams.get("sort") || "NEWEST") as PublicBusinessFilters["sort"]
-    };
-    void load(initial);
-    void Promise.all([getCategories(), getUniversities()])
-      .then(([categoryResponse, universityResponse]) => {
-        setCategories(categoryResponse.data ?? []);
-        setUniversities(universityResponse.data ?? []);
-      })
-      .catch(() => undefined);
-  }, []);
-
-  function submit(event: FormEvent) {
-    event.preventDefault();
-    const filters = currentFilters();
-    const next = new URLSearchParams();
-    Object.entries(filters).forEach(([key, value]) => {
-      if (value !== undefined && value !== "") next.set(key, String(value));
-    });
-    setSearchParams(next);
-    void load(filters);
-  }
-
-  function clearFilters() {
-    setSearch("");
-    setCategory("");
-    setUniversity("");
-    setBusinessType("");
-    setAvailability("");
-    setFulfilment("");
-    setSort("NEWEST");
-    setSearchParams(new URLSearchParams());
-    void load({ sort: "NEWEST" });
-  }
-
-  return (
-    <main className="wide-shell">
-      <section className="card wide-card">
-        <span className="eyebrow">Marketplace</span>
-        <h1>Businesses</h1>
-        <p>Find approved businesses by category, university, type, availability and fulfilment.</p>
-
-        <form className="marketplace-filter marketplace-filter--expanded" onSubmit={submit}>
-          <input value={search} onChange={(event) => setSearch(event.target.value)} placeholder="Search name, description or location" />
-          <select value={category} onChange={(event) => setCategory(event.target.value)}>
-            <option value="">All categories</option>
-            {categories.map((item) => <option value={item.id} key={item.id}>{item.name}</option>)}
-          </select>
-          <select value={university} onChange={(event) => setUniversity(event.target.value)}>
-            <option value="">All universities</option>
-            {universities.map((item) => <option value={item.id} key={item.id}>{item.short_name || item.name}</option>)}
-          </select>
-          <select value={businessType} onChange={(event) => setBusinessType(event.target.value)}>
-            <option value="">All business types</option>
-            <option value="STUDENT_BUSINESS">Student businesses</option>
-            <option value="OTHER_BUSINESS">Other businesses</option>
-          </select>
-          <select value={availability} onChange={(event) => setAvailability(event.target.value)}>
-            <option value="">Any availability</option>
-            <option value="OPEN">Open</option>
-            <option value="UNAVAILABLE">Currently unavailable</option>
-          </select>
-          <select value={fulfilment} onChange={(event) => setFulfilment(event.target.value)}>
-            <option value="">Any fulfilment</option>
-            <option value="PICKUP">Pickup</option>
-            <option value="SELLER_DELIVERY">Seller delivery</option>
-          </select>
-          <select value={sort} onChange={(event) => setSort(event.target.value)}>
-            <option value="NEWEST">Newest approved</option>
-            <option value="NAME_A_TO_Z">Name: A–Z</option>
-          </select>
-          <div className="actions">
-            <button type="submit">Apply filters</button>
-            <button type="button" className="secondary-button" onClick={clearFilters}>Clear</button>
-          </div>
-        </form>
-
-        {error && <p className="message message--error">{error}</p>}
-        {loading && <p>Loading businesses...</p>}
-        {!loading && !error && <p><strong>{businesses.length}</strong> business{businesses.length === 1 ? "" : "es"} found.</p>}
-        {!loading && !error && businesses.length === 0 && <p>No businesses matched your filters.</p>}
-
-        <div className="business-grid">
-          {businesses.map((business) => {
-            const logoUrl = getLogoUrl(business.logo_path);
-            return (
-              <article className="business-card" key={business.id}>
-                {logoUrl ? <img src={logoUrl} alt={`${business.name} logo`} className="storefront-logo" /> : <div className="storefront-logo storefront-logo--empty">No logo</div>}
-                <div>
-                  <div className="business-card__topline">
-                    <span>{business.business_type === "STUDENT_BUSINESS" ? "Student Business" : "Other Business"}</span>
-                    <span className={`availability-badge availability-badge--${business.availability_status.toLowerCase()}`}>
-                      {business.availability_status === "OPEN" ? "Open" : "Unavailable"}
-                    </span>
-                  </div>
-                  <h2>{business.name}</h2>
-                  <p>{business.description}</p>
-                  {business.review_count > 0 && <p><strong>★ {business.rating?.toFixed(1)}</strong> ({business.review_count} review{business.review_count === 1 ? "" : "s"})</p>}
-                  <p><strong>Location:</strong> {business.university?.short_name || business.university?.name || business.location_text}</p>
-                  <p><strong>Categories:</strong> {business.categories.map((item) => item.name).join(", ") || "None"}</p>
-                  <p><strong>Fulfilment:</strong> {business.pickup_enabled ? "Pickup" : ""}{business.pickup_enabled && business.seller_delivery_enabled ? " · " : ""}{business.seller_delivery_enabled ? "Seller delivery" : ""}</p>
-                  <Link className="button-link" to={`/businesses/${business.slug}`}>View storefront</Link>
-                </div>
-              </article>
-            );
-          })}
-        </div>
-
-        <div className="actions">
-          <Link className="button-link button-link--secondary" to="/products">Browse products</Link>
-          <Link className="button-link button-link--secondary" to="/">Back home</Link>
-        </div>
+  return <main className="wide-shell marketplace-page">
+    <section className="marketplace-page-hero marketplace-page-hero--stores"><div><span className="eyebrow">Shop local</span><h1>Discover trusted stores</h1><p>Meet student entrepreneurs and community sellers, then browse everything they offer in one place.</p></div><Link className="button-link button-link--secondary" to="/products">Browse products</Link></section>
+    <div className="marketplace-catalog-layout">
+      <aside className="catalog-filter-card"><div className="catalog-filter-heading"><div><span className="eyebrow">Refine</span><h2>Store filters</h2></div><button type="button" className="text-button" onClick={clearFilters}>Reset</button></div>
+        <form className="catalog-filter-form" onSubmit={submit}><label>Search<input value={search} onChange={e=>setSearch(e.target.value)} placeholder="Name, description or location"/></label><label>Category<select value={category} onChange={e=>setCategory(e.target.value)}><option value="">All categories</option>{categories.map(i=><option value={i.id} key={i.id}>{i.name}</option>)}</select></label><label>University<select value={university} onChange={e=>setUniversity(e.target.value)}><option value="">All universities</option>{universities.map(i=><option value={i.id} key={i.id}>{i.short_name||i.name}</option>)}</select></label><label>Business type<select value={businessType} onChange={e=>setBusinessType(e.target.value)}><option value="">All businesses</option><option value="STUDENT_BUSINESS">Student businesses</option><option value="OTHER_BUSINESS">Other businesses</option></select></label><label>Availability<select value={availability} onChange={e=>setAvailability(e.target.value)}><option value="">Any availability</option><option value="OPEN">Open now</option><option value="UNAVAILABLE">Unavailable</option></select></label><label>Fulfilment<select value={fulfilment} onChange={e=>setFulfilment(e.target.value)}><option value="">Any fulfilment</option><option value="PICKUP">Pickup</option><option value="SELLER_DELIVERY">Seller delivery</option></select></label><button type="submit">Apply filters</button></form>
+      </aside>
+      <section className="catalog-results"><div className="catalog-results-toolbar"><div><span className="eyebrow">Stores</span><h2>{loading?"Loading stores…":`${businesses.length} ${businesses.length===1?"store":"stores"}`}</h2></div><label className="sort-control">Sort<select value={sort} onChange={e=>{setSort(e.target.value);void load({...currentFilters(),sort:e.target.value as PublicBusinessFilters["sort"]});}}><option value="NEWEST">Newest</option><option value="NAME_A_TO_Z">Name: A–Z</option></select></label></div>
+      {error&&<p className="message message--error">{error}</p>}
+      {!loading&&!error&&businesses.length===0&&<div className="catalog-empty"><div className="catalog-empty-icon">⌕</div><h3>No stores found</h3><p>Try another category, university or search term.</p><button onClick={clearFilters}>Clear filters</button></div>}
+      <div className="business-grid business-grid--catalog">{businesses.map(b=>{const logo=getLogoUrl(b.logo_path);return <article className="business-card catalog-business-card" key={b.id}><div className="catalog-business-banner"></div><div className="catalog-business-content">{logo?<img src={logo} alt={`${b.name} logo`} className="storefront-logo catalog-business-logo"/>:<div className="storefront-logo storefront-logo--empty catalog-business-logo">{b.name.slice(0,2).toUpperCase()}</div>}<div className="business-card__topline"><span>{b.business_type==="STUDENT_BUSINESS"?"Student Business":"Community Business"}</span><span className={`availability-badge availability-badge--${b.availability_status.toLowerCase()}`}>{b.availability_status==="OPEN"?"Open":"Unavailable"}</span></div><h2>{b.name}</h2><p className="catalog-business-description">{b.description}</p><div className="catalog-rating">{b.review_count>0?<><strong>★ {b.rating?.toFixed(1)}</strong><span>({b.review_count} reviews)</span></>:<span>New store</span>}</div><div className="catalog-business-tags">{b.categories.slice(0,3).map(c=><span key={c.id}>{c.name}</span>)}</div><div className="catalog-card-meta"><span>{b.university?.short_name||b.university?.name||b.location_text}</span><span>{b.pickup_enabled?"Pickup":""}{b.pickup_enabled&&b.seller_delivery_enabled?" · ":""}{b.seller_delivery_enabled?"Delivery":""}</span></div><Link className="button-link catalog-business-cta" to={`/businesses/${b.slug}`}>Visit storefront</Link></div></article>;})}</div>
       </section>
-    </main>
-  );
+    </div>
+  </main>;
 }

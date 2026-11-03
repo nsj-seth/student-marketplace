@@ -41,10 +41,11 @@ export function MyBusinessesPage() {
   }
 
   return (
-    <main className="wide-shell">
+    <main className="wide-shell seller-hub-page">
       <section className="wide-card card">
-        <span className="eyebrow">Phase 07A</span>
-        <h1>My businesses</h1>
+        <span className="eyebrow">Seller Hub · Businesses</span>
+        <h1>Businesses</h1>
+        <p className="page-lead">Manage storefront availability, details and product catalogues.</p>
         <p>Switch between your approved businesses, update their information, and control whether customers should currently see them as available.</p>
 
         {error && <p className="message message--error">{error}</p>}

@@ -46,10 +46,10 @@ export function SellerOrdersPage() {
   }
 
   return (
-    <main className="wide-shell">
+    <main className="wide-shell seller-hub-page">
       <section className="card wide-card">
         <div className="section-heading">
-          <div><span className="eyebrow">Seller dashboard</span><h1>Orders</h1></div>
+          <div><span className="eyebrow">Seller Hub · Fulfilment</span><h1>Orders</h1></div>
           <div className="actions"><Link to="/seller/businesses">My businesses</Link><Link to="/">Marketplace</Link></div>
         </div>
 
