@@ -39,7 +39,7 @@ export function AdminSellerApplicationsPage() {
   }, [filter]);
 
   return (
-    <main className="wide-shell">
+    <main className="wide-shell admin-management-page">
       <section className="wide-card card">
         <span className="eyebrow">Phase 06</span>
         <h1>Seller applications</h1>
