@@ -120,13 +120,13 @@ export function ProductImagesPage() {
     finally { setBusyId(null); }
   }
 
-  if (loading) return <main className="wide-shell"><section className="wide-card card"><p>Loading images...</p></section></main>;
-  if (!product) return <main className="wide-shell"><section className="wide-card card"><h1>Product not found</h1>{error && <p className="message message--error">{error}</p>}</section></main>;
+  if (loading) return <main className="wide-shell seller-hub-page"><section className="wide-card card"><p>Loading images...</p></section></main>;
+  if (!product) return <main className="wide-shell seller-hub-page"><section className="wide-card card"><h1>Product not found</h1>{error && <p className="message message--error">{error}</p>}</section></main>;
 
   return (
-    <main className="wide-shell">
+    <main className="wide-shell seller-hub-page">
       <section className="wide-card card">
-        <span className="eyebrow">Phase 08B</span>
+        <span className="eyebrow">Seller Hub · Product media</span>
         <h1>{product.name} images</h1>
         <p>Add up to 8 images. The primary image will be used as the product's main marketplace image.</p>
 

@@ -66,13 +66,13 @@ export function ProductEditorPage() {
     finally { setSaving(false); }
   }
 
-  if (loading) return <main className="wide-shell"><section className="wide-card card"><p>Loading...</p></section></main>;
-  if (!business) return <main className="wide-shell"><section className="wide-card card"><h1>Business not found</h1>{error && <p className="message message--error">{error}</p>}</section></main>;
+  if (loading) return <main className="wide-shell seller-hub-page"><section className="wide-card card"><p>Loading...</p></section></main>;
+  if (!business) return <main className="wide-shell seller-hub-page"><section className="wide-card card"><h1>Business not found</h1>{error && <p className="message message--error">{error}</p>}</section></main>;
 
   return (
-    <main className="wide-shell">
+    <main className="wide-shell seller-hub-page">
       <section className="wide-card card">
-        <span className="eyebrow">Phase 08B</span>
+        <span className="eyebrow">Seller Hub · Product editor</span>
         <h1>{editing ? `Edit ${product?.name ?? "product"}` : `Add product to ${business.name}`}</h1>
         <p>Manage the product details here. Existing products can manage their image gallery separately.</p>
         <form className="compact-form" onSubmit={submit}>

@@ -1,4 +1,5 @@
 import { Route, Routes } from "react-router-dom";
+import { AppShell } from "./components/layout/AppShell";
 import { ProtectedRoute } from "./components/auth/ProtectedRoute";
 import { RoleRoute } from "./components/auth/RoleRoute";
 import { AccessPage } from "./pages/access/AccessPage";
@@ -28,6 +29,7 @@ import { ProductImagesPage } from "./pages/seller/ProductImagesPage";
 import { SellerOrdersPage } from "./pages/seller/SellerOrdersPage";
 import { SellerOrderDetailPage } from "./pages/seller/SellerOrderDetailPage";
 import { SellerReviewsPage } from "./pages/seller/SellerReviewsPage";
+import { SellerDashboardPage } from "./pages/seller/SellerDashboardPage";
 import { WishlistPage } from "./pages/customer/WishlistPage";
 import { CartPage } from "./pages/customer/CartPage";
 import { CheckoutPage } from "./pages/customer/CheckoutPage";
@@ -46,6 +48,7 @@ import { AdminMarketplacePage } from "./pages/admin/AdminMarketplacePage";
 
 export default function App() {
   return (
+    <AppShell>
     <Routes>
       <Route path="/" element={<HomePage />} />
       <Route path="/reference-data" element={<ReferenceDataPage />} />
@@ -78,6 +81,7 @@ export default function App() {
       </Route>
 
       <Route element={<RoleRoute allowedRoles={["SELLER"]} />}>
+        <Route path="/seller" element={<SellerDashboardPage />} />
         <Route path="/seller-test" element={<AccessPage role="SELLER" />} />
         <Route path="/seller/businesses" element={<MyBusinessesPage />} />
         <Route path="/seller/businesses/:id" element={<ManageBusinessPage />} />
@@ -105,5 +109,6 @@ export default function App() {
         <Route path="/admin/orders/:id" element={<AdminOrderDetailPage />} />
       </Route>
     </Routes>
+    </AppShell>
   );
 }

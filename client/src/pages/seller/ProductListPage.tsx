@@ -85,12 +85,12 @@ export function ProductListPage() {
     finally { setBusyId(null); }
   }
 
-  if (loading) return <main className="wide-shell"><section className="wide-card card"><p>Loading products...</p></section></main>;
+  if (loading) return <main className="wide-shell seller-hub-page"><section className="wide-card card"><p>Loading products...</p></section></main>;
 
   return (
-    <main className="wide-shell">
+    <main className="wide-shell seller-hub-page">
       <section className="wide-card card">
-        <span className="eyebrow">Phase 08B</span>
+        <span className="eyebrow">Seller Hub · Inventory</span>
         <h1>{business ? `${business.name} products` : "Products"}</h1>
         <p>Create and manage products, stock quantities, and product images.</p>
 

@@ -5,144 +5,15 @@ import { getPublicBusiness, type PublicBusiness } from "../../services/business.
 import { getPublicProducts, type PublicProduct } from "../../services/product.service";
 import { PublicReviewsPanel } from "../../components/reviews/PublicReviewsPanel";
 import { ReportForm } from "../../components/reports/ReportForm";
-
-function getLogoUrl(path: string | null) {
-  if (!path) return null;
-  return supabase.storage.from("business-logos").getPublicUrl(path).data.publicUrl;
-}
-
-function getProductImageUrl(path: string | null) {
-  if (!path) return null;
-  return supabase.storage.from("product-images").getPublicUrl(path).data.publicUrl;
-}
-
-export function BusinessStorefrontPage() {
-  const { slug } = useParams();
-  const [business, setBusiness] = useState<PublicBusiness | null>(null);
-  const [products, setProducts] = useState<PublicProduct[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
-
-  useEffect(() => {
-    let active = true;
-
-    async function load() {
-      if (!slug) return;
-      try {
-        const response = await getPublicBusiness(slug);
-        const loadedBusiness = response.data ?? null;
-        if (active) setBusiness(loadedBusiness);
-        if (loadedBusiness) {
-          const productResponse = await getPublicProducts({ business: loadedBusiness.id });
-          if (active) setProducts(productResponse.data ?? []);
-        }
-      } catch (err) {
-        if (active) setError(err instanceof Error ? err.message : "Unable to load storefront.");
-      } finally {
-        if (active) setLoading(false);
-      }
-    }
-
-    void load();
-    return () => {
-      active = false;
-    };
-  }, [slug]);
-
-  if (loading) return <main className="page-shell"><section className="card"><p>Loading storefront...</p></section></main>;
-
-  if (error || !business) {
-    return (
-      <main className="page-shell">
-        <section className="card">
-          <h1>Storefront unavailable</h1>
-          <p className="message message--error">{error || "Business not found."}</p>
-          <Link to="/businesses">Back to businesses</Link>
-        </section>
-      </main>
-    );
-  }
-
-  const logoUrl = getLogoUrl(business.logo_path);
-  const socialEntries = Object.entries(business.social_links).filter(([, value]) => Boolean(value));
-
-  return (
-    <main className="wide-shell">
-      <section className="card wide-card storefront">
-        <div className="storefront-header">
-          {logoUrl ? <img className="storefront-logo storefront-logo--large" src={logoUrl} alt={`${business.name} logo`} /> : <div className="storefront-logo storefront-logo--large storefront-logo--empty">No logo</div>}
-          <div>
-            <span className="eyebrow">{business.business_type === "STUDENT_BUSINESS" ? "Student Business" : "Other Business"}</span>
-            <h1>{business.name}</h1>
-            <span className={`availability-badge availability-badge--${business.availability_status.toLowerCase()}`}>
-              {business.availability_status === "OPEN" ? "Currently Open" : "Currently Unavailable"}
-            </span>
-          </div>
-        </div>
-
-        <p>{business.description}</p>
-
-        <div className="storefront-info-grid">
-          <section>
-            <h2>Business information</h2>
-            {business.university && <p><strong>University:</strong> {business.university.name}</p>}
-            <p><strong>Location:</strong> {business.location_text}</p>
-            <p><strong>Contact:</strong> {business.contact_phone}</p>
-            <p><strong>Categories:</strong> {business.categories.map((category) => category.name).join(", ") || "None"}</p>
-          </section>
-
-          <section>
-            <h2>Fulfilment</h2>
-            <ul>
-              {business.pickup_enabled && <li>Customer pickup</li>}
-              {business.seller_delivery_enabled && <li>Seller delivery</li>}
-            </ul>
-            {socialEntries.length > 0 && (
-              <>
-                <h2>Contact links</h2>
-                <ul>
-                  {socialEntries.map(([label, value]) => <li key={label}><strong>{label}:</strong> {value}</li>)}
-                </ul>
-              </>
-            )}
-          </section>
-        </div>
-
-        <section className="storefront-placeholder">
-          <h2>Products</h2>
-          {products.length === 0 ? <p>No public products are available from this business yet.</p> : (
-            <div className="product-market-grid">
-              {products.map((product) => {
-                const image = product.images.find((item) => item.is_primary) ?? product.images[0] ?? null;
-                const productImageUrl = getProductImageUrl(image?.storage_path ?? null);
-                return (
-                  <article className="product-market-card" key={product.id}>
-                    {productImageUrl ? <img src={productImageUrl} alt={image?.alt_text ?? product.name} /> : <div className="product-market-card__empty">No image</div>}
-                    <div className="product-market-card__body">
-                      <h3>{product.name}</h3>
-                      <p className="product-price">GH₵{product.price.toFixed(2)}</p>
-                      <p>{product.status === "OUT_OF_STOCK" ? "Out of stock" : "In stock"}</p>
-                      <Link className="button-link" to={`/products/${product.id}/${product.slug}`}>View product</Link>
-                    </div>
-                  </article>
-                );
-              })}
-            </div>
-          )}
-        </section>
-
-        <PublicReviewsPanel targetType="BUSINESS" targetId={business.id} />
-
-        <div className="storefront-report-grid">
-          <ReportForm targetType="BUSINESS" targetId={business.id} label="Business" />
-          <ReportForm targetType="SELLER" targetId={business.id} label="Seller" />
-        </div>
-
-        <div className="actions">
-          <Link className="button-link button-link--secondary" to="/businesses">Browse businesses</Link>
-          <Link className="button-link button-link--secondary" to="/">Home</Link>
-        </div>
-      </section>
-    </main>
-  );
+function getLogoUrl(path:string|null){if(!path)return null;return supabase.storage.from("business-logos").getPublicUrl(path).data.publicUrl;}function getProductImageUrl(path:string|null){if(!path)return null;return supabase.storage.from("product-images").getPublicUrl(path).data.publicUrl;}
+export function BusinessStorefrontPage(){const {slug}=useParams();const [business,setBusiness]=useState<PublicBusiness|null>(null);const [products,setProducts]=useState<PublicProduct[]>([]);const [loading,setLoading]=useState(true);const [error,setError]=useState("");
+ useEffect(()=>{let active=true;async function load(){if(!slug)return;try{const r=await getPublicBusiness(slug);const loaded=r.data??null;if(active)setBusiness(loaded);if(loaded){const pr=await getPublicProducts({business:loaded.id});if(active)setProducts(pr.data??[]);}}catch(err){if(active)setError(err instanceof Error?err.message:"Unable to load storefront.");}finally{if(active)setLoading(false);}}void load();return()=>{active=false;};},[slug]);
+ if(loading)return <main className="page-shell"><section className="card"><p>Loading storefront...</p></section></main>;if(error||!business)return <main className="page-shell"><section className="card"><h1>Storefront unavailable</h1><p className="message message--error">{error||"Business not found."}</p><Link to="/businesses">Back to businesses</Link></section></main>;
+ const logoUrl=getLogoUrl(business.logo_path);const socialEntries=Object.entries(business.social_links).filter(([,value])=>Boolean(value));
+ return <main className="wide-shell storefront-page"><nav className="breadcrumb"><Link to="/">Home</Link><span>›</span><Link to="/businesses">Stores</Link><span>›</span><span>{business.name}</span></nav>
+ <section className="storefront-hero"><div className="storefront-cover"></div><div className="storefront-identity">{logoUrl?<img className="storefront-logo storefront-logo--hero" src={logoUrl} alt={`${business.name} logo`}/>:<div className="storefront-logo storefront-logo--hero storefront-logo--empty">{business.name.slice(0,2).toUpperCase()}</div>}<div><div className="storefront-title-row"><div><span className="eyebrow">{business.business_type==="STUDENT_BUSINESS"?"Student Business":"Community Business"}</span><h1>{business.name}</h1></div><span className={`availability-badge availability-badge--${business.availability_status.toLowerCase()}`}>{business.availability_status==="OPEN"?"Open now":"Unavailable"}</span></div><div className="storefront-rating">{business.review_count>0?<><strong>★ {business.rating?.toFixed(1)}</strong><span>{business.review_count} review{business.review_count===1?"":"s"}</span></>:<span>New store</span>}</div><p>{business.description}</p><div className="storefront-chips">{business.categories.map(c=><span key={c.id}>{c.name}</span>)}</div></div></div></section>
+ <section className="storefront-overview-grid"><div className="storefront-info-card"><span className="eyebrow">Store details</span><h2>About this business</h2>{business.university&&<p><strong>University</strong><span>{business.university.name}</span></p>}<p><strong>Location</strong><span>{business.location_text}</span></p><p><strong>Contact</strong><span>{business.contact_phone}</span></p></div><div className="storefront-info-card"><span className="eyebrow">Fulfilment</span><h2>How to receive your order</h2><div className="fulfilment-option-list">{business.pickup_enabled&&<div><strong>✓ Customer pickup</strong><span>Arrange a pickup directly with the seller.</span></div>}{business.seller_delivery_enabled&&<div><strong>✓ Seller delivery</strong><span>The seller can deliver your order.</span></div>}</div>{socialEntries.length>0&&<div className="storefront-socials">{socialEntries.map(([label,value])=><span key={label}><strong>{label}</strong>{value}</span>)}</div>}</div></section>
+ <section className="storefront-products-section"><div className="section-heading-row"><div><span className="eyebrow">Shop the store</span><h2>Products from {business.name}</h2></div><span>{products.length} item{products.length===1?"":"s"}</span></div>{products.length===0?<div className="catalog-empty"><h3>No products yet</h3><p>This store does not currently have any public products.</p></div>:<div className="product-market-grid product-market-grid--catalog">{products.map(product=>{const image=product.images.find(i=>i.is_primary)??product.images[0]??null;const url=getProductImageUrl(image?.storage_path??null);return <article className="product-market-card catalog-product-card" key={product.id}><Link className="catalog-product-image" to={`/products/${product.id}/${product.slug}`}>{url?<img src={url} alt={image?.alt_text??product.name}/>:<div className="product-market-card__empty">No image</div>}<span className={`catalog-stock-pill ${product.status==="OUT_OF_STOCK"?"catalog-stock-pill--muted":""}`}>{product.status==="OUT_OF_STOCK"?"Out of stock":"In stock"}</span></Link><div className="product-market-card__body"><span className="eyebrow">{product.category?.name??"Product"}</span><h2><Link to={`/products/${product.id}/${product.slug}`}>{product.name}</Link></h2><p className="product-price">GH₵{product.price.toFixed(2)}</p>{product.review_count>0&&<div className="catalog-rating"><strong>★ {product.rating?.toFixed(1)}</strong><span>({product.review_count})</span></div>}</div></article>;})}</div>}</section>
+ <section className="storefront-lower-grid"><div className="card wide-card"><PublicReviewsPanel targetType="BUSINESS" targetId={business.id}/></div><div className="card storefront-report-stack"><ReportForm targetType="BUSINESS" targetId={business.id} label="Business"/><ReportForm targetType="SELLER" targetId={business.id} label="Seller"/></div></section>
+ </main>;
 }

@@ -167,13 +167,13 @@ export function ManageBusinessPage() {
     }
   }
 
-  if (loading) return <main className="wide-shell"><section className="wide-card card"><p>Loading business...</p></section></main>;
-  if (!business) return <main className="wide-shell"><section className="wide-card card"><h1>Business not found</h1>{error && <p className="message message--error">{error}</p>}<Link to="/seller/businesses">Back to my businesses</Link></section></main>;
+  if (loading) return <main className="wide-shell seller-hub-page"><section className="wide-card card"><p>Loading business...</p></section></main>;
+  if (!business) return <main className="wide-shell seller-hub-page"><section className="wide-card card"><h1>Business not found</h1>{error && <p className="message message--error">{error}</p>}<Link to="/seller/businesses">Back to my businesses</Link></section></main>;
 
   return (
-    <main className="wide-shell">
+    <main className="wide-shell seller-hub-page">
       <section className="wide-card card">
-        <span className="eyebrow">Phase 07A</span>
+        <span className="eyebrow">Seller Hub · Store settings</span>
         <h1>Manage {business.name}</h1>
         <p>
           Type: <strong>{business.business_type === "STUDENT_BUSINESS" ? "Student Business" : "Other Business"}</strong>

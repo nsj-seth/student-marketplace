@@ -29,9 +29,9 @@ export function SellerReviewsPage() {
   }, [businessId]);
 
   return (
-    <main className="wide-shell">
+    <main className="wide-shell seller-hub-page">
       <section className="card wide-card">
-        <div className="section-heading"><div><span className="eyebrow">Seller</span><h1>Reviews</h1></div><Link to="/seller/businesses">My businesses</Link></div>
+        <div className="section-heading"><div><span className="eyebrow">Seller Hub · Reputation</span><h1>Reviews</h1></div><Link to="/seller/businesses">My businesses</Link></div>
         {error && <p className="message message--error">{error}</p>}
         <label>Business<select value={businessId} onChange={(event) => setBusinessId(event.target.value)}>{businesses.map((business) => <option key={business.id} value={business.id}>{business.name}</option>)}</select></label>
         {reviews.length === 0 ? <p>No reviews for this business yet.</p> : (
