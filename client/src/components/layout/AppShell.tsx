@@ -30,7 +30,7 @@ export function AppShell({ children }: AppShellProps) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [unread, setUnread] = useState(0);
 
-  const isSellerArea = location.pathname.startsWith("/seller/");
+  const isSellerArea = location.pathname === "/seller" || location.pathname.startsWith("/seller/");
   const isAdminArea = location.pathname.startsWith("/admin");
   const hasWorkspace = isSellerArea || isAdminArea;
 
