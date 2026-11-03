@@ -84,7 +84,7 @@ body { margin: 0; min-width: 320px; min-height: 100vh; background: #f7f7fb; colo
 a { color: var(--primary-dark); text-decoration: none; }
 a:hover { color: var(--primary); }
 button, input, textarea, select { font: inherit; }
-button { border: 0; }
+button:not([data-ui]) { border: 0; }
 img { max-width: 100%; }
 h1, h2, h3, h4 { color: var(--text); letter-spacing: -0.025em; }
 h1 { margin: 0 0 12px; font-size: clamp(2rem, 4vw, 3rem); line-height: 1.05; }
@@ -140,14 +140,14 @@ small { color: var(--muted); }
 .eyebrow::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: #a78bfa; }
 
 label { display: grid; gap: 7px; color: #3d374b; font-size: .9rem; font-weight: 750; }
-input, select, textarea { width: 100%; padding: 11px 12px; border: 1px solid var(--border-strong); border-radius: 11px; background: #fff; color: var(--text); transition: border .16s, box-shadow .16s; }
+input:not([data-ui]), select, textarea { width: 100%; padding: 11px 12px; border: 1px solid var(--border-strong); border-radius: 11px; background: #fff; color: var(--text); transition: border .16s, box-shadow .16s; }
 textarea { min-height: 100px; resize: vertical; }
-input:focus, select:focus, textarea:focus { outline: none; border-color: #a78bfa; box-shadow: 0 0 0 4px rgba(124,58,237,.10); }
+input:not([data-ui]):focus, select:focus, textarea:focus { outline: none; border-color: #a78bfa; box-shadow: 0 0 0 4px rgba(124,58,237,.10); }
 fieldset { border: 1px solid var(--border); border-radius: 14px; padding: 16px; }
 
-button, .button-link { display: inline-flex; align-items: center; justify-content: center; gap: 7px; border-radius: 11px; padding: 11px 16px; background: linear-gradient(135deg, #7c3aed, #6d28d9); color: #fff; font-weight: 800; cursor: pointer; text-decoration: none; box-shadow: 0 7px 18px rgba(124,58,237,.18); transition: transform .15s, box-shadow .15s, background .15s; }
-button:hover, .button-link:hover { color: #fff; transform: translateY(-1px); box-shadow: 0 10px 22px rgba(124,58,237,.22); }
-button:disabled { opacity: .55; cursor: not-allowed; transform: none; }
+button:not([data-ui]), .button-link { display: inline-flex; align-items: center; justify-content: center; gap: 7px; border-radius: 11px; padding: 11px 16px; background: linear-gradient(135deg, #7c3aed, #6d28d9); color: #fff; font-weight: 800; cursor: pointer; text-decoration: none; box-shadow: 0 7px 18px rgba(124,58,237,.18); transition: transform .15s, box-shadow .15s, background .15s; }
+button:not([data-ui]):hover, .button-link:hover { color: #fff; transform: translateY(-1px); box-shadow: 0 10px 22px rgba(124,58,237,.22); }
+button:not([data-ui]):disabled { opacity: .55; cursor: not-allowed; transform: none; }
 .secondary-button, .button-link--secondary { background: #f2eff7; color: #4b4558; box-shadow: none; }
 .secondary-button:hover, .button-link--secondary:hover { color: var(--primary-dark); background: #e9e2f7; box-shadow: none; }
 .danger-button { background: #dc2626; }
@@ -746,4 +746,38 @@ th,td{text-align:left;vertical-align:top}
 @media(prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
+}
+
+
+.modern-account-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-radius: 10px;
+  padding: 9px 10px;
+  color: var(--ds-foreground);
+  font-size: .875rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background .15s ease, color .15s ease;
+}
+.modern-account-menu-item:hover {
+  background: var(--ds-muted);
+  color: var(--ds-foreground);
+}
+.modern-mobile-nav-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-radius: 12px;
+  padding: 10px 12px;
+  color: var(--ds-muted-foreground);
+  font-size: .9rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background .15s ease, color .15s ease;
+}
+.modern-mobile-nav-link:hover {
+  background: var(--ds-muted);
+  color: var(--ds-foreground);
 }
