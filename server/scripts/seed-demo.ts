@@ -96,6 +96,17 @@ async function cleanupDemoUsers(client: SupabaseClient) {
     await must(client.from("orders").delete().in("id", uniqueOrderIds), "delete prior demo orders");
   }
 
+  const priorReports = await must<any[]>(
+    client.from("reports").select("id").in("reporter_id", userIds),
+    "load prior demo reports"
+  );
+  const priorReportIds = priorReports.map((row) => row.id);
+  if (priorReportIds.length > 0) {
+    await must(
+      client.from("notifications").delete().eq("entity_type", "REPORT").in("entity_id", priorReportIds),
+      "delete prior demo report notifications"
+    );
+  }
   await must(client.from("reports").delete().in("reporter_id", userIds), "delete prior demo reports");
   await must(client.from("notifications").delete().in("recipient_id", userIds), "delete prior demo notifications");
   await must(client.from("wishlist_items").delete().in("user_id", userIds), "delete prior demo wishlists");
