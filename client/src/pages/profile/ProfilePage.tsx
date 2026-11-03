@@ -50,7 +50,7 @@ export function ProfilePage() {
           {profile && (
             <form className="account-form" onSubmit={handleSubmit}>
               <label>Full name<input value={fullName} onChange={(e) => setFullName(e.target.value)} minLength={2} required /></label>
-              <label>Email address<input value={profile.email} readOnly /><span>Your sign-in email cannot be changed here.</span></label>
+              <label>Email address<input value={profile.email ?? ""} readOnly /><span>Your sign-in email cannot be changed here.</span></label>
               <div className="account-email-status"><span>Email status</span><strong>{profile.emailVerified ? "Verified" : "Pending verification"}</strong></div>
               {message && <p className="message message--success">{message}</p>}
               <div className="account-form__actions"><button type="submit">Save changes</button><Link to="/">Back to marketplace</Link></div>
