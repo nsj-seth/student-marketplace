@@ -781,3 +781,36 @@ th,td{text-align:left;vertical-align:top}
   background: var(--ds-muted);
   color: var(--ds-foreground);
 }
+
+
+/* UI Modernization Phase 10 — safe global polish.
+   Legacy selectors above remain intentionally for the deferred Admin UI. */
+html {
+  background: var(--ds-background);
+}
+body {
+  background: var(--ds-background);
+  color: var(--ds-foreground);
+}
+::selection {
+  background: color-mix(in srgb, var(--ds-primary) 18%, transparent);
+}
+:where(button, a, input, select, textarea) {
+  -webkit-tap-highlight-color: transparent;
+}
+[data-ui] {
+  font-family: var(--ds-font-sans);
+}
+[data-ui]:disabled {
+  cursor: not-allowed;
+}
+@media (max-width: 640px) {
+  body {
+    overflow-x: hidden;
+  }
+  [data-ui="button"],
+  [data-ui="auth-submit"],
+  [data-ui="checkout-submit"] {
+    min-height: 44px;
+  }
+}
