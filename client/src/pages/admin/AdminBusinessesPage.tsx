@@ -42,7 +42,7 @@ export function AdminBusinessesPage() {
   }
 
   return (
-    <main className="wide-shell">
+    <main className="wide-shell admin-management-page">
       <section className="card wide-card">
         <span className="eyebrow">Admin management</span>
         <h1>Businesses</h1>
