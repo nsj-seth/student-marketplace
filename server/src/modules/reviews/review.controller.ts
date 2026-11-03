@@ -1,4 +1,5 @@
 import type { RequestHandler, Response } from "express";
+import { routeParam } from "../../utils/route-param.js";
 import { createReviewSchema } from "./review.schema.js";
 import { createReview, getBusinessReviews, getProductReviews, getReviewOptionsForOrder, getReviewsForSellerBusiness } from "./review.service.js";
 
@@ -11,8 +12,9 @@ function handleKnownError(error: unknown, res: Response) {
     REVIEW_ALREADY_EXISTS: 409,
     BUSINESS_NOT_FOUND: 404
   };
-  if (!status[error.name]) return false;
-  res.status(status[error.name]).json({ success: false, message: error.message, code: error.name });
+  const httpStatus = status[error.name];
+  if (!httpStatus) return false;
+  res.status(httpStatus).json({ success: false, message: error.message, code: error.name });
   return true;
 }
 
@@ -31,17 +33,17 @@ export const createReviewController: RequestHandler = async (req, res, next) => 
 };
 
 export const productReviewsController: RequestHandler = async (req, res, next) => {
-  try { res.json({ success: true, data: await getProductReviews(req.params.productId) }); }
+  try { res.json({ success: true, data: await getProductReviews(routeParam(req.params.productId)) }); }
   catch (error) { next(error); }
 };
 
 export const businessReviewsController: RequestHandler = async (req, res, next) => {
-  try { res.json({ success: true, data: await getBusinessReviews(req.params.businessId) }); }
+  try { res.json({ success: true, data: await getBusinessReviews(routeParam(req.params.businessId)) }); }
   catch (error) { next(error); }
 };
 
 export const orderReviewOptionsController: RequestHandler = async (req, res, next) => {
-  try { res.json({ success: true, data: await getReviewOptionsForOrder(req.auth!.user.id, req.params.orderId) }); }
+  try { res.json({ success: true, data: await getReviewOptionsForOrder(req.auth!.user.id, routeParam(req.params.orderId)) }); }
   catch (error) { if (!handleKnownError(error, res)) next(error); }
 };
 

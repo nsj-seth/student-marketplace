@@ -1,4 +1,5 @@
 import type { RequestHandler, Response } from "express";
+import { routeParam } from "../../utils/route-param.js";
 import { checkoutValidationSchema } from "../checkout/checkout.schema.js";
 import { getMyOrder, getMyOrders, placeOrder } from "./order.service.js";
 
@@ -50,7 +51,7 @@ export const listMyOrdersController: RequestHandler = async (req, res, next) => 
 
 export const getMyOrderController: RequestHandler = async (req, res, next) => {
   try {
-    const order = await getMyOrder(req.auth!.user.id, req.params.id);
+    const order = await getMyOrder(req.auth!.user.id, routeParam(req.params.id));
     res.json({ success: true, data: order });
   } catch (error) {
     if (!handleOrderError(error, res)) next(error);

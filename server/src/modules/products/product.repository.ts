@@ -224,7 +224,7 @@ export async function createProductImageRecord(productId: string, storagePath: s
     .order("sort_order", { ascending: false })
     .limit(1);
   if (orderError) throw new Error(`Unable to determine image order: ${orderError.message}`);
-  const sortOrder = lastRows?.length ? Number(lastRows[0].sort_order) + 1 : 0;
+  const sortOrder = lastRows?.[0] ? Number(lastRows[0].sort_order) + 1 : 0;
   const isPrimary = (count ?? 0) === 0;
 
   const { data, error } = await supabase

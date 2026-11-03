@@ -1,4 +1,5 @@
 import type { RequestHandler } from "express";
+import { routeParam } from "../../utils/route-param.js";
 import {
   getMyNotifications,
   getMyUnreadCount,
@@ -27,7 +28,7 @@ export const unreadCountController: RequestHandler = async (req, res, next) => {
 
 export const markNotificationReadController: RequestHandler = async (req, res, next) => {
   try {
-    const data = await readMyNotification(req.auth!.user.id, req.params.id);
+    const data = await readMyNotification(req.auth!.user.id, routeParam(req.params.id));
     if (!data) {
       res.status(404).json({ success: false, message: "Notification not found.", code: "NOTIFICATION_NOT_FOUND" });
       return;

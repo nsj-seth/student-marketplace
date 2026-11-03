@@ -1,4 +1,5 @@
 import type { RequestHandler } from "express";
+import { routeParam } from "../../utils/route-param.js";
 import { createReportSchema, listReportsQuerySchema, resolveReportSchema } from "./report.schema.js";
 import { getAdminReport, getAdminReports, getOwnReports, moderateReport, submitReport } from "./report.service.js";
 
@@ -26,7 +27,7 @@ export const listAdminReportsController: RequestHandler = async (req, res, next)
 
 export const getAdminReportController: RequestHandler = async (req, res, next) => {
   try {
-    const report = await getAdminReport(req.params.id);
+    const report = await getAdminReport(routeParam(req.params.id));
     if (!report) { res.status(404).json({ success: false, message: "Report not found.", code: "REPORT_NOT_FOUND" }); return; }
     res.json({ success: true, data: report });
   } catch (error) { next(error); }
@@ -36,7 +37,7 @@ export const resolveAdminReportController: RequestHandler = async (req, res, nex
   try {
     const parsed = resolveReportSchema.safeParse(req.body);
     if (!parsed.success) { res.status(400).json({ success: false, message: "Invalid moderation decision.", code: "VALIDATION_ERROR" }); return; }
-    const report = await moderateReport(req.params.id, req.auth!.user.id, parsed.data.status, parsed.data.action, parsed.data.note);
+    const report = await moderateReport(routeParam(req.params.id), req.auth!.user.id, parsed.data.status, parsed.data.action, parsed.data.note);
     res.json({ success: true, data: report });
   } catch (error) { next(error); }
 };

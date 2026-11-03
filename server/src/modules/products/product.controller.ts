@@ -1,4 +1,5 @@
 import type { RequestHandler } from "express";
+import { routeParam } from "../../utils/route-param.js";
 import {
   attachProductImageSchema,
   createProductSchema,
@@ -27,7 +28,7 @@ function validationError(res: Parameters<RequestHandler>[1], errors: Record<stri
 
 export const listSellerProductsController: RequestHandler = async (req, res, next) => {
   try {
-    const data = await getMyBusinessProducts(req.params.businessId!, req.auth!.user.id);
+    const data = await getMyBusinessProducts(routeParam(req.params.businessId), req.auth!.user.id);
     if (data === null) {
       res.status(404).json({ success: false, message: "Business not found.", code: "BUSINESS_NOT_FOUND" });
       return;
@@ -38,7 +39,7 @@ export const listSellerProductsController: RequestHandler = async (req, res, nex
 
 export const getSellerProductController: RequestHandler = async (req, res, next) => {
   try {
-    const product = await getMyBusinessProduct(req.params.productId!, req.params.businessId!, req.auth!.user.id);
+    const product = await getMyBusinessProduct(routeParam(req.params.productId), routeParam(req.params.businessId), req.auth!.user.id);
     if (!product) {
       res.status(404).json({ success: false, message: "Product not found.", code: "PRODUCT_NOT_FOUND" });
       return;
@@ -54,7 +55,7 @@ export const createSellerProductController: RequestHandler = async (req, res, ne
       validationError(res, parsed.error.flatten().fieldErrors);
       return;
     }
-    const result = await createMyProduct(req.auth!.user.id, { businessId: req.params.businessId!, ...parsed.data });
+    const result = await createMyProduct(req.auth!.user.id, { businessId: routeParam(req.params.businessId), ...parsed.data });
     if (result.kind === "BUSINESS_NOT_FOUND") {
       res.status(404).json({ success: false, message: "Business not found.", code: "BUSINESS_NOT_FOUND" });
       return;
@@ -74,7 +75,7 @@ export const updateSellerProductController: RequestHandler = async (req, res, ne
       validationError(res, parsed.error.flatten().fieldErrors);
       return;
     }
-    const result = await updateMyProduct(req.params.productId!, req.params.businessId!, req.auth!.user.id, parsed.data);
+    const result = await updateMyProduct(routeParam(req.params.productId), routeParam(req.params.businessId), req.auth!.user.id, parsed.data);
     if (result.kind === "NOT_FOUND") {
       res.status(404).json({ success: false, message: "Product not found.", code: "PRODUCT_NOT_FOUND" });
       return;
@@ -94,7 +95,7 @@ export const updateSellerProductInventoryController: RequestHandler = async (req
       validationError(res, parsed.error.flatten().fieldErrors);
       return;
     }
-    const product = await updateMyProductInventory(req.params.productId!, req.params.businessId!, req.auth!.user.id, parsed.data.quantity);
+    const product = await updateMyProductInventory(routeParam(req.params.productId), routeParam(req.params.businessId), req.auth!.user.id, parsed.data.quantity);
     if (!product) {
       res.status(404).json({ success: false, message: "Product not found.", code: "PRODUCT_NOT_FOUND" });
       return;
@@ -110,7 +111,7 @@ export const updateSellerProductStatusController: RequestHandler = async (req, r
       validationError(res, parsed.error.flatten().fieldErrors);
       return;
     }
-    const result = await updateMyProductStatus(req.params.productId!, req.params.businessId!, req.auth!.user.id, parsed.data.status);
+    const result = await updateMyProductStatus(routeParam(req.params.productId), routeParam(req.params.businessId), req.auth!.user.id, parsed.data.status);
     if (result.kind === "NOT_FOUND") {
       res.status(404).json({ success: false, message: "Product not found.", code: "PRODUCT_NOT_FOUND" });
       return;
@@ -125,7 +126,7 @@ export const updateSellerProductStatusController: RequestHandler = async (req, r
 
 export const removeSellerProductController: RequestHandler = async (req, res, next) => {
   try {
-    const removed = await removeMyProduct(req.params.productId!, req.params.businessId!, req.auth!.user.id);
+    const removed = await removeMyProduct(routeParam(req.params.productId), routeParam(req.params.businessId), req.auth!.user.id);
     if (!removed) {
       res.status(404).json({ success: false, message: "Product not found.", code: "PRODUCT_NOT_FOUND" });
       return;
@@ -141,7 +142,7 @@ export const attachSellerProductImageController: RequestHandler = async (req, re
       validationError(res, parsed.error.flatten().fieldErrors);
       return;
     }
-    const result = await attachMyProductImage(req.params.productId!, req.params.businessId!, req.auth!.user.id, parsed.data);
+    const result = await attachMyProductImage(routeParam(req.params.productId), routeParam(req.params.businessId), req.auth!.user.id, parsed.data);
     if (result.kind === "NOT_FOUND") {
       res.status(404).json({ success: false, message: "Product not found.", code: "PRODUCT_NOT_FOUND" });
       return;
@@ -165,7 +166,7 @@ export const reorderSellerProductImagesController: RequestHandler = async (req, 
       validationError(res, parsed.error.flatten().fieldErrors);
       return;
     }
-    const result = await reorderMyProductImages(req.params.productId!, req.params.businessId!, req.auth!.user.id, parsed.data.imageIds);
+    const result = await reorderMyProductImages(routeParam(req.params.productId), routeParam(req.params.businessId), req.auth!.user.id, parsed.data.imageIds);
     if (result.kind === "NOT_FOUND") {
       res.status(404).json({ success: false, message: "Product not found.", code: "PRODUCT_NOT_FOUND" });
       return;
@@ -180,7 +181,7 @@ export const reorderSellerProductImagesController: RequestHandler = async (req, 
 
 export const setSellerProductPrimaryImageController: RequestHandler = async (req, res, next) => {
   try {
-    const result = await setMyPrimaryProductImage(req.params.productId!, req.params.businessId!, req.auth!.user.id, req.params.imageId!);
+    const result = await setMyPrimaryProductImage(routeParam(req.params.productId), routeParam(req.params.businessId), req.auth!.user.id, routeParam(req.params.imageId));
     if (result.kind === "NOT_FOUND") {
       res.status(404).json({ success: false, message: "Product not found.", code: "PRODUCT_NOT_FOUND" });
       return;
@@ -195,7 +196,7 @@ export const setSellerProductPrimaryImageController: RequestHandler = async (req
 
 export const removeSellerProductImageController: RequestHandler = async (req, res, next) => {
   try {
-    const result = await removeMyProductImage(req.params.productId!, req.params.businessId!, req.auth!.user.id, req.params.imageId!);
+    const result = await removeMyProductImage(routeParam(req.params.productId), routeParam(req.params.businessId), req.auth!.user.id, routeParam(req.params.imageId));
     if (result.kind === "NOT_FOUND") {
       res.status(404).json({ success: false, message: "Product not found.", code: "PRODUCT_NOT_FOUND" });
       return;

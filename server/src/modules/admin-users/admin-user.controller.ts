@@ -1,4 +1,5 @@
 import type { RequestHandler } from "express";
+import { routeParam } from "../../utils/route-param.js";
 import { listAdminUsersQuerySchema, updateAdminUserStatusSchema } from "./admin-user.schema.js";
 import { getAdminUser, getAdminUsers, updateAdminUserStatus } from "./admin-user.service.js";
 
@@ -15,7 +16,7 @@ export const listAdminUsersController: RequestHandler = async (req, res, next) =
 
 export const getAdminUserController: RequestHandler = async (req, res, next) => {
   try {
-    const user = await getAdminUser(req.params.id);
+    const user = await getAdminUser(routeParam(req.params.id));
     if (!user) {
       res.status(404).json({ success: false, message: "User not found.", code: "USER_NOT_FOUND" });
       return;
@@ -32,7 +33,7 @@ export const updateAdminUserStatusController: RequestHandler = async (req, res, 
       return;
     }
 
-    const user = await updateAdminUserStatus(req.auth!.user.id, req.params.id, parsed.data.status, parsed.data.reason);
+    const user = await updateAdminUserStatus(req.auth!.user.id, routeParam(req.params.id), parsed.data.status, parsed.data.reason);
     if (!user) {
       res.status(404).json({ success: false, message: "User not found.", code: "USER_NOT_FOUND" });
       return;

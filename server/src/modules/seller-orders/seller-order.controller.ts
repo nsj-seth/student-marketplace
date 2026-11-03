@@ -1,4 +1,5 @@
 import type { RequestHandler, Response } from "express";
+import { routeParam } from "../../utils/route-param.js";
 import { sellerOrderListQuerySchema, sellerOrderStatusSchema } from "./seller-order.schema.js";
 import { getMySellerOrder, getMySellerOrders, updateMySellerOrderStatus } from "./seller-order.service.js";
 
@@ -30,7 +31,7 @@ export const listSellerOrdersController: RequestHandler = async (req, res, next)
 
 export const getSellerOrderController: RequestHandler = async (req, res, next) => {
   try {
-    const order = await getMySellerOrder(req.auth!.user.id, req.params.id);
+    const order = await getMySellerOrder(req.auth!.user.id, routeParam(req.params.id));
     res.json({ success: true, data: order });
   } catch (error) { if (!handle(error, res)) next(error); }
 };
@@ -42,7 +43,7 @@ export const updateSellerOrderStatusController: RequestHandler = async (req, res
       res.status(400).json({ success: false, message: "Invalid status update.", code: "INVALID_STATUS_UPDATE", errors: parsed.error.flatten().fieldErrors });
       return;
     }
-    const order = await updateMySellerOrderStatus(req.auth!.user.id, req.params.id, parsed.data.status, parsed.data.note);
+    const order = await updateMySellerOrderStatus(req.auth!.user.id, routeParam(req.params.id), parsed.data.status, parsed.data.note);
     res.json({ success: true, data: order });
   } catch (error) { if (!handle(error, res)) next(error); }
 };

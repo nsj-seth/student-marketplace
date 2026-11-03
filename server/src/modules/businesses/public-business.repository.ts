@@ -147,7 +147,7 @@ export async function listPublicBusinesses(filters: {
   const { data, error } = await query;
   if (error) throw new Error(`Unable to load public businesses: ${error.message}`);
 
-  let businesses = await attachPublicRelations((data ?? []) as PublicBusinessRecord[]);
+  let businesses = await attachPublicRelations((data ?? []) as unknown as PublicBusinessRecord[]);
 
   if (filters.category) {
     businesses = businesses.filter((business) =>
@@ -170,6 +170,6 @@ export async function findPublicBusinessBySlug(slug: string) {
   if (error) throw new Error(`Unable to load public business: ${error.message}`);
   if (!data) return null;
 
-  const [business] = await attachPublicRelations([data as PublicBusinessRecord]);
+  const [business] = await attachPublicRelations([data as unknown as PublicBusinessRecord]);
   return business ?? null;
 }
