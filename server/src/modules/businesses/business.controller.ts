@@ -14,7 +14,7 @@ export const listMyBusinessesController: RequestHandler = async (req, res, next)
 
 export const getMyBusinessController: RequestHandler = async (req, res, next) => {
   try {
-    const business = await getMyBusiness(routeParam(routeParam(req.params.id)), req.auth!.user.id);
+    const business = await getMyBusiness(routeParam(req.params.id), req.auth!.user.id);
     if (!business) {
       res.status(404).json({ success: false, message: "Business not found.", code: "BUSINESS_NOT_FOUND" });
       return;
@@ -38,7 +38,7 @@ export const updateMyBusinessController: RequestHandler = async (req, res, next)
       return;
     }
 
-    const business = await updateMyBusiness(routeParam(routeParam(req.params.id)), req.auth!.user.id, parsed.data);
+    const business = await updateMyBusiness(routeParam(req.params.id), req.auth!.user.id, parsed.data);
     if (!business) {
       res.status(404).json({ success: false, message: "Business not found.", code: "BUSINESS_NOT_FOUND" });
       return;
@@ -57,7 +57,7 @@ export const updateMyBusinessAvailabilityController: RequestHandler = async (req
       return;
     }
 
-    const business = await setMyBusinessAvailability(routeParam(routeParam(req.params.id)), req.auth!.user.id, parsed.data.availabilityStatus);
+    const business = await setMyBusinessAvailability(routeParam(req.params.id), req.auth!.user.id, parsed.data.availabilityStatus);
     if (!business) {
       res.status(404).json({ success: false, message: "Business not found.", code: "BUSINESS_NOT_FOUND" });
       return;
