@@ -1,7 +1,9 @@
 import { useEffect, useMemo, useState, type FormEvent, type ReactNode } from "react";
 import {
   Bell,
+  Building2,
   ChevronDown,
+  FileWarning,
   Heart,
   LayoutDashboard,
   LogOut,
@@ -9,10 +11,12 @@ import {
   MessageSquareText,
   Package,
   Search,
+  Settings2,
   ShoppingBag,
   ShoppingCart,
   Store,
   UserRound,
+  Users,
   X
 } from "lucide-react";
 import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
@@ -34,6 +38,10 @@ const primaryLinks = [
   { to: "/businesses", label: "Stores" },
   { to: "/reference-data", label: "Categories" }
 ] as const;
+
+function ShieldAdminMark() {
+  return <Settings2 className="size-4" aria-hidden="true" />;
+}
 
 function Brand() {
   return (
@@ -81,6 +89,19 @@ function sellerNavIcon(to: string) {
   if (to === "/seller/businesses") return <Store className="size-4 shrink-0" />;
   if (to === "/seller/orders") return <Package className="size-4 shrink-0" />;
   if (to === "/seller/reviews") return <MessageSquareText className="size-4 shrink-0" />;
+  return null;
+}
+
+function adminNavIcon(to: string) {
+  if (to === "/admin") return <LayoutDashboard className="size-4 shrink-0" />;
+  if (to === "/admin/seller-applications") return <Store className="size-4 shrink-0" />;
+  if (to === "/admin/users") return <Users className="size-4 shrink-0" />;
+  if (to === "/admin/businesses") return <Building2 className="size-4 shrink-0" />;
+  if (to === "/admin/products") return <ShoppingBag className="size-4 shrink-0" />;
+  if (to === "/admin/orders") return <Package className="size-4 shrink-0" />;
+  if (to === "/admin/reports") return <FileWarning className="size-4 shrink-0" />;
+  if (to === "/admin/marketplace") return <Settings2 className="size-4 shrink-0" />;
+  if (to === "/admin/reference-data") return <Settings2 className="size-4 shrink-0" />;
   return null;
 }
 
@@ -438,7 +459,7 @@ export function AppShell({ children }: AppShellProps) {
           <aside className="workspace-sidebar">
             <div className="workspace-sidebar__heading">
               <span className="workspace-sidebar__badge">
-                {isAdminArea ? "A" : <Store className="size-4" aria-hidden="true" />}
+                {isAdminArea ? <ShieldAdminMark /> : <Store className="size-4" aria-hidden="true" />}
               </span>
               <div>
                 <strong>{isAdminArea ? "Admin Panel" : "Seller Hub"}</strong>
@@ -452,7 +473,7 @@ export function AppShell({ children }: AppShellProps) {
                   className={({ isActive }) =>
                     cn(
                       "workspace-nav__link",
-                      isSellerArea && "flex items-center gap-2.5",
+                      (isSellerArea || isAdminArea) && "flex items-center gap-2.5",
                       isActive && "workspace-nav__link--active"
                     )
                   }
@@ -460,6 +481,7 @@ export function AppShell({ children }: AppShellProps) {
                   to={to}
                 >
                   {isSellerArea && sellerNavIcon(to)}
+                  {isAdminArea && adminNavIcon(to)}
                   <span>{label}</span>
                 </NavLink>
               ))}
