@@ -1,8 +1,18 @@
 import { useEffect, useMemo, useState } from "react";
-import { Link } from "react-router-dom";
-import { getMarketplaceManagement, setFeaturedBusiness, setFeaturedProduct, type MarketplaceManagementData } from "../../services/admin-marketplace.service";
+import { Search, Sparkles, Store } from "lucide-react";
+import { AdminPageHeader } from "../../components/admin/AdminUi";
+import { Badge } from "@/components/ui/badge";
+import { Input } from "@/components/ui/input";
+import {
+  getMarketplaceManagement,
+  setFeaturedBusiness,
+  setFeaturedProduct,
+  type MarketplaceManagementData
+} from "../../services/admin-marketplace.service";
 
-function money(value: number) { return `GH₵${value.toFixed(2)}`; }
+function money(value: number) {
+  return "GH₵" + value.toFixed(2);
+}
 
 export function AdminMarketplacePage() {
   const [data, setData] = useState<MarketplaceManagementData | null>(null);
@@ -33,68 +43,165 @@ export function AdminMarketplacePage() {
 
   const products = useMemo(() => {
     const term = productSearch.trim().toLowerCase();
-    return (data?.products ?? []).filter((item) => !term || `${item.name} ${item.business_name}`.toLowerCase().includes(term));
+    return (data?.products ?? []).filter((item) =>
+      !term || (item.name + " " + item.business_name).toLowerCase().includes(term)
+    );
   }, [data, productSearch]);
 
   async function toggleBusiness(id: string, featured: boolean) {
-    setSavingId(id); setError("");
-    try { await setFeaturedBusiness(id, featured); await load(); }
-    catch (err) { setError(err instanceof Error ? err.message : "Unable to update featured business."); }
-    finally { setSavingId(null); }
+    setSavingId(id);
+    setError("");
+    try {
+      await setFeaturedBusiness(id, featured);
+      await load();
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Unable to update featured business.");
+    } finally {
+      setSavingId(null);
+    }
   }
 
   async function toggleProduct(id: string, featured: boolean) {
-    setSavingId(id); setError("");
-    try { await setFeaturedProduct(id, featured); await load(); }
-    catch (err) { setError(err instanceof Error ? err.message : "Unable to update featured product."); }
-    finally { setSavingId(null); }
+    setSavingId(id);
+    setError("");
+    try {
+      await setFeaturedProduct(id, featured);
+      await load();
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Unable to update featured product.");
+    } finally {
+      setSavingId(null);
+    }
   }
 
   return (
-    <main className="wide-shell admin-management-page">
-      <section className="card wide-card">
-        <span className="eyebrow">Admin marketplace management</span>
-        <h1>Featured listings</h1>
-        <p>Choose which active businesses and public products appear in the homepage featured sections.</p>
-        {error && <p className="message message--error">{error}</p>}
-        {loading ? <p>Loading marketplace listings...</p> : (
-          <>
-            <section className="admin-dashboard-panel">
-              <div className="section-heading"><h2>Businesses</h2><span>{data?.businesses.filter((item) => item.is_featured).length ?? 0} featured</span></div>
-              <input value={businessSearch} onChange={(e) => setBusinessSearch(e.target.value)} placeholder="Search businesses" />
-              <div className="admin-feature-list">
-                {businesses.map((business) => (
-                  <article key={business.id}>
-                    <div><strong>{business.name}</strong><span>{business.business_type.replaceAll("_", " ")} · {business.status}</span></div>
-                    <button type="button" disabled={savingId === business.id || (!business.is_featured && business.status !== "ACTIVE")} onClick={() => void toggleBusiness(business.id, !business.is_featured)}>
-                      {savingId === business.id ? "Saving..." : business.is_featured ? "Remove featured" : "Feature"}
+    <main className="min-h-screen bg-background p-5 text-foreground sm:p-6">
+      <AdminPageHeader
+        eyebrow="Marketplace curation"
+        title="Featured listings"
+        description="Choose which active businesses and public products appear in the homepage featured sections."
+        icon={<Sparkles className="size-3.5" />}
+      />
+
+      {error && <div className="mt-5 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">{error}</div>}
+
+      {loading ? (
+        <div className="mt-5 grid gap-5 xl:grid-cols-2">
+          <div className="h-96 animate-pulse rounded-2xl bg-muted" />
+          <div className="h-96 animate-pulse rounded-2xl bg-muted" />
+        </div>
+      ) : (
+        <div className="mt-5 grid gap-5 xl:grid-cols-2">
+          <section className="overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
+            <div className="border-b border-border p-5">
+              <div className="flex items-center justify-between gap-3">
+                <div>
+                  <span className="text-xs font-bold uppercase tracking-[.14em] text-primary">Businesses</span>
+                  <h2 className="mt-1 text-lg font-semibold">Featured stores</h2>
+                </div>
+                <Badge variant="secondary">
+                  {data?.businesses.filter((item) => item.is_featured).length ?? 0} featured
+                </Badge>
+              </div>
+
+              <div className="relative mt-4">
+                <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
+                <Input
+                  value={businessSearch}
+                  onChange={(e) => setBusinessSearch(e.target.value)}
+                  className="pl-9"
+                  placeholder="Search businesses"
+                />
+              </div>
+            </div>
+
+            <div className="divide-y divide-border">
+              {businesses.map((business) => (
+                <article key={business.id} className="flex items-center justify-between gap-4 p-4">
+                  <div className="min-w-0">
+                    <strong className="block truncate text-sm">{business.name}</strong>
+                    <span className="text-xs text-muted-foreground">
+                      {business.business_type.replaceAll("_", " ")} · {business.status}
+                    </span>
+                  </div>
+                  <button
+                    data-ui="admin-feature-business"
+                    type="button"
+                    disabled={savingId === business.id || (!business.is_featured && business.status !== "ACTIVE")}
+                    onClick={() => void toggleBusiness(business.id, !business.is_featured)}
+                    className={
+                      "h-9 shrink-0 rounded-xl border px-3 text-xs font-semibold disabled:opacity-40 " +
+                      (business.is_featured
+                        ? "border-red-200 bg-red-50 text-red-700"
+                        : "border-primary/20 bg-primary/5 text-primary")
+                    }
+                  >
+                    {savingId === business.id ? "Saving..." : business.is_featured ? "Remove featured" : "Feature"}
+                  </button>
+                </article>
+              ))}
+            </div>
+          </section>
+
+          <section className="overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
+            <div className="border-b border-border p-5">
+              <div className="flex items-center justify-between gap-3">
+                <div>
+                  <span className="text-xs font-bold uppercase tracking-[.14em] text-primary">Products</span>
+                  <h2 className="mt-1 text-lg font-semibold">Featured products</h2>
+                </div>
+                <Badge variant="secondary">
+                  {data?.products.filter((item) => item.is_featured).length ?? 0} featured
+                </Badge>
+              </div>
+
+              <div className="relative mt-4">
+                <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
+                <Input
+                  value={productSearch}
+                  onChange={(e) => setProductSearch(e.target.value)}
+                  className="pl-9"
+                  placeholder="Search products or businesses"
+                />
+              </div>
+            </div>
+
+            <div className="divide-y divide-border">
+              {products.map((product) => {
+                const publicEligible =
+                  (product.status === "ACTIVE" || product.status === "OUT_OF_STOCK") &&
+                  product.business_status === "ACTIVE";
+
+                return (
+                  <article key={product.id} className="flex items-center justify-between gap-4 p-4">
+                    <div className="min-w-0">
+                      <strong className="block truncate text-sm">{product.name}</strong>
+                      <span className="block truncate text-xs text-muted-foreground">
+                        {product.business_name} · {money(product.price)} · {product.status}
+                        {product.business_status !== "ACTIVE" ? " · business " + product.business_status : ""}
+                      </span>
+                    </div>
+                    <button
+                      data-ui="admin-feature-product"
+                      type="button"
+                      disabled={savingId === product.id || (!product.is_featured && !publicEligible)}
+                      onClick={() => void toggleProduct(product.id, !product.is_featured)}
+                      className={
+                        "h-9 shrink-0 rounded-xl border px-3 text-xs font-semibold disabled:opacity-40 " +
+                        (product.is_featured
+                          ? "border-red-200 bg-red-50 text-red-700"
+                          : "border-primary/20 bg-primary/5 text-primary")
+                      }
+                    >
+                      {savingId === product.id ? "Saving..." : product.is_featured ? "Remove featured" : "Feature"}
                     </button>
                   </article>
-                ))}
-              </div>
-            </section>
-
-            <section className="admin-dashboard-panel">
-              <div className="section-heading"><h2>Products</h2><span>{data?.products.filter((item) => item.is_featured).length ?? 0} featured</span></div>
-              <input value={productSearch} onChange={(e) => setProductSearch(e.target.value)} placeholder="Search products or businesses" />
-              <div className="admin-feature-list">
-                {products.map((product) => {
-                  const publicEligible = (product.status === "ACTIVE" || product.status === "OUT_OF_STOCK") && product.business_status === "ACTIVE";
-                  return (
-                    <article key={product.id}>
-                      <div><strong>{product.name}</strong><span>{product.business_name} · {money(product.price)} · {product.status}{product.business_status !== "ACTIVE" ? ` · business ${product.business_status}` : ""}</span></div>
-                      <button type="button" disabled={savingId === product.id || (!product.is_featured && !publicEligible)} onClick={() => void toggleProduct(product.id, !product.is_featured)}>
-                        {savingId === product.id ? "Saving..." : product.is_featured ? "Remove featured" : "Feature"}
-                      </button>
-                    </article>
-                  );
-                })}
-              </div>
-            </section>
-          </>
-        )}
-        <div className="actions"><Link className="button-link button-link--secondary" to="/admin">Admin dashboard</Link><Link className="button-link button-link--secondary" to="/">Marketplace</Link></div>
-      </section>
+                );
+              })}
+            </div>
+          </section>
+        </div>
+      )}
     </main>
   );
 }
