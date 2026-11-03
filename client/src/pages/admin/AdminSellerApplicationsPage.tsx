@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
+import { ArrowRight, Clock3, Store } from "lucide-react";
 import { Link } from "react-router-dom";
+import { AdminEmptyState, AdminPageHeader } from "../../components/admin/AdminUi";
+import { Badge } from "@/components/ui/badge";
 import {
   getAdminSellerApplications,
   type AdminSellerApplication
@@ -39,56 +42,91 @@ export function AdminSellerApplicationsPage() {
   }, [filter]);
 
   return (
-    <main className="wide-shell admin-management-page">
-      <section className="wide-card card">
-        <span className="eyebrow">Phase 06</span>
-        <h1>Seller applications</h1>
-        <p>Review submitted seller applications and approve or reject them.</p>
+    <main className="min-h-screen bg-background p-5 text-foreground sm:p-6">
+      <AdminPageHeader
+        eyebrow="Admin review"
+        title="Seller applications"
+        description="Review submitted seller applications and approve or reject marketplace access."
+        icon={<Store className="size-3.5" />}
+      />
 
-        <div className="actions">
-          {FILTERS.map((item) => (
-            <button
-              key={item.value}
-              type="button"
-              className={filter === item.value ? "" : "secondary-button"}
-              onClick={() => setFilter(item.value)}
-            >
-              {item.label}
-            </button>
+      <div className="mt-5 flex flex-wrap gap-2 rounded-2xl border border-border bg-card p-2 shadow-sm">
+        {FILTERS.map((item) => (
+          <button
+            data-ui="admin-seller-filter"
+            key={item.value}
+            type="button"
+            onClick={() => setFilter(item.value)}
+            className={
+              "rounded-xl px-4 py-2 text-sm font-semibold transition " +
+              (filter === item.value
+                ? "bg-primary text-primary-foreground"
+                : "text-muted-foreground hover:bg-muted hover:text-foreground")
+            }
+          >
+            {item.label}
+          </button>
+        ))}
+      </div>
+
+      {error && (
+        <div className="mt-5 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+          {error}
+        </div>
+      )}
+
+      {loading ? (
+        <div className="mt-5 space-y-4">
+          {Array.from({ length: 4 }).map((_, index) => (
+            <div key={index} className="h-40 animate-pulse rounded-2xl bg-muted" />
           ))}
         </div>
-
-        {error && <p className="message message--error">{error}</p>}
-
-        {loading ? (
-          <p>Loading applications...</p>
-        ) : applications.length === 0 ? (
-          <p>No seller applications match this filter.</p>
-        ) : (
-          <ul className="management-list admin-application-list">
-            {applications.map((application) => (
-              <li key={application.id}>
-                <div>
-                  <strong>{application.business_name ?? "Unnamed business"}</strong>
-                  <span>Applicant: {application.applicant?.full_name ?? application.applicant_id}</span>
-                  <span>Type: {application.business_type === "STUDENT_BUSINESS" ? "Student Business" : "Other Business"}</span>
-                  <span>Status: {application.status}</span>
-                  {application.submitted_at && (
-                    <span>Submitted: {new Date(application.submitted_at).toLocaleString()}</span>
-                  )}
-                </div>
-                <Link className="button-link" to={`/admin/seller-applications/${application.id}`}>
-                  Review
-                </Link>
-              </li>
-            ))}
-          </ul>
-        )}
-
-        <div className="actions">
-          <Link className="button-link button-link--secondary" to="/">Back home</Link>
+      ) : applications.length === 0 ? (
+        <div className="mt-5">
+          <AdminEmptyState
+            icon={<Store className="size-6" />}
+            title="No applications found"
+            description="No seller applications match the selected filter."
+          />
         </div>
-      </section>
+      ) : (
+        <div className="mt-5 space-y-4">
+          {applications.map((application) => (
+            <article
+              key={application.id}
+              className="flex flex-col gap-4 rounded-2xl border border-border bg-card p-5 shadow-sm sm:flex-row sm:items-center sm:justify-between"
+            >
+              <div className="min-w-0">
+                <div className="flex flex-wrap items-center gap-2">
+                  <strong className="text-lg">{application.business_name ?? "Unnamed business"}</strong>
+                  <Badge variant={application.status === "PENDING" ? "warning" : application.status === "APPROVED" ? "success" : "destructive"}>
+                    {application.status}
+                  </Badge>
+                </div>
+                <p className="mt-2 text-sm text-muted-foreground">
+                  Applicant: {application.applicant?.full_name ?? application.applicant_id}
+                </p>
+                <p className="mt-1 text-sm text-muted-foreground">
+                  Type: {application.business_type === "STUDENT_BUSINESS" ? "Student Business" : "Other Business"}
+                </p>
+                {application.submitted_at && (
+                  <p className="mt-1 flex items-center gap-1.5 text-xs text-muted-foreground">
+                    <Clock3 className="size-3.5" />
+                    Submitted {new Date(application.submitted_at).toLocaleString()}
+                  </p>
+                )}
+              </div>
+
+              <Link
+                className="inline-flex h-10 items-center gap-2 rounded-xl bg-primary px-4 text-sm font-semibold text-primary-foreground"
+                to={"/admin/seller-applications/" + application.id}
+              >
+                Review <ArrowRight className="size-4" />
+              </Link>
+            </article>
+          ))}
+        </div>
+      )}
     </main>
   );
 }
