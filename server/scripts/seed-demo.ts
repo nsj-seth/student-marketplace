@@ -38,18 +38,105 @@ async function must<T>(promise: PromiseLike<{ data: T | null; error: any }>, lab
 }
 
 async function cleanupDemoUsers(client: SupabaseClient) {
-  console.log("Cleaning previous demo users...");
+  console.log("Cleaning previous demo marketplace data...");
+  const demoUsers: Array<{ id: string; email?: string }> = [];
   let page = 1;
+
   while (true) {
     const { data, error } = await client.auth.admin.listUsers({ page, perPage: 1000 });
     if (error) throw error;
-    const demoUsers = data.users.filter((user) => user.email?.endsWith(`@${DEMO_DOMAIN}`));
-    for (const user of demoUsers) {
-      const result = await client.auth.admin.deleteUser(user.id);
-      if (result.error) throw result.error;
-    }
+    demoUsers.push(...data.users.filter((user) => user.email?.endsWith(`@${DEMO_DOMAIN}`)));
     if (data.users.length < 1000) break;
     page += 1;
+  }
+
+  if (demoUsers.length === 0) return;
+  const userIds = demoUsers.map((user) => user.id);
+
+  const demoBusinesses = await must<any[]>(
+    client.from("businesses").select("id").in("owner_id", userIds),
+    "load prior demo businesses"
+  );
+  const businessIds = demoBusinesses.map((row) => row.id);
+
+  const demoOrders = await must<any[]>(
+    client.from("orders").select("id").in("customer_id", userIds),
+    "load prior demo orders"
+  );
+  const orderIds = demoOrders.map((row) => row.id);
+
+  let sellerOrderIds: string[] = [];
+  if (orderIds.length > 0) {
+    const sellerOrders = await must<any[]>(
+      client.from("seller_orders").select("id").in("order_id", orderIds),
+      "load prior demo seller orders"
+    );
+    sellerOrderIds = sellerOrders.map((row) => row.id);
+  }
+
+  if (businessIds.length > 0) {
+    const extraSellerOrders = await must<any[]>(
+      client.from("seller_orders").select("id,order_id").in("business_id", businessIds),
+      "load seller orders attached to demo businesses"
+    );
+    sellerOrderIds = [...new Set([...sellerOrderIds, ...extraSellerOrders.map((row) => row.id)])];
+    orderIds.push(...extraSellerOrders.map((row) => row.order_id));
+  }
+
+  const uniqueOrderIds = [...new Set(orderIds)];
+
+  if (sellerOrderIds.length > 0) {
+    await must(client.from("reviews").delete().in("seller_order_id", sellerOrderIds), "delete prior demo reviews");
+    await must(client.from("order_status_history").delete().in("seller_order_id", sellerOrderIds), "delete prior demo history");
+    await must(client.from("order_items").delete().in("seller_order_id", sellerOrderIds), "delete prior demo order items");
+    await must(client.from("seller_orders").delete().in("id", sellerOrderIds), "delete prior demo seller orders");
+  }
+
+  if (uniqueOrderIds.length > 0) {
+    await must(client.from("orders").delete().in("id", uniqueOrderIds), "delete prior demo orders");
+  }
+
+  await must(client.from("reports").delete().in("reporter_id", userIds), "delete prior demo reports");
+  await must(client.from("notifications").delete().in("recipient_id", userIds), "delete prior demo notifications");
+  await must(client.from("wishlist_items").delete().in("user_id", userIds), "delete prior demo wishlists");
+  await must(client.from("carts").delete().in("user_id", userIds), "delete prior demo carts");
+
+  if (businessIds.length > 0) {
+    const demoProducts = await must<any[]>(
+      client.from("products").select("id").in("business_id", businessIds),
+      "load prior demo products"
+    );
+    const productIds = demoProducts.map((row) => row.id);
+    if (productIds.length > 0) {
+      await must(client.from("reports").delete().eq("target_type", "PRODUCT").in("target_id", productIds), "delete product reports");
+      await must(client.from("wishlist_items").delete().in("product_id", productIds), "delete product wishlist references");
+      await must(client.from("cart_items").delete().in("product_id", productIds), "delete product cart references");
+      await must(client.from("product_images").delete().in("product_id", productIds), "delete product image metadata");
+      await must(client.from("products").delete().in("id", productIds), "delete prior demo products");
+    }
+    await must(client.from("reports").delete().eq("target_type", "BUSINESS").in("target_id", businessIds), "delete business reports");
+    await must(client.from("business_categories").delete().in("business_id", businessIds), "delete prior demo business categories");
+    await must(client.from("businesses").delete().in("id", businessIds), "delete prior demo businesses");
+  }
+
+  await must(client.from("reports").delete().in("target_id", userIds), "delete reports targeting demo users");
+
+  const applications = await must<any[]>(
+    client.from("seller_applications").select("id").in("applicant_id", userIds),
+    "load prior demo applications"
+  );
+  const applicationIds = applications.map((row) => row.id);
+  if (applicationIds.length > 0) {
+    await must(client.from("seller_application_categories").delete().in("seller_application_id", applicationIds), "delete prior demo application categories");
+    await must(client.from("student_verifications").delete().in("seller_application_id", applicationIds), "delete prior demo verifications");
+    await must(client.from("seller_applications").delete().in("id", applicationIds), "delete prior demo applications");
+  }
+
+  await must(client.from("user_roles").delete().in("user_id", userIds), "delete prior demo roles");
+
+  for (const user of demoUsers) {
+    const result = await client.auth.admin.deleteUser(user.id);
+    if (result.error) throw result.error;
   }
 }
 
@@ -71,6 +158,10 @@ async function createDemoUsers(client: SupabaseClient, count: number) {
 }
 
 async function main() {
+  if (process.env.NODE_ENV === "production" && process.env.ALLOW_DEMO_SEED !== "YES") {
+    throw new Error("Refusing to seed demo data in production. Set ALLOW_DEMO_SEED=YES only if this is intentionally a disposable demo environment.");
+  }
+
   console.log("Phase 24 demo seed starting...");
   await cleanupDemoUsers(supabase);
 
@@ -111,7 +202,7 @@ async function main() {
           social_links: { instagram: `@${slugify(template.name).replaceAll("-", "")}` },
           pickup_enabled: template.pickup,
           seller_delivery_enabled: template.delivery,
-          logo_path: `demo/${slugify(template.name)}.png`,
+          logo_path: null,
           submitted_at: daysAgo(120 - i * 3),
           reviewed_at: daysAgo(118 - i * 3),
           review_note: "Approved demo marketplace seller."
@@ -162,7 +253,7 @@ async function main() {
           social_links: { instagram: `@${slugify(template.name).replaceAll("-", "")}` },
           pickup_enabled: template.pickup,
           seller_delivery_enabled: template.delivery,
-          logo_path: `demo/${slugify(template.name)}.png`,
+          logo_path: null,
           status: i === 16 ? "DISABLED" : "ACTIVE",
           availability_status: i % 7 === 0 ? "UNAVAILABLE" : "OPEN",
           is_featured: i < 6,
