@@ -1,4 +1,5 @@
 import type { RequestHandler } from "express";
+import { routeParam } from "../../utils/route-param.js";
 import { publicBusinessListQuerySchema } from "./public-business.schema.js";
 import { getPublicBusiness, getPublicBusinesses } from "./public-business.service.js";
 
@@ -24,7 +25,7 @@ export const listPublicBusinessesController: RequestHandler = async (req, res, n
 
 export const getPublicBusinessController: RequestHandler = async (req, res, next) => {
   try {
-    const slug = req.params.slug?.trim();
+    const slug = routeParam(req.params.slug).trim();
     if (!slug) {
       res.status(400).json({ success: false, message: "Business slug is required.", code: "VALIDATION_ERROR" });
       return;
