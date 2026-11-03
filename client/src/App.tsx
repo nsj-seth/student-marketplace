@@ -4,6 +4,7 @@ import { ProtectedRoute } from "./components/auth/ProtectedRoute";
 import { RoleRoute } from "./components/auth/RoleRoute";
 import { AccessPage } from "./pages/access/AccessPage";
 import { ForbiddenPage } from "./pages/access/ForbiddenPage";
+import { NotFoundPage } from "./pages/access/NotFoundPage";
 import { AdminReferenceDataPage } from "./pages/admin/AdminReferenceDataPage";
 import { AdminSellerApplicationsPage } from "./pages/admin/AdminSellerApplicationsPage";
 import { AdminSellerApplicationDetailPage } from "./pages/admin/AdminSellerApplicationDetailPage";
@@ -108,6 +109,8 @@ export default function App() {
         <Route path="/admin/orders" element={<AdminOrdersPage />} />
         <Route path="/admin/orders/:id" element={<AdminOrderDetailPage />} />
       </Route>
+
+      <Route path="*" element={<NotFoundPage />} />
     </Routes>
     </AppShell>
   );
