@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
+import { ArrowLeft, BadgeCheck, Building2, GraduationCap, Store } from "lucide-react";
 import { Link, useParams } from "react-router-dom";
+import { Badge } from "@/components/ui/badge";
 import {
   getAdminSellerApplication,
   reviewAdminSellerApplication,
@@ -32,13 +34,19 @@ export function AdminSellerApplicationDetailPage() {
 
   async function review(decision: "APPROVE" | "REJECT") {
     if (!id) return;
+
     setSaving(true);
     setMessage(null);
     setError(null);
+
     try {
       const response = await reviewAdminSellerApplication(id, { decision, note });
       setApplication(response.data ?? null);
-      setMessage(decision === "APPROVE" ? "Application approved and business created." : "Application rejected.");
+      setMessage(
+        decision === "APPROVE"
+          ? "Application approved and business created."
+          : "Application rejected."
+      );
     } catch (err) {
       setError(err instanceof Error ? err.message : "Unable to review seller application.");
     } finally {
@@ -46,69 +54,150 @@ export function AdminSellerApplicationDetailPage() {
     }
   }
 
-  if (loading) return <main className="page-shell admin-management-page"><section className="card"><p>Loading application...</p></section></main>;
-  if (!application) return <main className="page-shell admin-management-page"><section className="card"><p>{error ?? "Application not found."}</p><Link to="/admin/seller-applications">Back</Link></section></main>;
+  if (loading) {
+    return (
+      <main className="min-h-screen bg-background p-5 sm:p-6">
+        <div className="h-96 animate-pulse rounded-2xl bg-muted" />
+      </main>
+    );
+  }
+
+  if (!application) {
+    return (
+      <main className="min-h-screen bg-background p-5 sm:p-6">
+        <section className="rounded-2xl border border-border bg-card p-8 text-center shadow-sm">
+          <Store className="mx-auto size-8 text-primary" />
+          <h1 className="mt-4 text-2xl font-bold">Application not found</h1>
+          <p className="mt-2 text-sm text-red-600">{error}</p>
+          <Link className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-primary" to="/admin/seller-applications">
+            <ArrowLeft className="size-4" />
+            Back to applications
+          </Link>
+        </section>
+      </main>
+    );
+  }
 
   return (
-    <main className="wide-shell admin-management-page">
-      <section className="wide-card card">
-        <span className="eyebrow">Phase 06</span>
-        <h1>{application.business_name ?? "Seller application"}</h1>
-        <p>Status: <strong>{application.status}</strong></p>
-
-        <div className="detail-grid">
-          <section>
-            <h2>Applicant</h2>
-            <p><strong>Name:</strong> {application.applicant?.full_name ?? "Unknown"}</p>
-            <p><strong>Business type:</strong> {application.business_type}</p>
-            {application.student_verification && (
-              <>
-                <p><strong>Student email:</strong> {application.student_verification.student_email}</p>
-                <p><strong>Verification:</strong> {application.student_verification.status}</p>
-                <p><strong>University:</strong> {application.student_verification.university?.name ?? "Not available"}</p>
-              </>
-            )}
-          </section>
-
-          <section>
-            <h2>Business details</h2>
-            <p><strong>Description:</strong> {application.description}</p>
-            <p><strong>Location:</strong> {application.location_text}</p>
-            <p><strong>Phone:</strong> {application.contact_phone}</p>
-            <p><strong>Categories:</strong> {application.categories.map((category) => category.name).join(", ") || "None"}</p>
-            <p><strong>Pickup:</strong> {application.pickup_enabled ? "Yes" : "No"}</p>
-            <p><strong>Seller delivery:</strong> {application.seller_delivery_enabled ? "Yes" : "No"}</p>
-            <p><strong>Logo path:</strong> {application.logo_path ?? "None"}</p>
-          </section>
-        </div>
-
-        {application.status === "PENDING" ? (
-          <section className="review-panel">
-            <label>
-              Review note / rejection reason
-              <textarea rows={4} value={note} onChange={(event) => setNote(event.target.value)} />
-            </label>
-            <div className="actions">
-              <button type="button" disabled={saving} onClick={() => void review("APPROVE")}>Approve</button>
-              <button type="button" className="danger-button" disabled={saving} onClick={() => void review("REJECT")}>Reject</button>
-            </div>
-          </section>
-        ) : (
-          <div className="info-box">
-            <p>This application has already been reviewed.</p>
-            {application.review_note && <p><strong>Review note:</strong> {application.review_note}</p>}
-            {application.business_id && <p><strong>Created business ID:</strong> {application.business_id}</p>}
+    <main className="min-h-screen bg-background p-5 text-foreground sm:p-6">
+      <section className="rounded-[1.75rem] border border-border bg-card p-6 shadow-sm sm:p-8">
+        <Link className="inline-flex items-center gap-2 text-sm font-semibold text-primary" to="/admin/seller-applications">
+          <ArrowLeft className="size-4" />
+          Seller applications
+        </Link>
+        <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+          <div>
+            <span className="text-xs font-bold uppercase tracking-[.14em] text-primary">Application review</span>
+            <h1 className="mt-2 text-3xl font-bold tracking-[-.04em]">{application.business_name ?? "Seller application"}</h1>
           </div>
-        )}
-
-        {message && <p className="message message--success">{message}</p>}
-        {error && <p className="message message--error">{error}</p>}
-
-        <div className="actions">
-          <Link className="button-link button-link--secondary" to="/admin/seller-applications">Back to applications</Link>
-          <Link className="button-link button-link--secondary" to="/">Home</Link>
+          <Badge variant={application.status === "PENDING" ? "warning" : application.status === "APPROVED" ? "success" : "destructive"}>
+            {application.status}
+          </Badge>
         </div>
       </section>
+
+      {message && <div className="mt-5 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700">{message}</div>}
+      {error && <div className="mt-5 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">{error}</div>}
+
+      <div className="mt-5 grid gap-5 xl:grid-cols-2">
+        <section className="rounded-2xl border border-border bg-card p-5 shadow-sm">
+          <div className="flex items-center gap-2">
+            <GraduationCap className="size-5 text-primary" />
+            <h2 className="text-lg font-semibold">Applicant</h2>
+          </div>
+          <div className="mt-4 space-y-3">
+            <div className="rounded-xl bg-muted/50 p-3">
+              <span className="text-xs text-muted-foreground">Name</span>
+              <strong className="mt-1 block text-sm">{application.applicant?.full_name ?? "Unknown"}</strong>
+            </div>
+            <div className="rounded-xl bg-muted/50 p-3">
+              <span className="text-xs text-muted-foreground">Business type</span>
+              <strong className="mt-1 block text-sm">{application.business_type.replaceAll("_", " ")}</strong>
+            </div>
+
+            {application.student_verification && (
+              <>
+                <div className="rounded-xl bg-muted/50 p-3">
+                  <span className="text-xs text-muted-foreground">Student email</span>
+                  <strong className="mt-1 block text-sm">{application.student_verification.student_email}</strong>
+                </div>
+                <div className="rounded-xl bg-muted/50 p-3">
+                  <span className="text-xs text-muted-foreground">Verification</span>
+                  <strong className="mt-1 block text-sm">{application.student_verification.status}</strong>
+                </div>
+                <div className="rounded-xl bg-muted/50 p-3">
+                  <span className="text-xs text-muted-foreground">University</span>
+                  <strong className="mt-1 block text-sm">{application.student_verification.university?.name ?? "Not available"}</strong>
+                </div>
+              </>
+            )}
+          </div>
+        </section>
+
+        <section className="rounded-2xl border border-border bg-card p-5 shadow-sm">
+          <div className="flex items-center gap-2">
+            <Building2 className="size-5 text-primary" />
+            <h2 className="text-lg font-semibold">Business details</h2>
+          </div>
+          <div className="mt-4 space-y-3 text-sm">
+            <p><strong>Description:</strong> <span className="text-muted-foreground">{application.description}</span></p>
+            <p><strong>Location:</strong> <span className="text-muted-foreground">{application.location_text}</span></p>
+            <p><strong>Phone:</strong> <span className="text-muted-foreground">{application.contact_phone}</span></p>
+            <p><strong>Categories:</strong> <span className="text-muted-foreground">{application.categories.map((category) => category.name).join(", ") || "None"}</span></p>
+            <p><strong>Pickup:</strong> <span className="text-muted-foreground">{application.pickup_enabled ? "Yes" : "No"}</span></p>
+            <p><strong>Seller delivery:</strong> <span className="text-muted-foreground">{application.seller_delivery_enabled ? "Yes" : "No"}</span></p>
+            <p><strong>Logo path:</strong> <span className="break-all text-muted-foreground">{application.logo_path ?? "None"}</span></p>
+          </div>
+        </section>
+      </div>
+
+      {application.status === "PENDING" ? (
+        <section className="mt-5 rounded-2xl border border-border bg-card p-5 shadow-sm">
+          <div className="flex items-center gap-2">
+            <BadgeCheck className="size-5 text-primary" />
+            <h2 className="text-lg font-semibold">Review decision</h2>
+          </div>
+
+          <label className="mt-4 grid gap-1.5 text-xs font-semibold text-muted-foreground">
+            Review note / rejection reason
+            <textarea
+              data-ui="admin-application-note"
+              rows={4}
+              value={note}
+              onChange={(event) => setNote(event.target.value)}
+              className="rounded-xl border border-input bg-background px-3 py-2.5 text-sm outline-none focus:border-ring focus:ring-4 focus:ring-ring/15"
+            />
+          </label>
+
+          <div className="mt-4 flex flex-wrap gap-2">
+            <button
+              data-ui="admin-application-approve"
+              type="button"
+              disabled={saving}
+              onClick={() => void review("APPROVE")}
+              className="h-10 rounded-xl bg-emerald-600 px-4 text-sm font-semibold text-white disabled:opacity-50"
+            >
+              Approve
+            </button>
+            <button
+              data-ui="admin-application-reject"
+              type="button"
+              disabled={saving}
+              onClick={() => void review("REJECT")}
+              className="h-10 rounded-xl border border-red-200 bg-red-50 px-4 text-sm font-semibold text-red-700 disabled:opacity-50"
+            >
+              Reject
+            </button>
+          </div>
+        </section>
+      ) : (
+        <section className="mt-5 rounded-2xl border border-border bg-card p-5 shadow-sm">
+          <h2 className="text-lg font-semibold">Review complete</h2>
+          <p className="mt-2 text-sm text-muted-foreground">This application has already been reviewed.</p>
+          {application.review_note && <p className="mt-3 text-sm"><strong>Review note:</strong> {application.review_note}</p>}
+          {application.business_id && <p className="mt-2 text-sm"><strong>Created business ID:</strong> {application.business_id}</p>}
+        </section>
+      )}
     </main>
   );
 }
