@@ -1,0 +1,91 @@
+import type { ReactNode } from "react";
+import { Badge } from "@/components/ui/badge";
+
+type AdminPageHeaderProps = {
+  eyebrow: string;
+  title: string;
+  description: string;
+  icon?: ReactNode;
+  actions?: ReactNode;
+};
+
+export function AdminPageHeader({
+  eyebrow,
+  title,
+  description,
+  icon,
+  actions
+}: AdminPageHeaderProps) {
+  return (
+    <section className="flex flex-col gap-5 rounded-[1.75rem] border border-border bg-card p-6 shadow-sm sm:flex-row sm:items-end sm:justify-between sm:p-8">
+      <div className="min-w-0">
+        <Badge variant="secondary" className="mb-3 gap-1.5">
+          {icon}
+          {eyebrow}
+        </Badge>
+        <h1 className="text-3xl font-bold tracking-[-.04em] sm:text-4xl">{title}</h1>
+        <p className="mt-2 max-w-3xl text-sm leading-6 text-muted-foreground sm:text-base">
+          {description}
+        </p>
+      </div>
+      {actions ? <div className="flex flex-wrap gap-2">{actions}</div> : null}
+    </section>
+  );
+}
+
+export function AdminEmptyState({
+  icon,
+  title,
+  description,
+  action
+}: {
+  icon: ReactNode;
+  title: string;
+  description: string;
+  action?: ReactNode;
+}) {
+  return (
+    <div className="grid place-items-center rounded-2xl border border-dashed border-border bg-muted/25 px-6 py-14 text-center">
+      <span className="grid size-14 place-items-center rounded-2xl bg-card text-primary shadow-sm">
+        {icon}
+      </span>
+      <h2 className="mt-4 text-xl font-semibold">{title}</h2>
+      <p className="mt-2 max-w-md text-sm leading-6 text-muted-foreground">{description}</p>
+      {action ? <div className="mt-5">{action}</div> : null}
+    </div>
+  );
+}
+
+export function AdminMetricCard({
+  label,
+  value,
+  hint,
+  icon,
+  tone = "primary"
+}: {
+  label: string;
+  value: string | number;
+  hint: string;
+  icon: ReactNode;
+  tone?: "primary" | "success" | "warning" | "danger" | "blue";
+}) {
+  const toneClass =
+    tone === "success"
+      ? "bg-emerald-50 text-emerald-600"
+      : tone === "warning"
+        ? "bg-amber-50 text-amber-600"
+        : tone === "danger"
+          ? "bg-red-50 text-red-600"
+          : tone === "blue"
+            ? "bg-blue-50 text-blue-600"
+            : "bg-primary/10 text-primary";
+
+  return (
+    <article className="rounded-2xl border border-border bg-card p-5 shadow-sm">
+      <span className={"grid size-10 place-items-center rounded-xl " + toneClass}>{icon}</span>
+      <span className="mt-4 block text-xs font-medium text-muted-foreground">{label}</span>
+      <strong className="mt-1 block text-2xl tracking-tight">{value}</strong>
+      <small className="mt-1 block text-xs leading-5 text-muted-foreground">{hint}</small>
+    </article>
+  );
+}
