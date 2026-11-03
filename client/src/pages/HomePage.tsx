@@ -14,7 +14,6 @@ import {
   ShoppingBag,
   Sparkles,
   Star,
-  Store,
   Truck,
   Utensils,
   Wrench
