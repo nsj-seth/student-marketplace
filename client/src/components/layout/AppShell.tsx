@@ -6,6 +6,7 @@ import {
   LayoutDashboard,
   LogOut,
   Menu,
+  MessageSquareText,
   Package,
   Search,
   ShoppingBag,
@@ -73,6 +74,14 @@ function DesktopNav() {
       ))}
     </nav>
   );
+}
+
+function sellerNavIcon(to: string) {
+  if (to === "/seller") return <LayoutDashboard className="size-4 shrink-0" />;
+  if (to === "/seller/businesses") return <Store className="size-4 shrink-0" />;
+  if (to === "/seller/orders") return <Package className="size-4 shrink-0" />;
+  if (to === "/seller/reviews") return <MessageSquareText className="size-4 shrink-0" />;
+  return null;
 }
 
 function IconLink({
@@ -428,7 +437,9 @@ export function AppShell({ children }: AppShellProps) {
         <div className="workspace-layout">
           <aside className="workspace-sidebar">
             <div className="workspace-sidebar__heading">
-              <span className="workspace-sidebar__badge">{isAdminArea ? "A" : "S"}</span>
+              <span className="workspace-sidebar__badge">
+                {isAdminArea ? "A" : <Store className="size-4" aria-hidden="true" />}
+              </span>
               <div>
                 <strong>{isAdminArea ? "Admin Panel" : "Seller Hub"}</strong>
                 <small>{isAdminArea ? "Marketplace control" : "Your commerce workspace"}</small>
@@ -439,14 +450,17 @@ export function AppShell({ children }: AppShellProps) {
                 <NavLink
                   key={to}
                   className={({ isActive }) =>
-                    isActive
-                      ? "workspace-nav__link workspace-nav__link--active"
-                      : "workspace-nav__link"
+                    cn(
+                      "workspace-nav__link",
+                      isSellerArea && "flex items-center gap-2.5",
+                      isActive && "workspace-nav__link--active"
+                    )
                   }
                   end={to === "/admin" || to === "/seller"}
                   to={to}
                 >
-                  {label}
+                  {isSellerArea && sellerNavIcon(to)}
+                  <span>{label}</span>
                 </NavLink>
               ))}
             </nav>
