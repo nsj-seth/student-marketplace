@@ -333,7 +333,7 @@ export function BusinessesPage() {
                     <div className="relative h-24 overflow-hidden bg-gradient-to-br from-violet-700 via-primary to-fuchsia-500">
                       <div className="absolute -right-10 -top-10 size-32 rounded-full border border-white/20" />
                       <div className="absolute left-4 top-4">
-                        <Badge className="border-white/15 bg-white/15 text-white backdrop-blur">
+                        <Badge className="border-white/20 bg-[#17111f] text-white">
                           {business.business_type === "STUDENT_BUSINESS" ? "Student business" : "Community business"}
                         </Badge>
                       </div>

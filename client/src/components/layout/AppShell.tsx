@@ -55,7 +55,7 @@ function Brand() {
       </span>
       <span className="hidden leading-none sm:grid">
         <strong className="text-[15px] font-bold tracking-[-0.02em] text-foreground">Student Marketplace</strong>
-        <span className="mt-1 text-[11px] font-medium text-muted-foreground">Local discovery, made simple</span>
+        <span className="mt-1 text-sm font-medium text-muted-foreground">Local discovery, made simple</span>
       </span>
     </Link>
   );
@@ -125,7 +125,7 @@ function IconLink({
     >
       {children}
       {!!badge && (
-        <span className="absolute -right-1.5 -top-1.5 grid min-h-5 min-w-5 place-items-center rounded-full border-2 border-background bg-primary px-1 text-[10px] font-bold leading-none text-primary-foreground">
+        <span className="absolute -right-1.5 -top-1.5 grid min-h-5 min-w-5 place-items-center rounded-full border-2 border-background bg-primary px-1 text-xs font-bold leading-none text-primary-foreground">
           {badge > 9 ? "9+" : badge}
         </span>
       )}

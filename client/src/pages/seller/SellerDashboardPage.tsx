@@ -68,7 +68,7 @@ export function SellerDashboardPage() {
 
   return (
     <main className="min-h-screen bg-background p-5 text-foreground sm:p-6">
-      <section className="overflow-hidden rounded-[1.75rem] border border-border bg-gradient-to-br from-violet-700 via-primary to-fuchsia-600 p-6 text-white shadow-xl sm:p-8">
+      <section className="overflow-hidden rounded-[1.75rem] border border-border bg-gradient-to-br from-violet-700 via-primary to-fuchsia-800 p-6 text-white shadow-xl sm:p-8">
         <div className="flex flex-col gap-6 xl:flex-row xl:items-end xl:justify-between">
           <div>
             <Badge className="mb-4 border-white/15 bg-white/15 text-white backdrop-blur">
@@ -77,7 +77,7 @@ export function SellerDashboardPage() {
             <h1 className="max-w-3xl text-3xl font-bold tracking-[-.04em] sm:text-4xl">
               Run your marketplace business from one place.
             </h1>
-            <p className="mt-3 max-w-2xl text-sm leading-6 text-violet-100/85 sm:text-base">
+            <p className="mt-3 max-w-2xl text-sm leading-6 text-violet-100 sm:text-base">
               Track stores, orders and fulfilment while keeping the customer marketplace only one click away.
             </p>
           </div>

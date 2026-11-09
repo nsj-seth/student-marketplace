@@ -151,19 +151,19 @@ function BusinessCard({
 
   return (
     <Card className="group overflow-hidden rounded-[1.35rem] border-border/80 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-primary/5">
-      <div className="relative h-24 overflow-hidden bg-gradient-to-br from-violet-700 via-primary to-violet-400">
+      <div className="relative h-24 overflow-hidden bg-gradient-to-br from-violet-800 via-primary to-violet-700">
         <div className="absolute -right-8 -top-10 size-32 rounded-full border border-white/20" />
         <div className="absolute bottom-[-35px] left-1/3 size-24 rounded-full bg-white/10 blur-xl" />
-        <div className="absolute left-4 top-4">
-          <Badge className="border-white/15 bg-white/15 text-white backdrop-blur-md">
+        <div className="relative z-10 flex flex-wrap items-center justify-between gap-2 p-4">
+          <Badge className="border-white/20 bg-[#17111f] text-white">
             {business.business_type === "STUDENT_BUSINESS" ? "Student business" : "Community business"}
           </Badge>
+          {featured && (
+            <span className="flex items-center gap-1 text-xs font-semibold text-white">
+              <Star className="size-3.5 fill-white text-white" /> Featured
+            </span>
+          )}
         </div>
-        {featured && (
-          <span className="absolute right-4 top-4 flex items-center gap-1 text-xs font-semibold text-white/90">
-            <Star className="size-3.5 fill-white text-white" /> Featured
-          </span>
-        )}
       </div>
 
       <div className="relative p-5 pt-12">
@@ -271,12 +271,12 @@ export function HomePage() {
 
             <h1 className="max-w-2xl text-4xl font-bold leading-[1.02] tracking-[-0.045em] text-white sm:text-5xl lg:text-[4.25rem]">
               Find great things
-              <span className="block bg-gradient-to-r from-violet-300 to-fuchsia-200 bg-clip-text text-transparent">
+              <span className="block text-violet-200">
                 closer to home.
               </span>
             </h1>
 
-            <p className="mt-5 max-w-xl text-base leading-7 text-violet-100/75 sm:text-lg">
+            <p className="mt-5 max-w-xl text-base leading-7 text-violet-100 sm:text-lg">
               Discover products, services and growing businesses from students and communities around you.
             </p>
 
@@ -332,7 +332,7 @@ export function HomePage() {
               </div>
             </form>
 
-            <div className="mt-6 flex flex-wrap gap-x-6 gap-y-3 text-sm text-violet-100/70">
+            <div className="mt-6 flex flex-wrap gap-x-6 gap-y-3 text-sm text-violet-100">
               <span className="flex items-center gap-2"><BadgeCheck className="size-4 text-violet-300" /> Verified sellers</span>
               <span className="flex items-center gap-2"><MapPin className="size-4 text-violet-300" /> Local discovery</span>
               <span className="flex items-center gap-2"><Star className="size-4 text-violet-300" /> Customer reviews</span>
@@ -353,10 +353,10 @@ export function HomePage() {
             {heroProduct && (
               <Link
                 to={`/products/${heroProduct.id}/${heroProduct.slug}`}
-                className="rounded-2xl border border-white/15 bg-black/35 p-4 text-white shadow-xl backdrop-blur-xl transition hover:bg-black/45"
+                className="rounded-2xl border border-white/15 bg-[#17111f] p-4 text-white shadow-xl backdrop-blur-xl transition hover:bg-[#2b1e3a]"
               >
                 <div className="flex items-center justify-between gap-3">
-                  <span className="text-xs font-medium text-white/65">Featured right now</span>
+                  <span className="text-xs font-medium text-white">Featured right now</span>
                   <ArrowUpRight className="size-4" />
                 </div>
                 <strong className="mt-2 block text-base">{heroProduct.name}</strong>
@@ -442,7 +442,7 @@ export function HomePage() {
                 <h2 className="mt-3 max-w-2xl text-3xl font-bold tracking-[-.035em] text-white">
                   Turn what you do into a storefront people can discover.
                 </h2>
-                <p className="mt-3 max-w-2xl text-sm leading-6 text-violet-100/80 sm:text-base">
+                <p className="mt-3 max-w-2xl text-sm leading-6 text-violet-100 sm:text-base">
                   Create your business profile, list products and manage customer orders from one marketplace account.
                 </p>
               </div>

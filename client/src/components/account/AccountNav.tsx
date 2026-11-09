@@ -40,7 +40,7 @@ export function AccountNav() {
               </span>
               <span className="min-w-0">
                 <strong className="block text-sm font-semibold">{item.label}</strong>
-                <small className="block truncate text-xs opacity-70">{item.description}</small>
+                <small className="block truncate text-xs text-inherit">{item.description}</small>
               </span>
             </NavLink>
           );

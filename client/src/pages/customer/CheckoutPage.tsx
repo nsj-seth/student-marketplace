@@ -146,7 +146,7 @@ export function CheckoutPage() {
     return (
       <main className="min-h-screen bg-background pb-16">
         <section className="mx-auto mt-8 w-[min(760px,calc(100%-32px))] overflow-hidden rounded-[2rem] border border-border bg-card shadow-xl">
-          <div className="bg-gradient-to-br from-emerald-500 to-emerald-600 px-6 py-10 text-center text-white sm:px-10">
+          <div className="bg-gradient-to-br from-emerald-700 to-emerald-800 px-6 py-10 text-center text-white sm:px-10">
             <span className="mx-auto grid size-16 place-items-center rounded-2xl bg-white/15 backdrop-blur">
               <CheckCircle2 className="size-8" />
             </span>
@@ -156,7 +156,7 @@ export function CheckoutPage() {
             <h1 className="mt-2 text-3xl font-bold tracking-[-.04em]">
               Your order is in.
             </h1>
-            <p className="mt-3 text-sm text-emerald-50/90">
+            <p className="mt-3 text-sm text-emerald-50">
               Each seller can now process their part of the order independently.
             </p>
           </div>

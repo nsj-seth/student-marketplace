@@ -63,7 +63,7 @@ export function AuthLayout({
                 {title}
               </h1>
 
-              <p className="mt-5 max-w-xl text-sm leading-7 text-violet-100/75 sm:text-base">
+              <p className="mt-5 max-w-xl text-sm leading-7 text-violet-100 sm:text-base">
                 {description}
               </p>
 
@@ -80,7 +80,7 @@ export function AuthLayout({
                       </span>
                       <div>
                         <strong className="block text-sm">{point.title}</strong>
-                        <span className="mt-1 block text-xs leading-5 text-violet-100/65">
+                        <span className="mt-1 block text-xs leading-5 text-violet-100">
                           {point.description}
                         </span>
                       </div>
@@ -90,7 +90,7 @@ export function AuthLayout({
               </div>
             </div>
 
-            <p className="m-0 text-xs text-violet-100/45">
+            <p className="m-0 text-xs text-violet-100">
               Student Marketplace · Local discovery, made simple.
             </p>
           </div>
