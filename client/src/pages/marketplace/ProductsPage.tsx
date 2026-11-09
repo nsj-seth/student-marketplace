@@ -155,13 +155,13 @@ export function ProductsPage() {
 
   return (
     <main className="min-h-screen bg-background pb-16 text-foreground">
-      <section className="mx-auto mt-5 flex w-[min(1240px,calc(100%-32px))] flex-col gap-6 overflow-hidden rounded-[1.75rem] border border-border/70 bg-gradient-to-br from-accent/60 via-card to-background px-6 py-8 shadow-sm sm:px-8 lg:flex-row lg:items-end lg:justify-between lg:px-10 lg:py-10">
+      <section className="mx-auto mt-5 flex w-[min(1240px,calc(100%-32px))] flex-col gap-6 overflow-hidden rounded-2xl border border-border/70 bg-card px-6 py-8 shadow-sm sm:px-8 lg:flex-row lg:items-end lg:justify-between lg:px-10 lg:py-10">
         <div>
           <Badge variant="secondary" className="mb-4 gap-1.5">
             <PackageSearch className="size-3.5" />
             Explore marketplace
           </Badge>
-          <h1 className="max-w-3xl text-3xl font-bold tracking-[-.04em] sm:text-4xl">
+          <h1 className="max-w-3xl text-3xl font-bold tracking-[-.025em] sm:text-4xl">
             Find the right product from sellers around you.
           </h1>
           <p className="mt-3 max-w-2xl text-sm leading-6 text-muted-foreground sm:text-base">
@@ -316,7 +316,7 @@ export function ProductsPage() {
         <section className="min-w-0">
           <div className="mb-5 flex flex-col gap-3 border-b border-border pb-5 sm:flex-row sm:items-end sm:justify-between">
             <div>
-              <p className="m-0 text-xs font-bold uppercase tracking-[.14em] text-primary-text">Products</p>
+              <p className="m-0 text-xs font-bold uppercase tracking-[.1em] text-primary-text">Products</p>
               <h2 className="mt-1 text-2xl font-bold tracking-[-.03em]">
                 {loading ? "Loading marketplace…" : `${products.length} ${products.length === 1 ? "product" : "products"}`}
               </h2>
@@ -395,7 +395,7 @@ export function ProductsPage() {
                 return (
                   <article
                     key={product.id}
-                    className="group overflow-hidden rounded-2xl border border-border/80 bg-card shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-primary/5"
+                    className="group overflow-hidden rounded-2xl border border-border/80 bg-card shadow-sm transition-all duration-300 hover:shadow-sm"
                   >
                     <Link
                       className="relative block aspect-[4/3] overflow-hidden bg-muted"
@@ -405,7 +405,7 @@ export function ProductsPage() {
                         <img
                           src={url}
                           alt={image?.alt_text ?? product.name}
-                          className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.04]"
+                          className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.02]"
                         />
                       ) : (
                         <div className="grid h-full place-items-center bg-gradient-to-br from-muted to-accent/60 text-muted-foreground">

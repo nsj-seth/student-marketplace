@@ -28,12 +28,12 @@ export function ReferenceDataPage() {
   return (
     <main className="min-h-screen bg-background pb-16 text-foreground">
       <div className="mx-auto mt-5 w-[min(1100px,calc(100%-32px))]">
-        <section className="rounded-[1.75rem] border border-border bg-gradient-to-br from-accent/60 via-card to-background p-6 shadow-sm sm:p-8">
+        <section className="rounded-2xl border border-border bg-card p-6 shadow-sm sm:p-8">
           <Badge variant="secondary" className="mb-3 gap-1.5">
             <BookOpen className="size-3.5" />
             Marketplace reference data
           </Badge>
-          <h1 className="text-3xl font-bold tracking-[-.04em] sm:text-4xl">
+          <h1 className="text-3xl font-bold tracking-[-.025em] sm:text-4xl">
             Universities & categories
           </h1>
           <p className="mt-2 max-w-2xl text-sm leading-6 text-muted-foreground">

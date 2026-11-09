@@ -281,7 +281,7 @@ export function BusinessApplicationPage() {
     return (
       <main className="min-h-screen bg-background pb-16">
         <div className="mx-auto mt-8 w-[min(1080px,calc(100%-32px))]">
-          <div className="h-[520px] animate-pulse rounded-3xl bg-muted" />
+          <div className="h-[520px] animate-pulse rounded-2xl bg-muted" />
         </div>
       </main>
     );
@@ -308,13 +308,13 @@ export function BusinessApplicationPage() {
   return (
     <main className="min-h-screen bg-background pb-16 text-foreground">
       <div className="mx-auto mt-5 w-[min(1080px,calc(100%-32px))]">
-        <section className="flex flex-col gap-5 rounded-[1.75rem] border border-border bg-gradient-to-br from-accent/60 via-card to-background p-6 shadow-sm sm:flex-row sm:items-end sm:justify-between sm:p-8">
+        <section className="flex flex-col gap-5 rounded-2xl border border-border bg-card p-6 shadow-sm sm:flex-row sm:items-end sm:justify-between sm:p-8">
           <div>
             <Badge variant="secondary" className="mb-3 gap-1.5">
               <Building2 className="size-3.5" />
               Seller onboarding · Business details
             </Badge>
-            <h1 className="text-3xl font-bold tracking-[-.04em]">
+            <h1 className="text-3xl font-bold tracking-[-.025em]">
               Business application
             </h1>
             <p className="mt-2 max-w-2xl text-sm leading-6 text-muted-foreground">
@@ -574,7 +574,7 @@ export function BusinessApplicationPage() {
             </section>
 
             <section className="rounded-2xl border border-border bg-card p-5 shadow-sm">
-              <span className="text-xs font-bold uppercase tracking-[.14em] text-primary-text">
+              <span className="text-xs font-bold uppercase tracking-[.1em] text-primary-text">
                 Submission readiness
               </span>
 

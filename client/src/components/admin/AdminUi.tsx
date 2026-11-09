@@ -1,5 +1,4 @@
 import type { ReactNode } from "react";
-import { Badge } from "@/components/ui/badge";
 
 type AdminPageHeaderProps = {
   eyebrow: string;
@@ -17,13 +16,13 @@ export function AdminPageHeader({
   actions
 }: AdminPageHeaderProps) {
   return (
-    <section className="flex flex-col gap-5 rounded-[1.75rem] border border-border bg-card p-6 shadow-sm sm:flex-row sm:items-end sm:justify-between sm:p-8">
+    <section className="flex flex-col gap-5 pb-3 pt-2 sm:flex-row sm:items-end sm:justify-between">
       <div className="min-w-0">
-        <Badge variant="secondary" className="mb-3 gap-1.5">
+        <span className="mb-3 inline-flex items-center gap-1.5 text-sm font-medium text-primary-text">
           {icon}
           {eyebrow}
-        </Badge>
-        <h1 className="text-3xl font-bold tracking-[-.04em] sm:text-4xl">{title}</h1>
+        </span>
+        <h1 className="text-3xl font-semibold tracking-[-.025em] sm:text-4xl">{title}</h1>
         <p className="mt-2 max-w-3xl text-sm leading-6 text-muted-foreground sm:text-base">
           {description}
         </p>
@@ -81,11 +80,13 @@ export function AdminMetricCard({
             : "bg-primary/10 text-primary-text";
 
   return (
-    <article className="rounded-2xl border border-border bg-card p-5 shadow-sm">
-      <span className={"grid size-10 place-items-center rounded-xl " + toneClass}>{icon}</span>
-      <span className="mt-4 block text-xs font-medium text-muted-foreground">{label}</span>
-      <strong className="mt-1 block text-2xl tracking-tight">{value}</strong>
-      <small className="mt-1 block text-xs leading-5 text-muted-foreground">{hint}</small>
+    <article className="rounded-2xl border border-border bg-card p-6 shadow-sm">
+      <div className="flex items-start justify-between gap-3">
+        <span className="text-sm font-medium text-muted-foreground">{label}</span>
+        <span className={"grid size-9 shrink-0 place-items-center rounded-lg " + toneClass}>{icon}</span>
+      </div>
+      <strong className="mt-5 block break-words text-2xl font-semibold tracking-tight">{value}</strong>
+      <small className="mt-4 block text-sm leading-5 text-muted-foreground">{hint}</small>
     </article>
   );
 }

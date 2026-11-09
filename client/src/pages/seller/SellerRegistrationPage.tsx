@@ -85,14 +85,14 @@ export function SellerRegistrationPage() {
   return (
     <main className="min-h-screen bg-background pb-16 text-foreground">
       <div className="mx-auto mt-5 w-[min(1180px,calc(100%-32px))]">
-        <section className="overflow-hidden rounded-[1.75rem] border border-border bg-gradient-to-br from-violet-700 via-primary to-fuchsia-800 p-6 text-white shadow-xl sm:p-8">
-          <Badge className="border-white/15 bg-white/15 text-white backdrop-blur">
+        <section className="overflow-hidden rounded-2xl border border-border bg-card p-6 text-foreground shadow-sm sm:p-8">
+          <Badge className="border-border bg-accent text-accent-foreground">
             Seller onboarding
           </Badge>
-          <h1 className="mt-4 max-w-3xl text-3xl font-bold tracking-[-.04em] sm:text-4xl">
+          <h1 className="mt-4 max-w-3xl text-3xl font-semibold tracking-[-.025em] sm:text-4xl">
             Turn your business into a marketplace storefront.
           </h1>
-          <p className="mt-3 max-w-2xl text-sm leading-6 text-violet-100 sm:text-base">
+          <p className="mt-3 max-w-2xl text-sm leading-6 text-muted-foreground sm:text-base">
             Start an application, verify student status where required, add your business details, then submit for admin review.
           </p>
 
@@ -102,10 +102,10 @@ export function SellerRegistrationPage() {
               ["2", "Complete verification", "Student email only when required"],
               ["3", "Submit for review", "Admin approval creates your storefront"]
             ].map(([step, title, description]) => (
-              <div key={step} className="rounded-2xl border border-white/10 bg-white/[.07] p-4 backdrop-blur">
-                <span className="grid size-8 place-items-center rounded-lg bg-white/10 text-sm font-bold">{step}</span>
+              <div key={step} className="rounded-2xl border border-border bg-muted/40 p-4 backdrop-blur">
+                <span className="grid size-8 place-items-center rounded-lg bg-accent text-accent-foreground text-sm font-bold">{step}</span>
                 <strong className="mt-3 block text-sm">{title}</strong>
-                <span className="mt-1 block text-xs leading-5 text-violet-100">{description}</span>
+                <span className="mt-1 block text-xs leading-5 text-muted-foreground">{description}</span>
               </div>
             ))}
           </div>
@@ -124,7 +124,7 @@ export function SellerRegistrationPage() {
 
         <div className="mt-6 grid gap-6 lg:grid-cols-[360px_minmax(0,1fr)]">
           <section className="rounded-2xl border border-border bg-card p-5 shadow-sm lg:sticky lg:top-[92px] lg:self-start">
-            <span className="text-xs font-bold uppercase tracking-[.14em] text-primary-text">
+            <span className="text-xs font-bold uppercase tracking-[.1em] text-primary-text">
               Start an application
             </span>
             <h2 className="mt-2 text-xl font-semibold">Choose business type</h2>
@@ -189,7 +189,7 @@ export function SellerRegistrationPage() {
           <section className="min-w-0">
             <div className="mb-4 flex items-end justify-between gap-3">
               <div>
-                <span className="text-xs font-bold uppercase tracking-[.14em] text-primary-text">Applications</span>
+                <span className="text-xs font-bold uppercase tracking-[.1em] text-primary-text">Applications</span>
                 <h2 className="mt-1 text-2xl font-bold tracking-[-.03em]">Your seller applications</h2>
               </div>
               <span className="text-sm text-muted-foreground">{applications.length} total</span>

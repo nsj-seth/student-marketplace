@@ -94,9 +94,9 @@ export function SellerOrderDetailPage() {
 
   if (loading) {
     return (
-      <main className="min-h-screen bg-background p-5 sm:p-6">
+      <main className="min-h-screen bg-background p-4 sm:p-8">
         <div className="space-y-5">
-          <div className="h-36 animate-pulse rounded-3xl bg-muted" />
+          <div className="h-36 animate-pulse rounded-2xl bg-muted" />
           <div className="h-72 animate-pulse rounded-2xl bg-muted" />
           <div className="h-64 animate-pulse rounded-2xl bg-muted" />
         </div>
@@ -106,7 +106,7 @@ export function SellerOrderDetailPage() {
 
   if (!order) {
     return (
-      <main className="min-h-screen bg-background p-5 sm:p-6">
+      <main className="min-h-screen bg-background p-4 sm:p-8">
         <section className="rounded-2xl border border-border bg-card p-8 text-center shadow-sm">
           <PackageCheck className="mx-auto size-8 text-primary-text" />
           <h1 className="mt-4 text-2xl font-bold">Seller order unavailable</h1>
@@ -126,8 +126,8 @@ export function SellerOrderDetailPage() {
   }
 
   return (
-    <main className="min-h-screen bg-background p-5 text-foreground sm:p-6">
-      <section className="flex flex-col gap-5 rounded-[1.75rem] border border-border bg-card p-6 shadow-sm sm:flex-row sm:items-end sm:justify-between sm:p-8">
+    <main className="min-h-screen bg-background p-4 text-foreground sm:p-8">
+      <section className="flex flex-col gap-5 rounded-2xl border border-border bg-card p-6 shadow-sm sm:flex-row sm:items-end sm:justify-between sm:p-8">
         <div>
           <Link
             className="mb-3 inline-flex items-center gap-2 text-sm font-semibold text-primary-text"
@@ -139,7 +139,7 @@ export function SellerOrderDetailPage() {
           <span className="block text-xs font-semibold text-primary-text">
             {order.business_name}
           </span>
-          <h1 className="mt-1 text-3xl font-bold tracking-[-.04em]">
+          <h1 className="mt-1 text-3xl font-bold tracking-[-.025em]">
             {order.seller_order_number}
           </h1>
           <p className="mt-2 text-sm text-muted-foreground">
@@ -309,7 +309,7 @@ export function SellerOrderDetailPage() {
 
         <aside className="xl:sticky xl:top-[92px] xl:self-start">
           <section className="rounded-2xl border border-border bg-card p-5 shadow-sm">
-            <span className="text-xs font-bold uppercase tracking-[.14em] text-primary-text">
+            <span className="text-xs font-bold uppercase tracking-[.1em] text-primary-text">
               Update order
             </span>
             <h2 className="mt-2 text-xl font-semibold">

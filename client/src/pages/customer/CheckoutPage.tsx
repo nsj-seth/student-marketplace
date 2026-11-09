@@ -126,7 +126,7 @@ export function CheckoutPage() {
   if (!preview) {
     return (
       <main className="min-h-screen bg-background pb-16">
-        <section className="mx-auto mt-8 grid w-[min(720px,calc(100%-32px))] place-items-center rounded-[1.75rem] border border-border bg-card px-6 py-14 text-center shadow-sm">
+        <section className="mx-auto mt-8 grid w-[min(720px,calc(100%-32px))] place-items-center rounded-2xl border border-border bg-card px-6 py-14 text-center shadow-sm">
           <ShoppingCart className="size-8 text-primary-text" />
           <h1 className="mt-4 text-2xl font-bold">Checkout isn’t ready</h1>
           {error && <p className="mt-2 text-sm text-danger-foreground">{error}</p>}
@@ -145,15 +145,15 @@ export function CheckoutPage() {
   if (createdOrder) {
     return (
       <main className="min-h-screen bg-background pb-16">
-        <section className="mx-auto mt-8 w-[min(760px,calc(100%-32px))] overflow-hidden rounded-[2rem] border border-border bg-card shadow-xl">
+        <section className="mx-auto mt-8 w-[min(760px,calc(100%-32px))] overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
           <div className="bg-gradient-to-br from-emerald-700 to-emerald-800 px-6 py-10 text-center text-white sm:px-10">
             <span className="mx-auto grid size-16 place-items-center rounded-2xl bg-white/15 backdrop-blur">
               <CheckCircle2 className="size-8" />
             </span>
-            <span className="mt-5 block text-xs font-bold uppercase tracking-[.16em] text-emerald-100">
+            <span className="mt-5 block text-xs font-bold uppercase tracking-[.1em] text-emerald-100">
               Order placed
             </span>
-            <h1 className="mt-2 text-3xl font-bold tracking-[-.04em]">
+            <h1 className="mt-2 text-3xl font-bold tracking-[-.025em]">
               Your order is in.
             </h1>
             <p className="mt-3 text-sm text-emerald-50">
@@ -219,7 +219,7 @@ export function CheckoutPage() {
               <ClipboardCheck className="size-3.5" />
               Checkout
             </Badge>
-            <h1 className="text-3xl font-bold tracking-[-.04em] sm:text-4xl">
+            <h1 className="text-3xl font-bold tracking-[-.025em] sm:text-4xl">
               Complete your order
             </h1>
             <p className="mt-2 text-sm text-muted-foreground sm:text-base">
@@ -452,7 +452,7 @@ export function CheckoutPage() {
 
           <aside className="lg:sticky lg:top-[92px] lg:self-start">
             <div className="rounded-2xl border border-border bg-card p-5 shadow-sm">
-              <span className="text-xs font-bold uppercase tracking-[.14em] text-primary-text">
+              <span className="text-xs font-bold uppercase tracking-[.1em] text-primary-text">
                 Order summary
               </span>
               <h2 className="mt-2 text-xl font-semibold">

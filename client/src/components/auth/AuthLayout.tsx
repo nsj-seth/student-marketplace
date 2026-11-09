@@ -41,7 +41,7 @@ export function AuthLayout({
   return (
     <main className="min-h-screen bg-background text-foreground">
       <div className="mx-auto grid min-h-[calc(100vh-72px)] w-[min(1180px,calc(100%-32px))] items-stretch gap-6 py-6 lg:grid-cols-[1.05fr_.95fr]">
-        <section className="relative overflow-hidden rounded-[2rem] hero-surface p-7 text-hero-foreground shadow-2xl shadow-violet-950/10 sm:p-10 lg:p-12">
+        <section className="relative overflow-hidden rounded-2xl hero-surface p-7 text-hero-foreground shadow-sm sm:p-10 lg:p-12">
           <div className="relative flex h-full flex-col">
             <Link className="inline-flex w-fit items-center gap-2 text-sm font-semibold text-hero-foreground" to="/">
               <span className="grid size-9 place-items-center rounded-xl bg-card/70">

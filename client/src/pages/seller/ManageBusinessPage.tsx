@@ -245,7 +245,7 @@ export function ManageBusinessPage() {
 
   if (loading) {
     return (
-      <main className="min-h-screen bg-background p-5 sm:p-6">
+      <main className="min-h-screen bg-background p-4 sm:p-8">
         <div className="h-96 animate-pulse rounded-2xl bg-muted" />
       </main>
     );
@@ -253,7 +253,7 @@ export function ManageBusinessPage() {
 
   if (!business) {
     return (
-      <main className="min-h-screen bg-background p-5 sm:p-6">
+      <main className="min-h-screen bg-background p-4 sm:p-8">
         <section className="rounded-2xl border border-border bg-card p-8 text-center shadow-sm">
           <Building2 className="mx-auto size-8 text-primary-text" />
           <h1 className="mt-4 text-2xl font-bold">Business not found</h1>
@@ -271,14 +271,14 @@ export function ManageBusinessPage() {
   }
 
   return (
-    <main className="min-h-screen bg-background p-5 text-foreground sm:p-6">
-      <section className="flex flex-col gap-5 rounded-[1.75rem] border border-border bg-card p-6 shadow-sm sm:flex-row sm:items-end sm:justify-between sm:p-8">
+    <main className="min-h-screen bg-background p-4 text-foreground sm:p-8">
+      <section className="flex flex-col gap-5 rounded-2xl border border-border bg-card p-6 shadow-sm sm:flex-row sm:items-end sm:justify-between sm:p-8">
         <div>
           <Badge variant="secondary" className="mb-3 gap-1.5">
             <Building2 className="size-3.5" />
             Seller Hub · Store settings
           </Badge>
-          <h1 className="text-3xl font-bold tracking-[-.04em]">
+          <h1 className="text-3xl font-bold tracking-[-.025em]">
             Manage {business.name}
           </h1>
           <p className="mt-2 max-w-2xl text-sm text-muted-foreground">

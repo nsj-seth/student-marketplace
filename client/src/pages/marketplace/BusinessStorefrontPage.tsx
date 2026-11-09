@@ -73,7 +73,7 @@ export function BusinessStorefrontPage() {
     return (
       <main className="min-h-screen bg-background pb-16">
         <div className="mx-auto mt-6 w-[min(1240px,calc(100%-32px))]">
-          <div className="h-64 animate-pulse rounded-[1.75rem] bg-muted" />
+          <div className="h-64 animate-pulse rounded-2xl bg-muted" />
           <div className="mt-6 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
             {Array.from({ length: 6 }).map((_, index) => (
               <div key={index} className="overflow-hidden rounded-2xl border border-border bg-card">
@@ -119,16 +119,14 @@ export function BusinessStorefrontPage() {
           <span className="max-w-[280px] truncate text-foreground">{business.name}</span>
         </nav>
 
-        <section className="overflow-hidden rounded-[1.75rem] border border-border bg-card shadow-sm">
-          <div className="relative h-44 overflow-hidden bg-gradient-to-br from-violet-800 via-primary to-fuchsia-500 sm:h-52">
-            <div className="absolute -right-16 -top-16 size-56 rounded-full border border-white/15" />
-            <div className="absolute left-1/3 top-10 size-40 rounded-full bg-white/10 blur-3xl" />
+        <section className="overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
+          <div className="hero-surface relative h-36 overflow-hidden sm:h-44">
           </div>
 
           <div className="relative px-6 pb-7 sm:px-8">
             <div className="-mt-12 flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
               <div className="flex min-w-0 flex-col gap-4 sm:flex-row sm:items-end">
-                <div className="grid size-24 shrink-0 place-items-center overflow-hidden rounded-3xl border-4 border-card bg-card shadow-xl">
+                <div className="grid size-24 shrink-0 place-items-center overflow-hidden rounded-2xl border-4 border-card bg-card shadow-sm">
                   {logoUrl ? (
                     <img src={logoUrl} alt={`${business.name} logo`} className="h-full w-full object-cover" />
                   ) : (
@@ -148,7 +146,7 @@ export function BusinessStorefrontPage() {
                     </Badge>
                   </div>
 
-                  <h1 className="mt-3 text-3xl font-bold tracking-[-.04em] sm:text-4xl">{business.name}</h1>
+                  <h1 className="mt-3 text-3xl font-bold tracking-[-.025em] sm:text-4xl">{business.name}</h1>
 
                   <div className="mt-2 flex flex-wrap items-center gap-3 text-sm text-muted-foreground">
                     <span className="flex items-center gap-1">
@@ -274,7 +272,7 @@ export function BusinessStorefrontPage() {
         <section className="mt-10">
           <div className="mb-6 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
             <div>
-              <span className="text-xs font-bold uppercase tracking-[.14em] text-primary-text">Shop the store</span>
+              <span className="text-xs font-bold uppercase tracking-[.1em] text-primary-text">Shop the store</span>
               <h2 className="mt-1 text-2xl font-bold tracking-[-.03em]">Products from {business.name}</h2>
             </div>
             <span className="text-sm text-muted-foreground">
@@ -298,7 +296,7 @@ export function BusinessStorefrontPage() {
 
                 return (
                   <article
-                    className="group overflow-hidden rounded-2xl border border-border/80 bg-card shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-primary/5"
+                    className="group overflow-hidden rounded-2xl border border-border/80 bg-card shadow-sm transition-all duration-300 hover:shadow-sm"
                     key={product.id}
                   >
                     <Link
@@ -309,7 +307,7 @@ export function BusinessStorefrontPage() {
                         <img
                           src={url}
                           alt={image?.alt_text ?? product.name}
-                          className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.04]"
+                          className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.02]"
                         />
                       ) : (
                         <div className="grid h-full place-items-center text-muted-foreground">

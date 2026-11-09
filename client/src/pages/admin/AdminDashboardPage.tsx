@@ -41,9 +41,9 @@ export function AdminDashboardPage() {
 
   if (loading) {
     return (
-      <main className="min-h-screen bg-background p-5 sm:p-6">
+      <main className="min-h-screen bg-background p-4 sm:p-8">
         <div className="space-y-5">
-          <div className="h-44 animate-pulse rounded-3xl bg-muted" />
+          <div className="h-44 animate-pulse rounded-2xl bg-muted" />
           <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
             {Array.from({ length: 8 }).map((_, index) => (
               <div key={index} className="h-28 animate-pulse rounded-2xl bg-muted" />
@@ -55,7 +55,7 @@ export function AdminDashboardPage() {
   }
 
   return (
-    <main className="min-h-screen bg-background p-5 text-foreground sm:p-6">
+    <main className="min-h-screen bg-background p-4 text-foreground sm:p-8">
       <AdminPageHeader
         eyebrow="Marketplace control center"
         title="Admin overview"
@@ -90,51 +90,57 @@ export function AdminDashboardPage() {
           <section className="mt-5 grid gap-4 md:grid-cols-3">
             <Link
               to="/admin/seller-applications"
-              className="group rounded-2xl border border-border bg-card p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
+              className="group rounded-2xl border border-primary bg-primary text-primary-foreground p-6 shadow-sm transition hover:shadow-sm"
             >
-              <div className="flex items-start justify-between gap-4">
-                <span className="grid size-10 place-items-center rounded-xl bg-warning-soft text-warning-foreground">
+              <div className="flex items-start justify-between gap-3">
+                <span className="text-sm font-medium text-white">Seller applications</span>
+                <span className="flex shrink-0 items-center gap-2">
+                <span className="grid size-10 place-items-center rounded-xl bg-white/15 text-white">
                   <Store className="size-5" />
                 </span>
-                <ArrowRight className="size-4 text-muted-foreground transition group-hover:text-primary-text" />
+                <ArrowRight className="size-4 text-white transition group-hover:text-white" />
+              </span>
               </div>
-              <span className="mt-4 block text-xs font-medium text-muted-foreground">Seller applications</span>
-              <strong className="mt-1 block text-3xl">{data.metrics.pendingSellerApplications}</strong>
-              <p className="mt-1 text-sm text-muted-foreground">
+              <strong className="mt-5 block text-3xl font-semibold tracking-tight">{data.metrics.pendingSellerApplications}</strong>
+              <p className="mt-4 text-sm text-white">
                 {data.metrics.pendingSellerApplications > 0 ? "Awaiting admin decision" : "Nothing waiting"}
               </p>
             </Link>
 
             <Link
               to="/admin/reports"
-              className="group rounded-2xl border border-border bg-card p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
+              className="group rounded-2xl border border-border bg-card text-foreground p-6 shadow-sm transition hover:shadow-sm"
             >
-              <div className="flex items-start justify-between gap-4">
+              <div className="flex items-start justify-between gap-3">
+                <span className="text-sm font-medium text-muted-foreground">Moderation reports</span>
+                <span className="flex shrink-0 items-center gap-2">
                 <span className="grid size-10 place-items-center rounded-xl bg-danger-soft text-danger-foreground">
                   <FileWarning className="size-5" />
                 </span>
                 <ArrowRight className="size-4 text-muted-foreground transition group-hover:text-primary-text" />
+              </span>
               </div>
-              <span className="mt-4 block text-xs font-medium text-muted-foreground">Moderation reports</span>
-              <strong className="mt-1 block text-3xl">{data.metrics.pendingReports}</strong>
-              <p className="mt-1 text-sm text-muted-foreground">
+              <strong className="mt-5 block text-3xl font-semibold tracking-tight">{data.metrics.pendingReports}</strong>
+              <p className="mt-4 text-sm text-muted-foreground">
                 {data.metrics.pendingReports > 0 ? "Needs moderation review" : "Queue is clear"}
               </p>
             </Link>
 
             <Link
               to="/admin/orders"
-              className="group rounded-2xl border border-border bg-card p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
+              className="group rounded-2xl border border-border bg-card text-foreground p-6 shadow-sm transition hover:shadow-sm"
             >
-              <div className="flex items-start justify-between gap-4">
+              <div className="flex items-start justify-between gap-3">
+                <span className="text-sm font-medium text-muted-foreground">Orders · 30 days</span>
+                <span className="flex shrink-0 items-center gap-2">
                 <span className="grid size-10 place-items-center rounded-xl bg-info-soft text-info-foreground">
                   <TrendingUp className="size-5" />
                 </span>
                 <ArrowRight className="size-4 text-muted-foreground transition group-hover:text-primary-text" />
+              </span>
               </div>
-              <span className="mt-4 block text-xs font-medium text-muted-foreground">Orders · 30 days</span>
-              <strong className="mt-1 block text-3xl">{data.metrics.ordersLast30Days}</strong>
-              <p className="mt-1 text-sm text-muted-foreground">
+              <strong className="mt-5 block text-3xl font-semibold tracking-tight">{data.metrics.ordersLast30Days}</strong>
+              <p className="mt-4 text-sm text-muted-foreground">
                 {money(data.metrics.orderValueLast30Days)} in order value
               </p>
             </Link>
@@ -200,7 +206,7 @@ export function AdminDashboardPage() {
             <article className="rounded-2xl border border-border bg-card shadow-sm">
               <div className="flex items-center justify-between border-b border-border p-5">
                 <div>
-                  <span className="text-xs font-bold uppercase tracking-[.14em] text-primary-text">Orders</span>
+                  <span className="text-xs font-bold uppercase tracking-[.1em] text-primary-text">Orders</span>
                   <h2 className="mt-1 text-lg font-semibold">Overall status</h2>
                 </div>
                 <Link className="text-sm font-semibold text-primary-text" to="/admin/orders">View orders</Link>
@@ -217,7 +223,7 @@ export function AdminDashboardPage() {
 
             <article className="rounded-2xl border border-border bg-card shadow-sm">
               <div className="border-b border-border p-5">
-                <span className="text-xs font-bold uppercase tracking-[.14em] text-primary-text">Fulfilment</span>
+                <span className="text-xs font-bold uppercase tracking-[.1em] text-primary-text">Fulfilment</span>
                 <h2 className="mt-1 text-lg font-semibold">Seller-order status</h2>
               </div>
               <div className="divide-y divide-border">
@@ -235,7 +241,7 @@ export function AdminDashboardPage() {
             <article className="rounded-2xl border border-border bg-card shadow-sm">
               <div className="flex items-center justify-between border-b border-border p-5">
                 <div>
-                  <span className="text-xs font-bold uppercase tracking-[.14em] text-primary-text">Latest activity</span>
+                  <span className="text-xs font-bold uppercase tracking-[.1em] text-primary-text">Latest activity</span>
                   <h2 className="mt-1 text-lg font-semibold">Recent orders</h2>
                 </div>
                 <Link className="text-sm font-semibold text-primary-text" to="/admin/orders">View all</Link>
@@ -266,7 +272,7 @@ export function AdminDashboardPage() {
             <article className="rounded-2xl border border-border bg-card shadow-sm">
               <div className="flex items-center justify-between border-b border-border p-5">
                 <div>
-                  <span className="text-xs font-bold uppercase tracking-[.14em] text-primary-text">Performance</span>
+                  <span className="text-xs font-bold uppercase tracking-[.1em] text-primary-text">Performance</span>
                   <h2 className="mt-1 text-lg font-semibold">Top businesses</h2>
                 </div>
                 <Link className="text-sm font-semibold text-primary-text" to="/admin/businesses">Manage</Link>
@@ -290,7 +296,7 @@ export function AdminDashboardPage() {
 
           <section className="mt-5">
             <div className="mb-4">
-              <span className="text-xs font-bold uppercase tracking-[.14em] text-primary-text">Operations</span>
+              <span className="text-xs font-bold uppercase tracking-[.1em] text-primary-text">Operations</span>
               <h2 className="mt-1 text-2xl font-bold tracking-[-.03em]">Manage marketplace</h2>
             </div>
             <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
@@ -306,7 +312,7 @@ export function AdminDashboardPage() {
               ].map(([to, title, description, Icon]) => (
                 <Link
                   key={String(to)}
-                  className="group rounded-2xl border border-border bg-card p-4 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
+                  className="group rounded-2xl border border-border bg-card text-foreground p-4 shadow-sm transition hover:shadow-sm"
                   to={String(to)}
                 >
                   <span className="grid size-9 place-items-center rounded-xl bg-primary/10 text-primary-text">
@@ -321,17 +327,17 @@ export function AdminDashboardPage() {
 
           <section className="mt-5 grid gap-4 md:grid-cols-3">
             <div className="rounded-2xl border border-border bg-card p-5 shadow-sm">
-              <span className="text-xs font-bold uppercase tracking-[.14em] text-primary-text">Business mix</span>
+              <span className="text-xs font-bold uppercase tracking-[.1em] text-primary-text">Business mix</span>
               <strong className="mt-2 block text-2xl">{data.metrics.studentBusinesses}</strong>
               <small className="text-xs text-muted-foreground">Student businesses</small>
             </div>
             <div className="rounded-2xl border border-border bg-card p-5 shadow-sm">
-              <span className="text-xs font-bold uppercase tracking-[.14em] text-primary-text">Business mix</span>
+              <span className="text-xs font-bold uppercase tracking-[.1em] text-primary-text">Business mix</span>
               <strong className="mt-2 block text-2xl">{data.metrics.otherBusinesses}</strong>
               <small className="text-xs text-muted-foreground">Other businesses</small>
             </div>
             <div className="rounded-2xl border border-border bg-card p-5 shadow-sm">
-              <span className="text-xs font-bold uppercase tracking-[.14em] text-primary-text">30-day value</span>
+              <span className="text-xs font-bold uppercase tracking-[.1em] text-primary-text">30-day value</span>
               <strong className="mt-2 block text-2xl">{money(data.metrics.orderValueLast30Days)}</strong>
               <small className="text-xs text-muted-foreground">Order value, not captured payments</small>
             </div>

@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState, type FormEvent, type ReactNode } from "react";
+import { Fragment, useEffect, useMemo, useState, type FormEvent, type ReactNode } from "react";
 import {
   Bell,
   Building2,
@@ -51,7 +51,7 @@ function Brand() {
       to="/"
       aria-label="Student Marketplace home"
     >
-      <span className="grid size-10 place-items-center rounded-2xl bg-primary text-primary-foreground shadow-sm transition-transform duration-200 group-hover:-rotate-3 group-hover:scale-[1.03]">
+      <span className="grid size-10 place-items-center rounded-xl bg-primary text-primary-foreground shadow-sm transition-transform duration-200">
         <ShoppingBag className="size-5" strokeWidth={2.1} aria-hidden="true" />
       </span>
       <span className="hidden leading-none sm:grid">
@@ -122,7 +122,7 @@ function IconLink({
       to={to}
       aria-label={label}
       title={label}
-      className="relative grid size-10 place-items-center rounded-xl border border-border bg-card text-muted-foreground shadow-xs transition-all hover:-translate-y-px hover:border-primary/25 hover:bg-accent hover:text-accent-foreground hover:shadow-sm"
+      className="relative grid size-10 place-items-center rounded-xl border border-border bg-card text-muted-foreground shadow-xs transition-all hover:border-primary/25 hover:bg-accent hover:text-accent-foreground hover:shadow-sm"
     >
       {children}
       {!!badge && (
@@ -205,10 +205,10 @@ export function AppShell({ children }: AppShellProps) {
       return [
         ["/admin", "Overview"],
         ["/admin/seller-applications", "Seller applications"],
-        ["/admin/users", "Users"],
         ["/admin/businesses", "Businesses"],
         ["/admin/products", "Products"],
         ["/admin/orders", "Orders"],
+        ["/admin/users", "Users"],
         ["/admin/reports", "Reports"],
         ["/admin/marketplace", "Marketplace"],
         ["/admin/reference-data", "Reference data"]
@@ -228,10 +228,13 @@ export function AppShell({ children }: AppShellProps) {
   }, [isAdminArea, isSellerArea]);
 
   const avatar = (user?.email?.[0] ?? "U").toUpperCase();
+  const workspaceGroups: Record<string, string> = isAdminArea
+    ? { "/admin": "Workspace", "/admin/seller-applications": "Commerce", "/admin/users": "Administration" }
+    : { "/seller": "Workspace", "/seller/businesses": "Your business" };
 
   return (
     <div className="app-root bg-background text-foreground">
-      <header className="sticky top-0 z-50 border-b border-border/90 bg-background/90 backdrop-blur-xl">
+      <header className="sticky top-0 z-50 border-b border-border bg-card">
         <div className="mx-auto flex min-h-[72px] w-[min(1240px,calc(100%-32px))] items-center gap-4">
           <Brand />
 
@@ -301,7 +304,7 @@ export function AppShell({ children }: AppShellProps) {
                   {accountOpen && (
                     <div
                       role="menu"
-                      className="absolute right-0 top-[calc(100%+10px)] w-64 overflow-hidden rounded-2xl border border-border bg-popover p-2 text-popover-foreground shadow-xl"
+                      className="absolute right-0 top-[calc(100%+10px)] w-64 overflow-hidden rounded-2xl border border-border bg-popover p-2 text-popover-foreground shadow-sm"
                     >
                       <div className="border-b border-border px-3 py-2.5">
                         <p className="m-0 truncate text-sm font-semibold text-foreground">{user.email}</p>
@@ -360,7 +363,7 @@ export function AppShell({ children }: AppShellProps) {
             <Button
               variant="outline"
               size="icon"
-              className="md:hidden"
+              className="xl:hidden"
               aria-expanded={menuOpen}
               aria-label={menuOpen ? "Close navigation" : "Open navigation"}
               onClick={() => setMenuOpen((value) => !value)}
@@ -371,7 +374,7 @@ export function AppShell({ children }: AppShellProps) {
         </div>
 
         {menuOpen && (
-          <div className="border-t border-border bg-background md:hidden">
+          <div className="border-t border-border bg-card xl:hidden">
             <div className="mx-auto grid w-[min(1240px,calc(100%-32px))] gap-4 py-4">
               <form className="relative" onSubmit={submitSearch} role="search">
                 <Search
@@ -470,27 +473,29 @@ export function AppShell({ children }: AppShellProps) {
             </div>
             <nav className="workspace-nav" aria-label={isAdminArea ? "Admin navigation" : "Seller navigation"}>
               {workspaceLinks.map(([to, label]) => (
-                <NavLink
-                  key={to}
-                  className={({ isActive }) =>
-                    cn(
-                      "workspace-nav__link",
-                      (isSellerArea || isAdminArea) && "flex items-center gap-2.5",
-                      isActive && "workspace-nav__link--active"
-                    )
-                  }
-                  end={to === "/admin" || to === "/seller"}
-                  to={to}
-                >
-                  {isSellerArea && sellerNavIcon(to)}
-                  {isAdminArea && adminNavIcon(to)}
-                  <span>{label}</span>
-                </NavLink>
+                <Fragment key={to}>
+                  {workspaceGroups[to] && <span className="workspace-nav__label">{workspaceGroups[to]}</span>}
+                  <NavLink
+                    className={({ isActive }) =>
+                      cn(
+                        "workspace-nav__link",
+                        (isSellerArea || isAdminArea) && "flex items-center gap-2.5",
+                        isActive && "workspace-nav__link--active"
+                      )
+                    }
+                    end={to === "/admin" || to === "/seller"}
+                    to={to}
+                  >
+                    {isSellerArea && sellerNavIcon(to)}
+                    {isAdminArea && adminNavIcon(to)}
+                    <span>{label}</span>
+                  </NavLink>
+                </Fragment>
               ))}
             </nav>
             <div className="workspace-sidebar__footer">
-              <Link to="/">Back to marketplace</Link>
-              <Link to="/profile">Account settings</Link>
+              <Link className="text-muted-foreground hover:text-foreground" to="/">Back to marketplace</Link>
+              <Link className="text-muted-foreground hover:text-foreground" to="/profile">Account settings</Link>
             </div>
           </aside>
           <div className="workspace-content">{children}</div>

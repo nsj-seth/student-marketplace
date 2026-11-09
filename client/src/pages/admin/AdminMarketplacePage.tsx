@@ -75,7 +75,7 @@ export function AdminMarketplacePage() {
   }
 
   return (
-    <main className="min-h-screen bg-background p-5 text-foreground sm:p-6">
+    <main className="min-h-screen bg-background p-4 text-foreground sm:p-8">
       <AdminPageHeader
         eyebrow="Marketplace curation"
         title="Featured listings"
@@ -96,7 +96,7 @@ export function AdminMarketplacePage() {
             <div className="border-b border-border p-5">
               <div className="flex items-center justify-between gap-3">
                 <div>
-                  <span className="text-xs font-bold uppercase tracking-[.14em] text-primary-text">Businesses</span>
+                  <span className="text-xs font-bold uppercase tracking-[.1em] text-primary-text">Businesses</span>
                   <h2 className="mt-1 text-lg font-semibold">Featured stores</h2>
                 </div>
                 <Badge variant="secondary">
@@ -147,7 +147,7 @@ export function AdminMarketplacePage() {
             <div className="border-b border-border p-5">
               <div className="flex items-center justify-between gap-3">
                 <div>
-                  <span className="text-xs font-bold uppercase tracking-[.14em] text-primary-text">Products</span>
+                  <span className="text-xs font-bold uppercase tracking-[.1em] text-primary-text">Products</span>
                   <h2 className="mt-1 text-lg font-semibold">Featured products</h2>
                 </div>
                 <Badge variant="secondary">

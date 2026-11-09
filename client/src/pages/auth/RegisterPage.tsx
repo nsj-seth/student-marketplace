@@ -56,13 +56,13 @@ export function RegisterPage() {
     >
       <form
         onSubmit={handleSubmit}
-        className="rounded-[1.75rem] border border-border bg-card p-6 shadow-xl shadow-primary/5 sm:p-8"
+        className="rounded-2xl border border-border bg-card p-6 shadow-sm shadow-primary/5 sm:p-8"
       >
         <div>
-          <span className="text-xs font-bold uppercase tracking-[.14em] text-primary-text">
+          <span className="text-xs font-bold uppercase tracking-[.1em] text-primary-text">
             Create account
           </span>
-          <h2 className="mt-2 text-3xl font-bold tracking-[-.04em]">Join Student Marketplace</h2>
+          <h2 className="mt-2 text-3xl font-bold tracking-[-.025em]">Join Student Marketplace</h2>
           <p className="mt-2 text-sm leading-6 text-muted-foreground">
             Create your customer account in a few seconds.
           </p>

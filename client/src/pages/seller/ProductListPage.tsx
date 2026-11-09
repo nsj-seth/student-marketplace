@@ -151,7 +151,7 @@ export function ProductListPage() {
 
   if (loading) {
     return (
-      <main className="min-h-screen bg-background p-5 sm:p-6">
+      <main className="min-h-screen bg-background p-4 sm:p-8">
         <div className="grid gap-4 xl:grid-cols-2">
           {Array.from({ length: 4 }).map((_, index) => (
             <div key={index} className="h-60 animate-pulse rounded-2xl bg-muted" />
@@ -162,14 +162,14 @@ export function ProductListPage() {
   }
 
   return (
-    <main className="min-h-screen bg-background p-5 text-foreground sm:p-6">
-      <section className="flex flex-col gap-5 rounded-[1.75rem] border border-border bg-card p-6 shadow-sm sm:flex-row sm:items-end sm:justify-between sm:p-8">
+    <main className="min-h-screen bg-background p-4 text-foreground sm:p-8">
+      <section className="flex flex-col gap-5 rounded-2xl border border-border bg-card p-6 shadow-sm sm:flex-row sm:items-end sm:justify-between sm:p-8">
         <div>
           <Badge variant="secondary" className="mb-3 gap-1.5">
             <Boxes className="size-3.5" />
             Seller Hub · Inventory
           </Badge>
-          <h1 className="text-3xl font-bold tracking-[-.04em]">
+          <h1 className="text-3xl font-bold tracking-[-.025em]">
             {business ? business.name + " products" : "Products"}
           </h1>
           <p className="mt-2 max-w-2xl text-sm leading-6 text-muted-foreground">

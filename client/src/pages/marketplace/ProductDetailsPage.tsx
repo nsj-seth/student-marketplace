@@ -141,8 +141,8 @@ export function ProductDetailsPage() {
     return (
       <main className="min-h-screen bg-background pb-16">
         <div className="mx-auto mt-6 grid w-[min(1240px,calc(100%-32px))] gap-6 lg:grid-cols-[1.08fr_.92fr]">
-          <div className="aspect-square animate-pulse rounded-3xl bg-muted" />
-          <div className="space-y-4 rounded-3xl border border-border bg-card p-6">
+          <div className="aspect-square animate-pulse rounded-2xl bg-muted" />
+          <div className="space-y-4 rounded-2xl border border-border bg-card p-6">
             <div className="h-5 w-24 animate-pulse rounded bg-muted" />
             <div className="h-10 w-4/5 animate-pulse rounded bg-muted" />
             <div className="h-7 w-40 animate-pulse rounded bg-muted" />
@@ -186,7 +186,7 @@ export function ProductDetailsPage() {
 
         <section className="grid gap-8 lg:grid-cols-[1.08fr_.92fr]">
           <div>
-            <div className="overflow-hidden rounded-[1.75rem] border border-border bg-muted shadow-sm">
+            <div className="overflow-hidden rounded-2xl border border-border bg-muted shadow-sm">
               {selectedImage ? (
                 <img
                   className="aspect-square h-full w-full object-cover"
@@ -227,7 +227,7 @@ export function ProductDetailsPage() {
           </div>
 
           <div className="lg:sticky lg:top-[92px] lg:self-start">
-            <div className="rounded-[1.75rem] border border-border bg-card p-6 shadow-sm sm:p-7">
+            <div className="rounded-2xl border border-border bg-card p-6 shadow-sm sm:p-7">
               <div className="flex flex-wrap items-center gap-2">
                 <Badge variant="secondary">{product.category?.name ?? "Product"}</Badge>
                 <Badge variant={product.status === "OUT_OF_STOCK" ? "secondary" : "success"}>
@@ -235,7 +235,7 @@ export function ProductDetailsPage() {
                 </Badge>
               </div>
 
-              <h1 className="mt-4 text-3xl font-bold tracking-[-.04em] sm:text-4xl">{product.name}</h1>
+              <h1 className="mt-4 text-3xl font-bold tracking-[-.025em] sm:text-4xl">{product.name}</h1>
 
               <div className="mt-3 flex flex-wrap items-center gap-3 text-sm">
                 {product.review_count > 0 ? (

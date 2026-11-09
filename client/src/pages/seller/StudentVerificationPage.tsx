@@ -147,7 +147,7 @@ export function StudentVerificationPage() {
     return (
       <main className="min-h-screen bg-background pb-16">
         <div className="mx-auto mt-8 w-[min(820px,calc(100%-32px))]">
-          <div className="h-96 animate-pulse rounded-3xl bg-muted" />
+          <div className="h-96 animate-pulse rounded-2xl bg-muted" />
         </div>
       </main>
     );
@@ -191,12 +191,12 @@ export function StudentVerificationPage() {
   return (
     <main className="min-h-screen bg-background pb-16 text-foreground">
       <div className="mx-auto mt-5 w-[min(900px,calc(100%-32px))]">
-        <section className="rounded-[1.75rem] border border-border bg-gradient-to-br from-accent/60 via-card to-background p-6 shadow-sm sm:p-8">
+        <section className="rounded-2xl border border-border bg-card p-6 shadow-sm sm:p-8">
           <Badge variant="secondary" className="mb-3 gap-1.5">
             <GraduationCap className="size-3.5" />
             Seller onboarding · Student verification
           </Badge>
-          <h1 className="text-3xl font-bold tracking-[-.04em]">Verify your student email</h1>
+          <h1 className="text-3xl font-bold tracking-[-.025em]">Verify your student email</h1>
           <p className="mt-2 max-w-2xl text-sm leading-6 text-muted-foreground">
             Confirm that you control a valid student email from the university linked to this application.
           </p>

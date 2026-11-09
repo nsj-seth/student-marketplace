@@ -40,13 +40,13 @@ export function MyOrdersPage() {
   return (
     <main className="min-h-screen bg-background pb-16 text-foreground">
       <div className="mx-auto mt-5 w-[min(1100px,calc(100%-32px))]">
-        <section className="flex flex-col gap-5 rounded-[1.75rem] border border-border bg-gradient-to-br from-accent/60 via-card to-background p-6 shadow-sm sm:flex-row sm:items-center sm:justify-between sm:p-8">
+        <section className="flex flex-col gap-5 rounded-2xl border border-border bg-card p-6 shadow-sm sm:flex-row sm:items-center sm:justify-between sm:p-8">
           <div>
             <Badge variant="secondary" className="mb-3 gap-1.5">
               <Package className="size-3.5" />
               My purchases
             </Badge>
-            <h1 className="text-3xl font-bold tracking-[-.04em]">Orders & tracking</h1>
+            <h1 className="text-3xl font-bold tracking-[-.025em]">Orders & tracking</h1>
             <p className="mt-2 max-w-2xl text-sm leading-6 text-muted-foreground">
               Follow each seller independently from acceptance to pickup or delivery.
             </p>

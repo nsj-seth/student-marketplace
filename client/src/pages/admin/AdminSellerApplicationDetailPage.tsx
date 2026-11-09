@@ -56,7 +56,7 @@ export function AdminSellerApplicationDetailPage() {
 
   if (loading) {
     return (
-      <main className="min-h-screen bg-background p-5 sm:p-6">
+      <main className="min-h-screen bg-background p-4 sm:p-8">
         <div className="h-96 animate-pulse rounded-2xl bg-muted" />
       </main>
     );
@@ -64,7 +64,7 @@ export function AdminSellerApplicationDetailPage() {
 
   if (!application) {
     return (
-      <main className="min-h-screen bg-background p-5 sm:p-6">
+      <main className="min-h-screen bg-background p-4 sm:p-8">
         <section className="rounded-2xl border border-border bg-card p-8 text-center shadow-sm">
           <Store className="mx-auto size-8 text-primary-text" />
           <h1 className="mt-4 text-2xl font-bold">Application not found</h1>
@@ -79,16 +79,16 @@ export function AdminSellerApplicationDetailPage() {
   }
 
   return (
-    <main className="min-h-screen bg-background p-5 text-foreground sm:p-6">
-      <section className="rounded-[1.75rem] border border-border bg-card p-6 shadow-sm sm:p-8">
+    <main className="min-h-screen bg-background p-4 text-foreground sm:p-8">
+      <section className="rounded-2xl border border-border bg-card p-6 shadow-sm sm:p-8">
         <Link className="inline-flex items-center gap-2 text-sm font-semibold text-primary-text" to="/admin/seller-applications">
           <ArrowLeft className="size-4" />
           Seller applications
         </Link>
         <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
           <div>
-            <span className="text-xs font-bold uppercase tracking-[.14em] text-primary-text">Application review</span>
-            <h1 className="mt-2 text-3xl font-bold tracking-[-.04em]">{application.business_name ?? "Seller application"}</h1>
+            <span className="text-xs font-bold uppercase tracking-[.1em] text-primary-text">Application review</span>
+            <h1 className="mt-2 text-3xl font-bold tracking-[-.025em]">{application.business_name ?? "Seller application"}</h1>
           </div>
           <Badge variant={application.status === "PENDING" ? "warning" : application.status === "APPROVED" ? "success" : "destructive"}>
             {application.status}

@@ -57,14 +57,14 @@ export function SellerReviewsPage() {
   }, [reviews]);
 
   return (
-    <main className="min-h-screen bg-background p-5 text-foreground sm:p-6">
-      <section className="flex flex-col gap-5 rounded-[1.75rem] border border-border bg-card p-6 shadow-sm sm:flex-row sm:items-end sm:justify-between sm:p-8">
+    <main className="min-h-screen bg-background p-4 text-foreground sm:p-8">
+      <section className="flex flex-col gap-5 rounded-2xl border border-border bg-card p-6 shadow-sm sm:flex-row sm:items-end sm:justify-between sm:p-8">
         <div>
           <Badge variant="secondary" className="mb-3 gap-1.5">
             <MessageSquareText className="size-3.5" />
             Seller Hub · Reputation
           </Badge>
-          <h1 className="text-3xl font-bold tracking-[-.04em]">
+          <h1 className="text-3xl font-bold tracking-[-.025em]">
             Reviews
           </h1>
           <p className="mt-2 max-w-2xl text-sm leading-6 text-muted-foreground">

@@ -68,7 +68,7 @@ function ProductCard({
   const image = productImage(product);
 
   return (
-    <Card className="group overflow-hidden rounded-[1.35rem] border-border/80 bg-card shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-primary/5">
+    <Card className="group overflow-hidden rounded-2xl border-border/80 bg-card shadow-sm transition-all duration-300 hover:shadow-sm">
       <Link
         className="relative block aspect-[4/3] overflow-hidden bg-muted"
         to={`/products/${product.id}/${product.slug}`}
@@ -77,7 +77,7 @@ function ProductCard({
           <img
             src={image}
             alt={product.name}
-            className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.04]"
+            className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.02]"
           />
         ) : (
           <div className="grid h-full place-items-center bg-gradient-to-br from-muted to-accent/70 text-muted-foreground">
@@ -150,17 +150,15 @@ function BusinessCard({
   const logo = businessLogo(business.logo_path);
 
   return (
-    <Card className="group overflow-hidden rounded-[1.35rem] border-border/80 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-primary/5">
-      <div className="relative h-24 overflow-hidden bg-gradient-to-br from-violet-800 via-primary to-violet-700">
-        <div className="absolute -right-8 -top-10 size-32 rounded-full border border-white/20" />
-        <div className="absolute bottom-[-35px] left-1/3 size-24 rounded-full bg-white/10 blur-xl" />
+    <Card className="group overflow-hidden rounded-2xl border-border/80 shadow-sm transition-all duration-300 hover:shadow-sm">
+      <div className="relative h-24 overflow-hidden bg-accent/50">
         <div className="relative z-10 flex flex-wrap items-center justify-between gap-2 p-4">
           <Badge className="border-border bg-card text-foreground">
             {business.business_type === "STUDENT_BUSINESS" ? "Student business" : "Community business"}
           </Badge>
           {featured && (
-            <span className="flex items-center gap-1 text-xs font-semibold text-white">
-              <Star className="size-3.5 fill-white text-white" /> Featured
+            <span className="flex items-center gap-1 text-xs font-semibold text-primary-text">
+              <Star className="size-3.5 text-primary-text" /> Featured
             </span>
           )}
         </div>
@@ -260,109 +258,85 @@ export function HomePage() {
 
   return (
     <main className="min-h-screen bg-background pb-16 text-foreground">
-      <section className="mx-auto mt-5 grid w-[min(1240px,calc(100%-32px))] overflow-hidden rounded-[2rem] border border-border/70 hero-surface shadow-2xl shadow-violet-950/10 lg:grid-cols-[1.08fr_.92fr]">
-        <div className="relative z-10 flex flex-col justify-center px-6 py-12 sm:px-10 lg:px-14 lg:py-16">
-          <div className="relative">
-            <Badge className="mb-5 border-border bg-card px-3 py-1.5 text-primary-text shadow-sm">
-              <Sparkles className="size-3.5" />
-              Student & community marketplace
-            </Badge>
+      <section aria-labelledby="home-heading" className="hero-surface mx-auto mt-6 grid w-[min(1240px,calc(100%-32px))] overflow-hidden rounded-2xl border border-border lg:grid-cols-[1.1fr_.9fr]">
+        <div className="flex flex-col justify-center px-6 py-9 sm:px-10 sm:py-12">
+          <span className="mb-5 flex items-center gap-2 text-sm font-semibold text-hero-accent">
+            <Sparkles className="size-4" aria-hidden="true" />
+            Student & community marketplace
+          </span>
+          <h1 id="home-heading" className="max-w-xl text-4xl font-semibold leading-[1.12] tracking-[-.035em] text-hero-foreground sm:text-5xl">
+            Great finds.
+            <span className="block text-hero-accent">Closer to you.</span>
+          </h1>
+          <p className="mt-4 max-w-lg text-base leading-7 text-hero-muted">
+            Shop student and community businesses. Find your next everyday favourite, right where you are.
+          </p>
 
-            <h1 className="max-w-2xl text-4xl font-bold leading-[1.02] tracking-[-0.045em] text-hero-foreground sm:text-5xl lg:text-[4.25rem]">
-              Find great things
-              <span className="block text-hero-accent">
-                closer to home.
-              </span>
-            </h1>
-
-            <p className="mt-5 max-w-xl text-base leading-7 text-hero-muted sm:text-lg">
-              Discover products, services and growing businesses from students and communities around you.
-            </p>
-
-            <form
-              className="mt-8 max-w-2xl overflow-hidden rounded-2xl border border-input bg-card p-2 shadow-xl"
-              onSubmit={submitSearch}
-            >
-              <div className="mb-2 flex gap-1 px-1">
+          <form className="mt-7 max-w-xl rounded-xl border border-input bg-card p-2" onSubmit={submitSearch} role="search" aria-label="Discover products and businesses">
+            <div className="mb-2 flex gap-1 border-b border-border px-1 pb-2">
+              {(["products", "businesses"] as const).map((type) => (
                 <button
+                  key={type}
                   data-ui="home-search-type"
                   type="button"
-                  className={cn(
-                    "rounded-lg px-3 py-1.5 text-xs font-semibold transition",
-                    searchType === "products"
-                      ? "bg-primary text-primary-foreground"
-                      : "text-muted-foreground hover:bg-muted"
-                  )}
-                  onClick={() => setSearchType("products")}
+                  aria-pressed={searchType === type}
+                  className={cn("rounded-lg px-3 py-2 text-sm font-medium transition-colors", searchType === type ? "bg-accent text-accent-foreground" : "text-muted-foreground hover:bg-muted hover:text-foreground")}
+                  onClick={() => setSearchType(type)}
                 >
-                  Products
+                  {type === "products" ? "Products" : "Businesses"}
                 </button>
-                <button
-                  data-ui="home-search-type"
-                  type="button"
-                  className={cn(
-                    "rounded-lg px-3 py-1.5 text-xs font-semibold transition",
-                    searchType === "businesses"
-                      ? "bg-primary text-primary-foreground"
-                      : "text-muted-foreground hover:bg-muted"
-                  )}
-                  onClick={() => setSearchType("businesses")}
-                >
-                  Businesses
-                </button>
-              </div>
-
-              <div className="flex items-center gap-2">
-                <Search className="ml-2 size-5 shrink-0 text-muted-foreground" />
-                <input
-                  data-ui="home-search-input"
-                  value={search}
-                  onChange={(event) => setSearch(event.target.value)}
-                  className="min-w-0 flex-1 border-0 bg-transparent px-1 py-3 text-sm text-foreground outline-none placeholder:text-muted-foreground"
-                  placeholder={searchType === "products" ? "What are you looking for?" : "Find a business..."}
-                />
-                <button
-                  data-ui="home-search-submit"
-                  type="submit"
-                  className="inline-flex h-11 items-center gap-2 rounded-xl bg-primary px-4 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90"
-                >
-                  Search <ArrowRight className="size-4" />
-                </button>
-              </div>
-            </form>
-
-            <div className="mt-6 flex flex-wrap gap-x-6 gap-y-3 text-sm text-hero-muted">
-              <span className="flex items-center gap-2"><BadgeCheck className="size-4 text-hero-accent" /> Verified sellers</span>
-              <span className="flex items-center gap-2"><MapPin className="size-4 text-hero-accent" /> Local discovery</span>
-              <span className="flex items-center gap-2"><Star className="size-4 text-hero-accent" /> Customer reviews</span>
+              ))}
             </div>
+            <div className="flex items-center gap-2">
+              <Search className="ml-2 size-5 shrink-0 text-muted-foreground" aria-hidden="true" />
+              <input
+                data-ui="home-search-input"
+                aria-label={searchType === "products" ? "Search products" : "Search businesses"}
+                value={search}
+                onChange={(event) => setSearch(event.target.value)}
+                className="min-w-0 flex-1 border-0 bg-transparent px-1 py-3 text-sm text-foreground placeholder:text-muted-foreground"
+                placeholder={searchType === "products" ? "What are you looking for?" : "Find a business..."}
+              />
+              <button data-ui="home-search-submit" type="submit" className="inline-flex h-11 shrink-0 items-center gap-2 rounded-lg bg-primary px-4 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90">
+                Search <ArrowRight className="hidden size-4 sm:block" aria-hidden="true" />
+              </button>
+            </div>
+          </form>
+
+          <div className="mt-5 flex flex-wrap gap-x-5 gap-y-2 text-sm text-hero-muted">
+            <span className="flex items-center gap-1.5"><BadgeCheck className="size-4" aria-hidden="true" /> Verified sellers</span>
+            <span className="flex items-center gap-1.5"><MapPin className="size-4" aria-hidden="true" /> Local discovery</span>
+            <span className="flex items-center gap-1.5"><Star className="size-4" aria-hidden="true" /> Customer reviews</span>
           </div>
         </div>
 
-        <div className="relative min-h-[370px] overflow-hidden lg:min-h-full">
-          {heroImage ? (
-            <img src={heroImage} alt="" className="absolute inset-0 h-full w-full object-cover" />
-          ) : (
-            <div className="absolute inset-0 bg-gradient-to-br from-violet-700 to-fuchsia-900" />
-          )}
-          <div className="hero-image-scrim absolute inset-0" />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
-
-          <div className="absolute bottom-5 left-5 right-5 grid gap-3 sm:left-8 sm:right-auto sm:w-[310px]">
-            {heroProduct && (
-              <Link
-                to={`/products/${heroProduct.id}/${heroProduct.slug}`}
-                className="rounded-2xl border border-border bg-card p-4 text-foreground shadow-xl transition hover:bg-muted"
-              >
-                <div className="flex items-center justify-between gap-3">
-                  <span className="text-xs font-medium text-muted-foreground">Featured right now</span>
-                  <ArrowUpRight className="size-4" />
-                </div>
-                <strong className="mt-2 block text-base">{heroProduct.name}</strong>
-                <span className="mt-1 block text-sm font-semibold text-primary-text">{money(heroProduct.price)}</span>
-              </Link>
+        <div className="m-5 mt-0 flex flex-col overflow-hidden rounded-xl border border-border bg-card lg:my-6 lg:ml-0 lg:mr-6">
+          <div className="relative min-h-52 flex-1 overflow-hidden bg-accent/40 lg:min-h-72">
+            {heroImage ? (
+              <img src={heroImage} alt={heroProduct?.name ?? "Featured marketplace product"} className="absolute inset-0 h-full w-full object-cover" />
+            ) : (
+              <div className="flex h-full min-h-52 flex-col items-center justify-center gap-4 p-8 text-center text-primary-text lg:min-h-72">
+                <ShoppingBag className="size-12" strokeWidth={1.4} aria-hidden="true" />
+                <span className="text-lg font-medium">Good things from your community.</span>
+              </div>
             )}
+            <span className="absolute left-4 top-4 rounded-lg border border-border bg-card px-3 py-1.5 text-sm font-medium text-foreground">Marketplace spotlight</span>
           </div>
+          {heroProduct ? (
+            <Link to={`/products/${heroProduct.id}/${heroProduct.slug}`} className="flex items-center justify-between gap-4 border-t border-border p-5 text-foreground transition-colors hover:bg-muted">
+              <span className="min-w-0">
+                <span className="mb-1 block text-sm text-muted-foreground">{heroProduct.business.name}</span>
+                <strong className="block text-base font-semibold">{heroProduct.name}</strong>
+                <span className="mt-1 block text-sm font-semibold text-primary-text">{money(heroProduct.price)}</span>
+              </span>
+              <ArrowUpRight className="size-5 shrink-0 text-primary-text" aria-hidden="true" />
+            </Link>
+          ) : (
+            <div className="border-t border-border p-5">
+              <strong className="block text-base font-semibold text-foreground">Discover something local</strong>
+              <p className="mt-1 text-sm text-muted-foreground">Explore products and meet the businesses behind them.</p>
+            </div>
+          )}
         </div>
       </section>
 
@@ -385,8 +359,8 @@ export function HomePage() {
           <section className="mx-auto mt-14 w-[min(1240px,calc(100%-32px))]">
             <div className="mb-6 flex items-end justify-between gap-5">
               <div>
-                <span className="text-xs font-bold uppercase tracking-[.16em] text-primary-text">Explore by category</span>
-                <h2 className="mt-2 text-2xl font-bold tracking-[-.03em] sm:text-3xl">Start with what you need.</h2>
+                <span className="text-xs font-bold uppercase tracking-[.1em] text-primary-text">Explore by category</span>
+                <h2 className="mt-2 text-2xl font-semibold tracking-[-.025em]">Start with what you need.</h2>
               </div>
               <Link className="hidden items-center gap-1 text-sm font-semibold text-primary-text sm:flex" to="/products">
                 Browse everything <ArrowRight className="size-4" />
@@ -400,7 +374,7 @@ export function HomePage() {
                   <Link
                     key={category.id}
                     to={`/products?category=${encodeURIComponent(category.id)}`}
-                    className="group rounded-2xl border border-border/80 bg-card p-4 text-center shadow-sm transition-all hover:-translate-y-0.5 hover:border-primary/20 hover:shadow-md"
+                    className="group rounded-2xl border border-border/80 bg-card p-4 text-center shadow-sm transition-all hover:border-primary/20 hover:shadow-sm"
                   >
                     <span className="mx-auto grid size-11 place-items-center rounded-xl bg-primary/8 text-primary-text transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
                       <Icon className="size-5" strokeWidth={1.8} />
@@ -416,8 +390,8 @@ export function HomePage() {
             <section className="mx-auto mt-16 w-[min(1240px,calc(100%-32px))]">
               <div className="mb-6 flex items-end justify-between gap-5">
                 <div>
-                  <span className="text-xs font-bold uppercase tracking-[.16em] text-primary-text">Handpicked</span>
-                  <h2 className="mt-2 text-2xl font-bold tracking-[-.03em] sm:text-3xl">Featured marketplace finds</h2>
+                  <span className="text-xs font-bold uppercase tracking-[.1em] text-primary-text">Handpicked</span>
+                  <h2 className="mt-2 text-2xl font-semibold tracking-[-.025em]">Featured marketplace finds</h2>
                   <p className="mt-2 text-sm text-muted-foreground">Popular products worth a closer look.</p>
                 </div>
                 <Link className="hidden items-center gap-1 text-sm font-semibold text-primary-text sm:flex" to="/products">
@@ -433,22 +407,21 @@ export function HomePage() {
             </section>
           )}
 
-          <section className="mx-auto mt-16 grid w-[min(1240px,calc(100%-32px))] overflow-hidden rounded-[1.75rem] bg-primary text-primary-foreground shadow-xl shadow-primary/10 lg:grid-cols-[1fr_auto]">
+          <section className="mx-auto mt-16 grid w-[min(1240px,calc(100%-32px))] overflow-hidden rounded-2xl border border-border bg-card text-foreground shadow-sm lg:grid-cols-[1fr_auto]">
             <div className="relative overflow-hidden p-8 sm:p-10">
-              <div className="absolute -bottom-24 -left-10 size-52 rounded-full border border-white/15" />
               <div className="relative">
-                <span className="text-xs font-bold uppercase tracking-[.16em] text-violet-200">Built for local sellers</span>
-                <h2 className="mt-3 max-w-2xl text-3xl font-bold tracking-[-.035em] text-white">
-                  Turn what you do into a storefront people can discover.
+                <span className="text-xs font-bold uppercase tracking-[.1em] text-primary-text">Built for local sellers</span>
+                <h2 className="mt-3 max-w-2xl text-2xl font-semibold tracking-[-.025em] text-foreground">
+                  Your next customer could be right here.
                 </h2>
-                <p className="mt-3 max-w-2xl text-sm leading-6 text-violet-100 sm:text-base">
+                <p className="mt-3 max-w-2xl text-sm leading-6 text-muted-foreground sm:text-base">
                   Create your business profile, list products and manage customer orders from one marketplace account.
                 </p>
               </div>
             </div>
             <div className="flex items-center p-8 pt-0 lg:p-10 lg:pl-0">
               <Link
-                className={cn(buttonVariants({ variant: "secondary", size: "lg" }), "bg-card text-primary-text hover:bg-accent")}
+                className={cn(buttonVariants({ size: "lg" }))}
                 to="/sell"
               >
                 Start selling <ArrowRight className="size-4" />
@@ -460,8 +433,8 @@ export function HomePage() {
             <section className="mx-auto mt-16 w-[min(1240px,calc(100%-32px))]">
               <div className="mb-6 flex items-end justify-between gap-5">
                 <div>
-                  <span className="text-xs font-bold uppercase tracking-[.16em] text-primary-text">Businesses to know</span>
-                  <h2 className="mt-2 text-2xl font-bold tracking-[-.03em] sm:text-3xl">Featured stores</h2>
+                  <span className="text-xs font-bold uppercase tracking-[.1em] text-primary-text">Businesses to know</span>
+                  <h2 className="mt-2 text-2xl font-semibold tracking-[-.025em]">Featured stores</h2>
                   <p className="mt-2 text-sm text-muted-foreground">Discover sellers building something worth supporting.</p>
                 </div>
                 <Link className="hidden items-center gap-1 text-sm font-semibold text-primary-text sm:flex" to="/businesses">
@@ -480,8 +453,8 @@ export function HomePage() {
           <section className="mx-auto mt-16 w-[min(1240px,calc(100%-32px))]">
             <div className="mb-6 flex items-end justify-between gap-5">
               <div>
-                <span className="text-xs font-bold uppercase tracking-[.16em] text-primary-text">Fresh listings</span>
-                <h2 className="mt-2 text-2xl font-bold tracking-[-.03em] sm:text-3xl">New marketplace finds</h2>
+                <span className="text-xs font-bold uppercase tracking-[.1em] text-primary-text">Fresh listings</span>
+                <h2 className="mt-2 text-2xl font-semibold tracking-[-.025em]">New marketplace finds</h2>
                 <p className="mt-2 text-sm text-muted-foreground">Recently added products from across the community.</p>
               </div>
               <Link className="hidden items-center gap-1 text-sm font-semibold text-primary-text sm:flex" to="/products?sort=NEWEST">
@@ -505,8 +478,8 @@ export function HomePage() {
           <section className="mx-auto mt-16 w-[min(1240px,calc(100%-32px))]">
             <div className="mb-6 flex items-end justify-between gap-5">
               <div>
-                <span className="text-xs font-bold uppercase tracking-[.16em] text-primary-text">Meet new sellers</span>
-                <h2 className="mt-2 text-2xl font-bold tracking-[-.03em] sm:text-3xl">Recently joined businesses</h2>
+                <span className="text-xs font-bold uppercase tracking-[.1em] text-primary-text">Meet new sellers</span>
+                <h2 className="mt-2 text-2xl font-semibold tracking-[-.025em]">Recently joined businesses</h2>
               </div>
               <Link className="hidden items-center gap-1 text-sm font-semibold text-primary-text sm:flex" to="/businesses?sort=NEWEST">
                 Explore directory <ArrowRight className="size-4" />

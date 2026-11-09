@@ -49,9 +49,9 @@ export function SellerDashboardPage() {
 
   if (loading) {
     return (
-      <main className="min-h-screen bg-background p-5 sm:p-6">
+      <main className="min-h-screen bg-background p-4 sm:p-8">
         <div className="space-y-5">
-          <div className="h-44 animate-pulse rounded-3xl bg-muted" />
+          <div className="h-44 animate-pulse rounded-2xl bg-muted" />
           <div className="grid gap-4 md:grid-cols-4">
             {Array.from({ length: 4 }).map((_, index) => (
               <div key={index} className="h-28 animate-pulse rounded-2xl bg-muted" />
@@ -67,31 +67,31 @@ export function SellerDashboardPage() {
   }
 
   return (
-    <main className="min-h-screen bg-background p-5 text-foreground sm:p-6">
-      <section className="overflow-hidden rounded-[1.75rem] border border-border bg-gradient-to-br from-violet-700 via-primary to-fuchsia-800 p-6 text-white shadow-xl sm:p-8">
+    <main className="min-h-screen bg-background p-4 text-foreground sm:p-8">
+      <section className="pb-3 pt-2">
         <div className="flex flex-col gap-6 xl:flex-row xl:items-end xl:justify-between">
           <div>
-            <Badge className="mb-4 border-white/15 bg-white/15 text-white backdrop-blur">
+            <Badge variant="secondary" className="mb-4 rounded-lg">
               Seller Hub
             </Badge>
-            <h1 className="max-w-3xl text-3xl font-bold tracking-[-.04em] sm:text-4xl">
-              Run your marketplace business from one place.
+            <h1 className="max-w-3xl text-3xl font-semibold tracking-[-.025em] sm:text-4xl">
+              Your business, at a glance.
             </h1>
-            <p className="mt-3 max-w-2xl text-sm leading-6 text-violet-100 sm:text-base">
+            <p className="mt-3 max-w-2xl text-sm leading-6 text-muted-foreground sm:text-base">
               Track stores, orders and fulfilment while keeping the customer marketplace only one click away.
             </p>
           </div>
 
           <div className="flex flex-wrap gap-3">
             <Link
-              className="inline-flex h-10 items-center gap-2 rounded-xl bg-card px-4 text-sm font-semibold text-primary-text"
+              className="inline-flex h-11 items-center gap-2 rounded-xl bg-primary px-4 text-sm font-semibold text-primary-foreground"
               to="/seller/businesses"
             >
               <Building2 className="size-4" />
               Manage businesses
             </Link>
             <Link
-              className="inline-flex h-10 items-center gap-2 rounded-xl border border-white/20 bg-white/10 px-4 text-sm font-semibold text-white backdrop-blur"
+              className="inline-flex h-11 items-center gap-2 rounded-xl border border-border bg-card px-4 text-sm font-semibold text-foreground"
               to="/sell"
             >
               Seller applications
@@ -107,42 +107,50 @@ export function SellerDashboardPage() {
       )}
 
       <section className="mt-5 grid gap-4 sm:grid-cols-2 xl:grid-cols-4" aria-label="Seller overview">
-        <article className="rounded-2xl border border-border bg-card p-5 shadow-sm">
-          <span className="grid size-10 place-items-center rounded-xl bg-primary/10 text-primary-text">
-            <Store className="size-5" />
-          </span>
-          <span className="mt-4 block text-xs font-medium text-muted-foreground">Businesses</span>
-          <strong className="mt-1 block text-2xl">{businesses.length}</strong>
-          <small className="mt-1 block text-xs text-muted-foreground">
+        <article className="rounded-2xl border border-primary bg-primary p-6 text-primary-foreground">
+          <div className="flex items-start justify-between gap-3">
+            <span className="text-sm font-medium text-white">Businesses</span>
+            <span className="grid size-9 shrink-0 place-items-center rounded-lg bg-white/15 text-white">
+              <Store className="size-5" />
+            </span>
+          </div>
+          <strong className="mt-5 block break-words text-2xl font-semibold tracking-tight">{businesses.length}</strong>
+          <small className="mt-4 block text-sm text-white">
             {businesses.filter((business) => business.availability_status === "OPEN").length} currently open
           </small>
         </article>
 
-        <article className="rounded-2xl border border-border bg-card p-5 shadow-sm">
-          <span className="grid size-10 place-items-center rounded-xl bg-warning-soft text-warning-foreground">
-            <Clock3 className="size-5" />
-          </span>
-          <span className="mt-4 block text-xs font-medium text-muted-foreground">New orders</span>
-          <strong className="mt-1 block text-2xl">{metrics.pending}</strong>
-          <small className="mt-1 block text-xs text-muted-foreground">Waiting for your response</small>
+        <article className="rounded-2xl border border-border bg-card p-6 shadow-sm">
+          <div className="flex items-start justify-between gap-3">
+            <span className="text-sm font-medium text-muted-foreground">New orders</span>
+            <span className="grid size-9 shrink-0 place-items-center rounded-lg bg-warning-soft text-warning-foreground">
+              <Clock3 className="size-5" />
+            </span>
+          </div>
+          <strong className="mt-5 block break-words text-2xl font-semibold tracking-tight">{metrics.pending}</strong>
+          <small className="mt-4 block text-sm text-muted-foreground">Waiting for your response</small>
         </article>
 
-        <article className="rounded-2xl border border-border bg-card p-5 shadow-sm">
-          <span className="grid size-10 place-items-center rounded-xl bg-info-soft text-info-foreground">
-            <ShoppingBag className="size-5" />
-          </span>
-          <span className="mt-4 block text-xs font-medium text-muted-foreground">In progress</span>
-          <strong className="mt-1 block text-2xl">{metrics.active}</strong>
-          <small className="mt-1 block text-xs text-muted-foreground">Accepted or being fulfilled</small>
+        <article className="rounded-2xl border border-border bg-card p-6 shadow-sm">
+          <div className="flex items-start justify-between gap-3">
+            <span className="text-sm font-medium text-muted-foreground">In progress</span>
+            <span className="grid size-9 shrink-0 place-items-center rounded-lg bg-info-soft text-info-foreground">
+              <ShoppingBag className="size-5" />
+            </span>
+          </div>
+          <strong className="mt-5 block break-words text-2xl font-semibold tracking-tight">{metrics.active}</strong>
+          <small className="mt-4 block text-sm text-muted-foreground">Accepted or being fulfilled</small>
         </article>
 
-        <article className="rounded-2xl border border-border bg-card p-5 shadow-sm">
-          <span className="grid size-10 place-items-center rounded-xl bg-success-soft text-success-foreground">
-            <PackageCheck className="size-5" />
-          </span>
-          <span className="mt-4 block text-xs font-medium text-muted-foreground">Completed value</span>
-          <strong className="mt-1 block text-2xl">{money(metrics.completedValue)}</strong>
-          <small className="mt-1 block text-xs text-muted-foreground">{metrics.completed} completed orders</small>
+        <article className="rounded-2xl border border-border bg-card p-6 shadow-sm">
+          <div className="flex items-start justify-between gap-3">
+            <span className="text-sm font-medium text-muted-foreground">Completed value</span>
+            <span className="grid size-9 shrink-0 place-items-center rounded-lg bg-success-soft text-success-foreground">
+              <PackageCheck className="size-5" />
+            </span>
+          </div>
+          <strong className="mt-5 block break-words text-2xl font-semibold tracking-tight">{money(metrics.completedValue)}</strong>
+          <small className="mt-4 block text-sm text-muted-foreground">{metrics.completed} completed orders</small>
         </article>
       </section>
 
@@ -150,7 +158,7 @@ export function SellerDashboardPage() {
         <section className="rounded-2xl border border-border bg-card shadow-sm">
           <div className="flex items-center justify-between border-b border-border p-5">
             <div>
-              <span className="text-xs font-bold uppercase tracking-[.14em] text-primary-text">Businesses</span>
+              <span className="text-xs font-bold uppercase tracking-[.1em] text-primary-text">Businesses</span>
               <h2 className="mt-1 text-lg font-semibold">Your stores</h2>
             </div>
             <Link className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary-text" to="/seller/businesses">
@@ -196,7 +204,7 @@ export function SellerDashboardPage() {
         <section className="rounded-2xl border border-border bg-card shadow-sm">
           <div className="flex items-center justify-between border-b border-border p-5">
             <div>
-              <span className="text-xs font-bold uppercase tracking-[.14em] text-primary-text">Orders</span>
+              <span className="text-xs font-bold uppercase tracking-[.1em] text-primary-text">Orders</span>
               <h2 className="mt-1 text-lg font-semibold">Recent activity</h2>
             </div>
             <Link className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary-text" to="/seller/orders">

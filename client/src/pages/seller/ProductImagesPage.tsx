@@ -206,7 +206,7 @@ export function ProductImagesPage() {
 
   if (loading) {
     return (
-      <main className="min-h-screen bg-background p-5 sm:p-6">
+      <main className="min-h-screen bg-background p-4 sm:p-8">
         <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
           {Array.from({ length: 6 }).map((_, index) => (
             <div key={index} className="h-72 animate-pulse rounded-2xl bg-muted" />
@@ -218,7 +218,7 @@ export function ProductImagesPage() {
 
   if (!product) {
     return (
-      <main className="min-h-screen bg-background p-5 sm:p-6">
+      <main className="min-h-screen bg-background p-4 sm:p-8">
         <section className="rounded-2xl border border-border bg-card p-8 text-center shadow-sm">
           <ImageIcon className="mx-auto size-8 text-primary-text" />
           <h1 className="mt-4 text-2xl font-bold">Product not found</h1>
@@ -229,14 +229,14 @@ export function ProductImagesPage() {
   }
 
   return (
-    <main className="min-h-screen bg-background p-5 text-foreground sm:p-6">
-      <section className="flex flex-col gap-5 rounded-[1.75rem] border border-border bg-card p-6 shadow-sm sm:flex-row sm:items-end sm:justify-between sm:p-8">
+    <main className="min-h-screen bg-background p-4 text-foreground sm:p-8">
+      <section className="flex flex-col gap-5 rounded-2xl border border-border bg-card p-6 shadow-sm sm:flex-row sm:items-end sm:justify-between sm:p-8">
         <div>
           <Badge variant="secondary" className="mb-3 gap-1.5">
             <ImageIcon className="size-3.5" />
             Seller Hub · Product media
           </Badge>
-          <h1 className="text-3xl font-bold tracking-[-.04em]">
+          <h1 className="text-3xl font-bold tracking-[-.025em]">
             {product.name} images
           </h1>
           <p className="mt-2 max-w-2xl text-sm leading-6 text-muted-foreground">

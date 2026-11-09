@@ -49,7 +49,7 @@ export function ProfilePage() {
     return (
       <main className="min-h-screen bg-background pb-16">
         <div className="mx-auto mt-6 w-[min(1100px,calc(100%-32px))]">
-          <div className="h-40 animate-pulse rounded-3xl bg-muted" />
+          <div className="h-40 animate-pulse rounded-2xl bg-muted" />
           <div className="mt-6 grid gap-6 lg:grid-cols-[260px_minmax(0,1fr)]">
             <div className="h-72 animate-pulse rounded-2xl bg-muted" />
             <div className="h-80 animate-pulse rounded-2xl bg-muted" />
@@ -62,7 +62,7 @@ export function ProfilePage() {
   return (
     <main className="min-h-screen bg-background pb-16 text-foreground">
       <div className="mx-auto mt-5 w-[min(1100px,calc(100%-32px))]">
-        <section className="flex flex-col gap-5 rounded-[1.75rem] border border-border bg-gradient-to-br from-accent/60 via-card to-background p-6 shadow-sm sm:flex-row sm:items-center sm:justify-between sm:p-8">
+        <section className="flex flex-col gap-5 rounded-2xl border border-border bg-card p-6 shadow-sm sm:flex-row sm:items-center sm:justify-between sm:p-8">
           <div className="flex items-center gap-4">
             <div className="grid size-16 place-items-center rounded-2xl bg-primary text-xl font-bold text-primary-foreground shadow-sm">
               {(profile?.fullName?.[0] ?? profile?.email?.[0] ?? "U").toUpperCase()}
@@ -93,7 +93,7 @@ export function ProfilePage() {
           <section className="rounded-2xl border border-border bg-card p-6 shadow-sm">
             <div className="flex flex-col gap-3 border-b border-border pb-5 sm:flex-row sm:items-center sm:justify-between">
               <div>
-                <span className="text-xs font-bold uppercase tracking-[.14em] text-primary-text">Personal information</span>
+                <span className="text-xs font-bold uppercase tracking-[.1em] text-primary-text">Personal information</span>
                 <h2 className="mt-1 text-xl font-semibold">Profile details</h2>
               </div>
               <span className="flex items-center gap-2 text-xs font-medium text-muted-foreground">

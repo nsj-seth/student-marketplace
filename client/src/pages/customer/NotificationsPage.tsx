@@ -69,13 +69,13 @@ export function NotificationsPage() {
   return (
     <main className="min-h-screen bg-background pb-16 text-foreground">
       <div className="mx-auto mt-5 w-[min(1100px,calc(100%-32px))]">
-        <section className="flex flex-col gap-5 rounded-[1.75rem] border border-border bg-gradient-to-br from-accent/60 via-card to-background p-6 shadow-sm sm:flex-row sm:items-center sm:justify-between sm:p-8">
+        <section className="flex flex-col gap-5 rounded-2xl border border-border bg-card p-6 shadow-sm sm:flex-row sm:items-center sm:justify-between sm:p-8">
           <div>
             <Badge variant="secondary" className="mb-3 gap-1.5">
               <Bell className="size-3.5" />
               Account activity
             </Badge>
-            <h1 className="text-3xl font-bold tracking-[-.04em]">Notifications</h1>
+            <h1 className="text-3xl font-bold tracking-[-.025em]">Notifications</h1>
             <p className="mt-2 max-w-2xl text-sm leading-6 text-muted-foreground">
               Order updates, seller activity and marketplace messages appear here.
             </p>
@@ -152,7 +152,7 @@ export function NotificationsPage() {
                     type="button"
                     onClick={() => void openNotification(item)}
                     className={cn(
-                      "flex w-full items-start gap-4 rounded-2xl border p-4 text-left shadow-sm transition hover:-translate-y-0.5 hover:shadow-md",
+                      "flex w-full items-start gap-4 rounded-2xl border p-4 text-left shadow-sm transition hover:shadow-sm",
                       item.is_read
                         ? "border-border bg-card"
                         : "border-primary/20 bg-primary/5"

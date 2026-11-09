@@ -80,13 +80,13 @@ export function WishlistPage() {
   return (
     <main className="min-h-screen bg-background pb-16 text-foreground">
       <div className="mx-auto mt-5 w-[min(1100px,calc(100%-32px))]">
-        <section className="flex flex-col gap-5 rounded-[1.75rem] border border-border bg-gradient-to-br from-accent/60 via-card to-background p-6 shadow-sm sm:flex-row sm:items-center sm:justify-between sm:p-8">
+        <section className="flex flex-col gap-5 rounded-2xl border border-border bg-card p-6 shadow-sm sm:flex-row sm:items-center sm:justify-between sm:p-8">
           <div>
             <Badge variant="secondary" className="mb-3 gap-1.5">
               <Heart className="size-3.5" />
               Saved for later
             </Badge>
-            <h1 className="text-3xl font-bold tracking-[-.04em]">Your wishlist</h1>
+            <h1 className="text-3xl font-bold tracking-[-.025em]">Your wishlist</h1>
             <p className="mt-2 max-w-2xl text-sm leading-6 text-muted-foreground">
               Keep products you’re considering in one place and move them to your cart when you’re ready.
             </p>
@@ -153,7 +153,7 @@ export function WishlistPage() {
 
                   return (
                     <article
-                      className="group overflow-hidden rounded-2xl border border-border/80 bg-card shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-primary/5"
+                      className="group overflow-hidden rounded-2xl border border-border/80 bg-card shadow-sm transition-all duration-300 hover:shadow-sm"
                       key={item.id}
                     >
                       <Link
@@ -164,7 +164,7 @@ export function WishlistPage() {
                           <img
                             src={url}
                             alt={image?.alt_text ?? product.name}
-                            className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.04]"
+                            className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.02]"
                           />
                         ) : (
                           <div className="grid h-full place-items-center text-muted-foreground">

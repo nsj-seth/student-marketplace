@@ -74,7 +74,7 @@ export function OrderDetailsPage() {
     return (
       <main className="min-h-screen bg-background pb-16">
         <div className="mx-auto mt-6 w-[min(1100px,calc(100%-32px))]">
-          <div className="h-36 animate-pulse rounded-3xl bg-muted" />
+          <div className="h-36 animate-pulse rounded-2xl bg-muted" />
           <div className="mt-6 h-80 animate-pulse rounded-2xl bg-muted" />
         </div>
       </main>
@@ -100,7 +100,7 @@ export function OrderDetailsPage() {
   return (
     <main className="min-h-screen bg-background pb-16 text-foreground">
       <div className="mx-auto mt-5 w-[min(1100px,calc(100%-32px))]">
-        <section className="flex flex-col gap-5 rounded-[1.75rem] border border-border bg-gradient-to-br from-accent/60 via-card to-background p-6 shadow-sm sm:flex-row sm:items-end sm:justify-between sm:p-8">
+        <section className="flex flex-col gap-5 rounded-2xl border border-border bg-card p-6 shadow-sm sm:flex-row sm:items-end sm:justify-between sm:p-8">
           <div>
             <Link className="mb-3 inline-flex items-center gap-2 text-sm font-semibold text-primary-text" to="/orders">
               <ArrowLeft className="size-4" />
@@ -109,7 +109,7 @@ export function OrderDetailsPage() {
             <span className="block text-xs font-medium text-muted-foreground">
               Placed {dateTime(order.created_at)}
             </span>
-            <h1 className="mt-2 text-3xl font-bold tracking-[-.04em]">{order.order_number}</h1>
+            <h1 className="mt-2 text-3xl font-bold tracking-[-.025em]">{order.order_number}</h1>
             <p className="mt-2 max-w-2xl text-sm text-muted-foreground">{order.status_summary}</p>
           </div>
 

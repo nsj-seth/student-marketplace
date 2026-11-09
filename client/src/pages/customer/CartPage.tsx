@@ -128,7 +128,7 @@ export function CartPage() {
               <ShoppingBag className="size-3.5" />
               Shopping bag
             </Badge>
-            <h1 className="text-3xl font-bold tracking-[-.04em] sm:text-4xl">Your cart</h1>
+            <h1 className="text-3xl font-bold tracking-[-.025em] sm:text-4xl">Your cart</h1>
             <p className="mt-2 text-sm text-muted-foreground sm:text-base">
               {isEmpty
                 ? "Your next favourite find can start here."
@@ -148,7 +148,7 @@ export function CartPage() {
         )}
 
         {isEmpty ? (
-          <section className="mt-8 grid place-items-center rounded-[1.75rem] border border-dashed border-border bg-muted/25 px-6 py-16 text-center">
+          <section className="mt-8 grid place-items-center rounded-2xl border border-dashed border-border bg-muted/25 px-6 py-16 text-center">
             <span className="grid size-16 place-items-center rounded-2xl bg-card text-primary-text shadow-sm">
               <ShoppingBag className="size-7" />
             </span>
@@ -293,7 +293,7 @@ export function CartPage() {
 
             <aside className="lg:sticky lg:top-[92px] lg:self-start">
               <div className="rounded-2xl border border-border bg-card p-5 shadow-sm">
-                <span className="text-xs font-bold uppercase tracking-[.14em] text-primary-text">Order summary</span>
+                <span className="text-xs font-bold uppercase tracking-[.1em] text-primary-text">Order summary</span>
                 <h2 className="mt-2 text-xl font-semibold">Ready to check out?</h2>
 
                 <div className="mt-5 space-y-3 text-sm">

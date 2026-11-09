@@ -104,7 +104,7 @@ export function AdminReferenceDataPage() {
   }
 
   return (
-    <main className="min-h-screen bg-background p-5 text-foreground sm:p-6">
+    <main className="min-h-screen bg-background p-4 text-foreground sm:p-8">
       <AdminPageHeader
         eyebrow="Reference data"
         title="Universities & categories"
