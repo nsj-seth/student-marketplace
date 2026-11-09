@@ -40,7 +40,7 @@ export function MyOrdersPage() {
   return (
     <main className="min-h-screen bg-background pb-16 text-foreground">
       <div className="mx-auto mt-5 w-[min(1100px,calc(100%-32px))]">
-        <section className="flex flex-col gap-5 rounded-[1.75rem] border border-border bg-gradient-to-br from-violet-50 via-white to-fuchsia-50 p-6 shadow-sm sm:flex-row sm:items-center sm:justify-between sm:p-8">
+        <section className="flex flex-col gap-5 rounded-[1.75rem] border border-border bg-gradient-to-br from-accent/60 via-card to-background p-6 shadow-sm sm:flex-row sm:items-center sm:justify-between sm:p-8">
           <div>
             <Badge variant="secondary" className="mb-3 gap-1.5">
               <Package className="size-3.5" />
@@ -104,7 +104,7 @@ export function MyOrdersPage() {
             </div>
 
             {error && (
-              <div className="mt-5 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+              <div className="mt-5 rounded-xl border border-danger-border bg-danger-soft px-4 py-3 text-sm text-danger-foreground">
                 {error}
               </div>
             )}
@@ -119,7 +119,7 @@ export function MyOrdersPage() {
 
             {!loading && orders.length === 0 && (
               <div className="mt-5 grid place-items-center rounded-2xl border border-dashed border-border bg-muted/25 px-6 py-14 text-center">
-                <Package className="size-7 text-primary" />
+                <Package className="size-7 text-primary-text" />
                 <h2 className="mt-4 text-xl font-semibold">No orders yet</h2>
                 <p className="mt-2 text-sm text-muted-foreground">
                   Your orders will appear here once you complete checkout.
@@ -170,7 +170,7 @@ export function MyOrdersPage() {
                       <div key={business.seller_order_number} className="p-4">
                         <div className="flex items-center justify-between gap-3">
                           <div className="flex min-w-0 items-center gap-3">
-                            <span className="grid size-9 shrink-0 place-items-center rounded-xl bg-primary/10 text-sm font-bold text-primary">
+                            <span className="grid size-9 shrink-0 place-items-center rounded-xl bg-primary/10 text-sm font-bold text-primary-text">
                               {business.name.charAt(0).toUpperCase()}
                             </span>
                             <div className="min-w-0">
@@ -203,7 +203,7 @@ export function MyOrdersPage() {
                       <strong className="block text-lg">{money(order.total)}</strong>
                     </div>
                     <Link
-                      className="inline-flex items-center gap-2 text-sm font-semibold text-primary"
+                      className="inline-flex items-center gap-2 text-sm font-semibold text-primary-text"
                       to={"/orders/" + order.id}
                     >
                       Track order <ArrowRight className="size-4" />

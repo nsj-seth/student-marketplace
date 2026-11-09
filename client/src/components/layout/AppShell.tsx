@@ -28,6 +28,7 @@ import { logout } from "../../services/auth.service";
 import { getCart } from "../../services/cart.service";
 import { getUnreadNotificationCount } from "../../services/notification.service";
 import { getWishlist } from "../../services/wishlist.service";
+import { ThemeToggle } from "./ThemeToggle";
 
 interface AppShellProps {
   children: ReactNode;
@@ -255,13 +256,14 @@ export function AppShell({ children }: AppShellProps) {
             <button
               data-ui="header-search-submit"
               type="submit"
-              className="absolute right-1.5 top-1/2 -translate-y-1/2 rounded-lg px-2.5 py-1.5 text-xs font-semibold text-primary transition-colors hover:bg-accent"
+              className="absolute right-1.5 top-1/2 -translate-y-1/2 rounded-lg px-2.5 py-1.5 text-xs font-semibold text-primary-text transition-colors hover:bg-accent"
             >
               Search
             </button>
           </form>
 
-          <div className="flex items-center gap-2">
+          <div className="ml-auto flex shrink-0 items-center gap-2 lg:ml-0">
+            <ThemeToggle />
             {!loading && user ? (
               <>
                 <div className="hidden items-center gap-2 sm:flex">
@@ -284,7 +286,7 @@ export function AppShell({ children }: AppShellProps) {
                     aria-haspopup="menu"
                     onClick={() => setAccountOpen((value) => !value)}
                   >
-                    <span className="grid size-7 place-items-center rounded-lg bg-primary/10 text-xs font-bold text-primary">
+                    <span className="grid size-7 place-items-center rounded-lg bg-primary/10 text-xs font-bold text-primary-text">
                       {avatar}
                     </span>
                     <span className="max-w-24 truncate text-sm font-semibold">
@@ -331,7 +333,7 @@ export function AppShell({ children }: AppShellProps) {
                         <button
                           data-ui="account-menu-logout"
                           type="button"
-                          className="modern-account-menu-item w-full text-left text-red-600 hover:bg-red-50 hover:text-red-700"
+                          className="modern-account-menu-item w-full text-left text-danger-foreground hover:bg-danger-soft hover:text-danger-foreground"
                           onClick={() => void logout()}
                         >
                           <LogOut className="size-4" aria-hidden="true" /> Sign out
@@ -414,7 +416,7 @@ export function AppShell({ children }: AppShellProps) {
                     </NavLink>
                     <NavLink className="modern-mobile-nav-link" to="/notifications">
                       <Bell className="size-4" /> Notifications
-                      {unread > 0 && <span className="ml-auto text-xs font-semibold text-primary">{unread > 9 ? "9+" : unread}</span>}
+                      {unread > 0 && <span className="ml-auto text-xs font-semibold text-primary-text">{unread > 9 ? "9+" : unread}</span>}
                     </NavLink>
                     <NavLink className="modern-mobile-nav-link" to="/profile">
                       <UserRound className="size-4" /> Account
@@ -434,7 +436,7 @@ export function AppShell({ children }: AppShellProps) {
                     )}
                     <button
                       data-ui="mobile-logout"
-                      className="modern-mobile-nav-link mt-1 text-left text-red-600"
+                      className="modern-mobile-nav-link mt-1 text-left text-danger-foreground"
                       type="button"
                       onClick={() => void logout()}
                     >
@@ -445,7 +447,7 @@ export function AppShell({ children }: AppShellProps) {
                   <>
                     <div className="my-2 h-px bg-border" />
                     <NavLink className="modern-mobile-nav-link" to="/login">Sign in</NavLink>
-                    <NavLink className="modern-mobile-nav-link font-semibold text-primary" to="/register">Create account</NavLink>
+                    <NavLink className="modern-mobile-nav-link font-semibold text-primary-text" to="/register">Create account</NavLink>
                   </>
                 ) : null}
               </nav>

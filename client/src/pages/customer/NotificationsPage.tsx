@@ -69,7 +69,7 @@ export function NotificationsPage() {
   return (
     <main className="min-h-screen bg-background pb-16 text-foreground">
       <div className="mx-auto mt-5 w-[min(1100px,calc(100%-32px))]">
-        <section className="flex flex-col gap-5 rounded-[1.75rem] border border-border bg-gradient-to-br from-violet-50 via-white to-fuchsia-50 p-6 shadow-sm sm:flex-row sm:items-center sm:justify-between sm:p-8">
+        <section className="flex flex-col gap-5 rounded-[1.75rem] border border-border bg-gradient-to-br from-accent/60 via-card to-background p-6 shadow-sm sm:flex-row sm:items-center sm:justify-between sm:p-8">
           <div>
             <Badge variant="secondary" className="mb-3 gap-1.5">
               <Bell className="size-3.5" />
@@ -81,7 +81,7 @@ export function NotificationsPage() {
             </p>
           </div>
 
-          <div className="rounded-2xl border border-border bg-white/75 px-5 py-4 text-center shadow-sm">
+          <div className="rounded-2xl border border-border bg-card px-5 py-4 text-center shadow-sm">
             <strong className="block text-2xl">{unreadCount}</strong>
             <span className="text-xs text-muted-foreground">unread in this view</span>
           </div>
@@ -114,7 +114,7 @@ export function NotificationsPage() {
             </div>
 
             {error && (
-              <div className="mb-5 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+              <div className="mb-5 rounded-xl border border-danger-border bg-danger-soft px-4 py-3 text-sm text-danger-foreground">
                 {error}
               </div>
             )}
@@ -129,7 +129,7 @@ export function NotificationsPage() {
 
             {!loading && items.length === 0 && (
               <div className="grid place-items-center rounded-2xl border border-dashed border-border bg-muted/25 px-6 py-14 text-center">
-                <span className="grid size-14 place-items-center rounded-2xl bg-card text-primary shadow-sm">
+                <span className="grid size-14 place-items-center rounded-2xl bg-card text-primary-text shadow-sm">
                   <Inbox className="size-6" />
                 </span>
                 <h2 className="mt-4 text-xl font-semibold">

@@ -84,7 +84,7 @@ export function SellerDashboardPage() {
 
           <div className="flex flex-wrap gap-3">
             <Link
-              className="inline-flex h-10 items-center gap-2 rounded-xl bg-white px-4 text-sm font-semibold text-primary"
+              className="inline-flex h-10 items-center gap-2 rounded-xl bg-card px-4 text-sm font-semibold text-primary-text"
               to="/seller/businesses"
             >
               <Building2 className="size-4" />
@@ -101,14 +101,14 @@ export function SellerDashboardPage() {
       </section>
 
       {error && (
-        <div className="mt-5 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+        <div className="mt-5 rounded-xl border border-danger-border bg-danger-soft px-4 py-3 text-sm text-danger-foreground">
           {error}
         </div>
       )}
 
       <section className="mt-5 grid gap-4 sm:grid-cols-2 xl:grid-cols-4" aria-label="Seller overview">
         <article className="rounded-2xl border border-border bg-card p-5 shadow-sm">
-          <span className="grid size-10 place-items-center rounded-xl bg-primary/10 text-primary">
+          <span className="grid size-10 place-items-center rounded-xl bg-primary/10 text-primary-text">
             <Store className="size-5" />
           </span>
           <span className="mt-4 block text-xs font-medium text-muted-foreground">Businesses</span>
@@ -119,7 +119,7 @@ export function SellerDashboardPage() {
         </article>
 
         <article className="rounded-2xl border border-border bg-card p-5 shadow-sm">
-          <span className="grid size-10 place-items-center rounded-xl bg-amber-50 text-amber-600">
+          <span className="grid size-10 place-items-center rounded-xl bg-warning-soft text-warning-foreground">
             <Clock3 className="size-5" />
           </span>
           <span className="mt-4 block text-xs font-medium text-muted-foreground">New orders</span>
@@ -128,7 +128,7 @@ export function SellerDashboardPage() {
         </article>
 
         <article className="rounded-2xl border border-border bg-card p-5 shadow-sm">
-          <span className="grid size-10 place-items-center rounded-xl bg-blue-50 text-blue-600">
+          <span className="grid size-10 place-items-center rounded-xl bg-info-soft text-info-foreground">
             <ShoppingBag className="size-5" />
           </span>
           <span className="mt-4 block text-xs font-medium text-muted-foreground">In progress</span>
@@ -137,7 +137,7 @@ export function SellerDashboardPage() {
         </article>
 
         <article className="rounded-2xl border border-border bg-card p-5 shadow-sm">
-          <span className="grid size-10 place-items-center rounded-xl bg-emerald-50 text-emerald-600">
+          <span className="grid size-10 place-items-center rounded-xl bg-success-soft text-success-foreground">
             <PackageCheck className="size-5" />
           </span>
           <span className="mt-4 block text-xs font-medium text-muted-foreground">Completed value</span>
@@ -150,17 +150,17 @@ export function SellerDashboardPage() {
         <section className="rounded-2xl border border-border bg-card shadow-sm">
           <div className="flex items-center justify-between border-b border-border p-5">
             <div>
-              <span className="text-xs font-bold uppercase tracking-[.14em] text-primary">Businesses</span>
+              <span className="text-xs font-bold uppercase tracking-[.14em] text-primary-text">Businesses</span>
               <h2 className="mt-1 text-lg font-semibold">Your stores</h2>
             </div>
-            <Link className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary" to="/seller/businesses">
+            <Link className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary-text" to="/seller/businesses">
               View all <ArrowRight className="size-4" />
             </Link>
           </div>
 
           {businesses.length === 0 ? (
             <div className="p-6 text-center">
-              <Building2 className="mx-auto size-7 text-primary" />
+              <Building2 className="mx-auto size-7 text-primary-text" />
               <h3 className="mt-3 text-base font-semibold">No approved businesses yet</h3>
               <p className="mt-2 text-sm text-muted-foreground">
                 Start or continue a seller application to create your first storefront.
@@ -171,7 +171,7 @@ export function SellerDashboardPage() {
               {businesses.slice(0, 4).map((business) => (
                 <article className="flex items-center justify-between gap-3 p-4" key={business.id}>
                   <div className="flex min-w-0 items-center gap-3">
-                    <span className="grid size-10 shrink-0 place-items-center rounded-xl bg-primary/10 text-sm font-bold text-primary">
+                    <span className="grid size-10 shrink-0 place-items-center rounded-xl bg-primary/10 text-sm font-bold text-primary-text">
                       {business.name.slice(0, 1).toUpperCase()}
                     </span>
                     <div className="min-w-0">
@@ -183,7 +183,7 @@ export function SellerDashboardPage() {
                     <Badge variant={business.availability_status === "OPEN" ? "success" : "secondary"}>
                       {business.availability_status === "OPEN" ? "Open" : "Unavailable"}
                     </Badge>
-                    <Link className="text-sm font-semibold text-primary" to={"/seller/businesses/" + business.id}>
+                    <Link className="text-sm font-semibold text-primary-text" to={"/seller/businesses/" + business.id}>
                       Manage
                     </Link>
                   </div>
@@ -196,17 +196,17 @@ export function SellerDashboardPage() {
         <section className="rounded-2xl border border-border bg-card shadow-sm">
           <div className="flex items-center justify-between border-b border-border p-5">
             <div>
-              <span className="text-xs font-bold uppercase tracking-[.14em] text-primary">Orders</span>
+              <span className="text-xs font-bold uppercase tracking-[.14em] text-primary-text">Orders</span>
               <h2 className="mt-1 text-lg font-semibold">Recent activity</h2>
             </div>
-            <Link className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary" to="/seller/orders">
+            <Link className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary-text" to="/seller/orders">
               View orders <ArrowRight className="size-4" />
             </Link>
           </div>
 
           {recentOrders.length === 0 ? (
             <div className="p-6 text-center">
-              <CheckCircle2 className="mx-auto size-7 text-primary" />
+              <CheckCircle2 className="mx-auto size-7 text-primary-text" />
               <h3 className="mt-3 text-base font-semibold">No orders yet</h3>
               <p className="mt-2 text-sm text-muted-foreground">New customer orders will appear here.</p>
             </div>

@@ -127,9 +127,9 @@ export function CheckoutPage() {
     return (
       <main className="min-h-screen bg-background pb-16">
         <section className="mx-auto mt-8 grid w-[min(720px,calc(100%-32px))] place-items-center rounded-[1.75rem] border border-border bg-card px-6 py-14 text-center shadow-sm">
-          <ShoppingCart className="size-8 text-primary" />
+          <ShoppingCart className="size-8 text-primary-text" />
           <h1 className="mt-4 text-2xl font-bold">Checkout isn’t ready</h1>
-          {error && <p className="mt-2 text-sm text-red-600">{error}</p>}
+          {error && <p className="mt-2 text-sm text-danger-foreground">{error}</p>}
           <Link
             className="mt-6 inline-flex h-10 items-center gap-2 rounded-xl bg-primary px-4 text-sm font-semibold text-primary-foreground"
             to="/cart"
@@ -199,7 +199,7 @@ export function CheckoutPage() {
             </div>
 
             <Link
-              className="mt-5 flex items-center justify-center gap-2 text-sm font-semibold text-primary"
+              className="mt-5 flex items-center justify-center gap-2 text-sm font-semibold text-primary-text"
               to="/products"
             >
               Continue shopping
@@ -227,7 +227,7 @@ export function CheckoutPage() {
             </p>
           </div>
 
-          <Link className="inline-flex items-center gap-2 text-sm font-semibold text-primary" to="/cart">
+          <Link className="inline-flex items-center gap-2 text-sm font-semibold text-primary-text" to="/cart">
             <ArrowLeft className="size-4" />
             Back to cart
           </Link>
@@ -258,7 +258,7 @@ export function CheckoutPage() {
         </div>
 
         {error && (
-          <div className="mt-5 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+          <div className="mt-5 rounded-xl border border-danger-border bg-danger-soft px-4 py-3 text-sm text-danger-foreground">
             {error}
           </div>
         )}
@@ -270,7 +270,7 @@ export function CheckoutPage() {
           <div className="space-y-6">
             <section className="rounded-2xl border border-border bg-card p-5 shadow-sm sm:p-6">
               <div className="flex items-start gap-3">
-                <span className="grid size-10 shrink-0 place-items-center rounded-xl bg-primary/10 text-primary">
+                <span className="grid size-10 shrink-0 place-items-center rounded-xl bg-primary/10 text-primary-text">
                   <UserRound className="size-5" />
                 </span>
                 <div>
@@ -341,7 +341,7 @@ export function CheckoutPage() {
 
             <section className="rounded-2xl border border-border bg-card p-5 shadow-sm sm:p-6">
               <div className="flex items-start gap-3">
-                <span className="grid size-10 shrink-0 place-items-center rounded-xl bg-primary/10 text-primary">
+                <span className="grid size-10 shrink-0 place-items-center rounded-xl bg-primary/10 text-primary-text">
                   <Truck className="size-5" />
                 </span>
                 <div>
@@ -361,7 +361,7 @@ export function CheckoutPage() {
                     <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                       <div>
                         <div className="flex items-center gap-2">
-                          <Store className="size-4 text-primary" />
+                          <Store className="size-4 text-primary-text" />
                           <h3 className="text-base font-semibold">{group.business.name}</h3>
                         </div>
                         <p className="mt-1 flex items-center gap-1 text-xs text-muted-foreground">
@@ -452,7 +452,7 @@ export function CheckoutPage() {
 
           <aside className="lg:sticky lg:top-[92px] lg:self-start">
             <div className="rounded-2xl border border-border bg-card p-5 shadow-sm">
-              <span className="text-xs font-bold uppercase tracking-[.14em] text-primary">
+              <span className="text-xs font-bold uppercase tracking-[.14em] text-primary-text">
                 Order summary
               </span>
               <h2 className="mt-2 text-xl font-semibold">
@@ -485,13 +485,13 @@ export function CheckoutPage() {
               </div>
 
               {!allSelected && (
-                <p className="mt-4 rounded-xl bg-amber-50 px-3 py-2 text-xs leading-5 text-amber-700">
+                <p className="mt-4 rounded-xl bg-warning-soft px-3 py-2 text-xs leading-5 text-warning-foreground">
                   Choose a fulfilment method for every seller.
                 </p>
               )}
 
               {!detailsReady && (
-                <p className="mt-3 rounded-xl bg-amber-50 px-3 py-2 text-xs leading-5 text-amber-700">
+                <p className="mt-3 rounded-xl bg-warning-soft px-3 py-2 text-xs leading-5 text-warning-foreground">
                   Complete your name, phone and location.
                 </p>
               )}
@@ -500,7 +500,7 @@ export function CheckoutPage() {
                 data-ui="checkout-submit"
                 type="submit"
                 disabled={submitting || !allSelected || !detailsReady}
-                className="mt-5 inline-flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-primary px-4 text-sm font-semibold text-primary-foreground shadow-sm transition hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-50"
+                className="mt-5 inline-flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-primary px-4 text-sm font-semibold text-primary-foreground shadow-sm transition hover:bg-primary/90 disabled:cursor-not-allowed disabled:saturate-50"
               >
                 <PackageCheck className="size-4" />
                 {submitting ? "Placing order…" : "Place order"}
@@ -511,7 +511,7 @@ export function CheckoutPage() {
               </p>
 
               <div className="mt-4 flex gap-3 rounded-xl bg-muted/50 p-3">
-                <ShieldCheck className="mt-0.5 size-4 shrink-0 text-emerald-600" />
+                <ShieldCheck className="mt-0.5 size-4 shrink-0 text-success-foreground" />
                 <p className="m-0 text-xs leading-5 text-muted-foreground">
                   Your cart becomes an order only after all server-side checks succeed.
                 </p>

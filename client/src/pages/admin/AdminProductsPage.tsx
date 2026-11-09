@@ -110,7 +110,7 @@ export function AdminProductsPage() {
         <button data-ui="admin-product-search" type="submit" className="h-10 self-end rounded-xl bg-primary px-4 text-sm font-semibold text-primary-foreground">Search</button>
       </form>
 
-      {error && <div className="mt-5 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">{error}</div>}
+      {error && <div className="mt-5 rounded-xl border border-danger-border bg-danger-soft px-4 py-3 text-sm text-danger-foreground">{error}</div>}
 
       <p className="mt-5 text-sm text-muted-foreground">
         <strong className="text-foreground">{total}</strong> matching product{total === 1 ? "" : "s"}
@@ -154,7 +154,7 @@ export function AdminProductsPage() {
               </div>
 
               {product.admin_status_reason && (
-                <div className="mt-4 rounded-xl border border-red-200 bg-red-50 p-3 text-sm text-red-700">
+                <div className="mt-4 rounded-xl border border-danger-border bg-danger-soft p-3 text-sm text-danger-foreground">
                   <strong>Admin reason:</strong> {product.admin_status_reason}
                 </div>
               )}
@@ -176,8 +176,8 @@ export function AdminProductsPage() {
                     className={
                       "inline-flex h-9 items-center rounded-xl border px-3 text-xs font-semibold " +
                       (product.status !== "HIDDEN"
-                        ? "border-red-200 bg-red-50 text-red-700"
-                        : "border-emerald-200 bg-emerald-50 text-emerald-700")
+                        ? "border-danger-border bg-danger-soft text-danger-foreground"
+                        : "border-success-border bg-success-soft text-success-foreground")
                     }
                   >
                     {product.status === "HIDDEN" ? "Restore" : "Hide"}
@@ -191,9 +191,9 @@ export function AdminProductsPage() {
 
       {totalPages > 1 && (
         <div className="mt-5 flex items-center justify-between rounded-2xl border border-border bg-card p-3 shadow-sm">
-          <button data-ui="admin-products-prev" type="button" disabled={page <= 1} onClick={() => void load(page - 1)} className="rounded-xl border border-border px-3 py-2 text-sm font-semibold disabled:opacity-40">Previous</button>
+          <button data-ui="admin-products-prev" type="button" disabled={page <= 1} onClick={() => void load(page - 1)} className="rounded-xl border border-border px-3 py-2 text-sm font-semibold disabled:saturate-50">Previous</button>
           <span className="text-sm text-muted-foreground">Page {page} of {totalPages}</span>
-          <button data-ui="admin-products-next" type="button" disabled={page >= totalPages} onClick={() => void load(page + 1)} className="rounded-xl border border-border px-3 py-2 text-sm font-semibold disabled:opacity-40">Next</button>
+          <button data-ui="admin-products-next" type="button" disabled={page >= totalPages} onClick={() => void load(page + 1)} className="rounded-xl border border-border px-3 py-2 text-sm font-semibold disabled:saturate-50">Next</button>
         </div>
       )}
 
@@ -219,7 +219,7 @@ export function AdminProductsPage() {
           )}
 
           <div className="mt-4 flex gap-2">
-            <button data-ui="admin-product-confirm" type="button" disabled={saving || (selected.status !== "HIDDEN" && reason.trim().length < 3)} onClick={() => void confirmStatusChange()} className="h-10 rounded-xl bg-primary px-4 text-sm font-semibold text-primary-foreground disabled:opacity-50">
+            <button data-ui="admin-product-confirm" type="button" disabled={saving || (selected.status !== "HIDDEN" && reason.trim().length < 3)} onClick={() => void confirmStatusChange()} className="h-10 rounded-xl bg-primary px-4 text-sm font-semibold text-primary-foreground disabled:saturate-50">
               {saving ? "Saving..." : "Confirm"}
             </button>
             <button data-ui="admin-product-cancel" type="button" disabled={saving} onClick={() => { setSelected(null); setReason(""); }} className="h-10 rounded-xl border border-border px-4 text-sm font-semibold">Cancel</button>

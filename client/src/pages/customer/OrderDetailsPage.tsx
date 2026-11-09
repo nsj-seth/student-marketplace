@@ -85,10 +85,10 @@ export function OrderDetailsPage() {
     return (
       <main className="min-h-screen bg-background pb-16">
         <section className="mx-auto mt-8 w-[min(760px,calc(100%-32px))] rounded-2xl border border-border bg-card p-8 text-center shadow-sm">
-          <Package className="mx-auto size-8 text-primary" />
+          <Package className="mx-auto size-8 text-primary-text" />
           <h1 className="mt-4 text-2xl font-bold">Order unavailable</h1>
-          <p className="mt-2 text-sm text-red-600">{error || "Order not found."}</p>
-          <Link className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-primary" to="/orders">
+          <p className="mt-2 text-sm text-danger-foreground">{error || "Order not found."}</p>
+          <Link className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-primary-text" to="/orders">
             <ArrowLeft className="size-4" />
             Back to My Orders
           </Link>
@@ -100,9 +100,9 @@ export function OrderDetailsPage() {
   return (
     <main className="min-h-screen bg-background pb-16 text-foreground">
       <div className="mx-auto mt-5 w-[min(1100px,calc(100%-32px))]">
-        <section className="flex flex-col gap-5 rounded-[1.75rem] border border-border bg-gradient-to-br from-violet-50 via-white to-fuchsia-50 p-6 shadow-sm sm:flex-row sm:items-end sm:justify-between sm:p-8">
+        <section className="flex flex-col gap-5 rounded-[1.75rem] border border-border bg-gradient-to-br from-accent/60 via-card to-background p-6 shadow-sm sm:flex-row sm:items-end sm:justify-between sm:p-8">
           <div>
-            <Link className="mb-3 inline-flex items-center gap-2 text-sm font-semibold text-primary" to="/orders">
+            <Link className="mb-3 inline-flex items-center gap-2 text-sm font-semibold text-primary-text" to="/orders">
               <ArrowLeft className="size-4" />
               My orders
             </Link>
@@ -120,7 +120,7 @@ export function OrderDetailsPage() {
         </section>
 
         {error && (
-          <div className="mt-5 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+          <div className="mt-5 rounded-xl border border-danger-border bg-danger-soft px-4 py-3 text-sm text-danger-foreground">
             {error}
           </div>
         )}
@@ -156,7 +156,7 @@ export function OrderDetailsPage() {
 
             <section className="rounded-2xl border border-border bg-card p-5 shadow-sm">
               <div className="flex items-start gap-3">
-                <span className="grid size-10 shrink-0 place-items-center rounded-xl bg-primary/10 text-primary">
+                <span className="grid size-10 shrink-0 place-items-center rounded-xl bg-primary/10 text-primary-text">
                   <UserRound className="size-5" />
                 </span>
                 <div>
@@ -204,7 +204,7 @@ export function OrderDetailsPage() {
                 >
                   <div className="flex flex-col gap-4 border-b border-border bg-muted/30 p-5 sm:flex-row sm:items-start sm:justify-between">
                     <div className="flex items-center gap-3">
-                      <span className="grid size-11 place-items-center rounded-xl bg-primary/10 text-base font-bold text-primary">
+                      <span className="grid size-11 place-items-center rounded-xl bg-primary/10 text-base font-bold text-primary-text">
                         {sellerOrder.business_name.charAt(0).toUpperCase()}
                       </span>
                       <div>
@@ -231,9 +231,9 @@ export function OrderDetailsPage() {
                     </div>
 
                     {sellerOrder.rejection_reason && (
-                      <div className="mt-4 rounded-xl border border-red-200 bg-red-50 p-4">
-                        <strong className="text-sm text-red-700">Why this seller order was not fulfilled</strong>
-                        <p className="mt-1 text-sm text-red-600">{sellerOrder.rejection_reason}</p>
+                      <div className="mt-4 rounded-xl border border-danger-border bg-danger-soft p-4">
+                        <strong className="text-sm text-danger-foreground">Why this seller order was not fulfilled</strong>
+                        <p className="mt-1 text-sm text-danger-foreground">{sellerOrder.rejection_reason}</p>
                       </div>
                     )}
 
@@ -279,7 +279,7 @@ export function OrderDetailsPage() {
                         <div className="mt-4 space-y-0">
                           {sellerOrder.timeline.map((entry, index) => (
                             <div className="relative flex gap-3 pb-5" key={entry.id}>
-                              <div className="relative z-10 mt-0.5 grid size-8 shrink-0 place-items-center rounded-full bg-primary/10 text-primary">
+                              <div className="relative z-10 mt-0.5 grid size-8 shrink-0 place-items-center rounded-full bg-primary/10 text-primary-text">
                                 <CheckCircle2 className="size-4" />
                               </div>
                               {index < sellerOrder.timeline.length - 1 && (

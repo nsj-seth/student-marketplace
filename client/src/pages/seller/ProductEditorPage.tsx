@@ -126,9 +126,9 @@ export function ProductEditorPage() {
     return (
       <main className="min-h-screen bg-background p-5 sm:p-6">
         <section className="rounded-2xl border border-border bg-card p-8 text-center shadow-sm">
-          <PackagePlus className="mx-auto size-8 text-primary" />
+          <PackagePlus className="mx-auto size-8 text-primary-text" />
           <h1 className="mt-4 text-2xl font-bold">Business not found</h1>
-          {error && <p className="mt-2 text-sm text-red-600">{error}</p>}
+          {error && <p className="mt-2 text-sm text-danger-foreground">{error}</p>}
         </section>
       </main>
     );
@@ -153,7 +153,7 @@ export function ProductEditorPage() {
         </div>
 
         <Link
-          className="inline-flex items-center gap-2 text-sm font-semibold text-primary"
+          className="inline-flex items-center gap-2 text-sm font-semibold text-primary-text"
           to={"/seller/businesses/" + businessId + "/products"}
         >
           <ArrowLeft className="size-4" />
@@ -162,7 +162,7 @@ export function ProductEditorPage() {
       </section>
 
       {error && (
-        <div className="mt-5 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+        <div className="mt-5 rounded-xl border border-danger-border bg-danger-soft px-4 py-3 text-sm text-danger-foreground">
           {error}
         </div>
       )}
@@ -242,7 +242,7 @@ export function ProductEditorPage() {
             data-ui="product-save"
             type="submit"
             disabled={!valid || saving}
-            className="inline-flex h-11 items-center gap-2 rounded-xl bg-primary px-5 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90 disabled:opacity-50"
+            className="inline-flex h-11 items-center gap-2 rounded-xl bg-primary px-5 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90 disabled:saturate-50"
           >
             <Save className="size-4" />
             {saving

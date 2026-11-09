@@ -19,7 +19,7 @@ export function MyReportsPage() {
   return (
     <main className="min-h-screen bg-background pb-16 text-foreground">
       <div className="mx-auto mt-5 w-[min(1100px,calc(100%-32px))]">
-        <section className="flex flex-col gap-5 rounded-[1.75rem] border border-border bg-gradient-to-br from-violet-50 via-white to-fuchsia-50 p-6 shadow-sm sm:flex-row sm:items-center sm:justify-between sm:p-8">
+        <section className="flex flex-col gap-5 rounded-[1.75rem] border border-border bg-gradient-to-br from-accent/60 via-card to-background p-6 shadow-sm sm:flex-row sm:items-center sm:justify-between sm:p-8">
           <div>
             <Badge variant="secondary" className="mb-3 gap-1.5">
               <ShieldAlert className="size-3.5" />
@@ -31,7 +31,7 @@ export function MyReportsPage() {
             </p>
           </div>
 
-          <div className="rounded-2xl border border-border bg-white/75 px-5 py-4 text-center shadow-sm">
+          <div className="rounded-2xl border border-border bg-card px-5 py-4 text-center shadow-sm">
             <strong className="block text-2xl">{reports.length}</strong>
             <span className="text-xs text-muted-foreground">submitted report{reports.length === 1 ? "" : "s"}</span>
           </div>
@@ -50,14 +50,14 @@ export function MyReportsPage() {
             )}
 
             {error && (
-              <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+              <div className="rounded-xl border border-danger-border bg-danger-soft px-4 py-3 text-sm text-danger-foreground">
                 {error}
               </div>
             )}
 
             {!loading && !error && reports.length === 0 && (
               <div className="grid place-items-center rounded-2xl border border-dashed border-border bg-muted/25 px-6 py-14 text-center">
-                <span className="grid size-14 place-items-center rounded-2xl bg-card text-primary shadow-sm">
+                <span className="grid size-14 place-items-center rounded-2xl bg-card text-primary-text shadow-sm">
                   <FileWarning className="size-6" />
                 </span>
                 <h2 className="mt-4 text-xl font-semibold">No reports submitted</h2>
@@ -76,7 +76,7 @@ export function MyReportsPage() {
                   >
                     <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                       <div>
-                        <span className="text-xs font-bold uppercase tracking-[.12em] text-primary">
+                        <span className="text-xs font-bold uppercase tracking-[.12em] text-primary-text">
                           {report.target_type.replaceAll("_", " ")}
                         </span>
                         <h2 className="mt-1 text-lg font-semibold">

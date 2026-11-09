@@ -112,7 +112,7 @@ export function AdminReportsPage() {
       </section>
 
       {error && (
-        <div className="mt-5 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+        <div className="mt-5 rounded-xl border border-danger-border bg-danger-soft px-4 py-3 text-sm text-danger-foreground">
           {error}
         </div>
       )}
@@ -137,7 +137,7 @@ export function AdminReportsPage() {
             <article className="rounded-2xl border border-border bg-card p-5 shadow-sm" key={report.id}>
               <div className="flex items-start justify-between gap-4">
                 <div>
-                  <span className="text-xs font-semibold text-primary">{report.target_type}</span>
+                  <span className="text-xs font-semibold text-primary-text">{report.target_type}</span>
                   <h2 className="mt-1 text-lg font-semibold">{report.target_label ?? report.target_type}</h2>
                 </div>
                 <Badge variant={report.status === "PENDING" ? "warning" : report.status === "ACTION_TAKEN" ? "destructive" : "secondary"}>
@@ -172,7 +172,7 @@ export function AdminReportsPage() {
       {selected && (
         <section className="mt-5 rounded-2xl border border-border bg-card p-5 shadow-sm">
           <div className="flex items-start gap-3">
-            <span className="grid size-10 place-items-center rounded-xl bg-primary/10 text-primary">
+            <span className="grid size-10 place-items-center rounded-xl bg-primary/10 text-primary-text">
               <ShieldCheck className="size-5" />
             </span>
             <div>
@@ -235,7 +235,7 @@ export function AdminReportsPage() {
                 data-ui="admin-report-save"
                 type="submit"
                 disabled={saving}
-                className="h-10 rounded-xl bg-primary px-4 text-sm font-semibold text-primary-foreground disabled:opacity-50"
+                className="h-10 rounded-xl bg-primary px-4 text-sm font-semibold text-primary-foreground disabled:saturate-50"
               >
                 {saving ? "Saving..." : "Save decision"}
               </button>

@@ -155,7 +155,7 @@ export function ProductsPage() {
 
   return (
     <main className="min-h-screen bg-background pb-16 text-foreground">
-      <section className="mx-auto mt-5 flex w-[min(1240px,calc(100%-32px))] flex-col gap-6 overflow-hidden rounded-[1.75rem] border border-border/70 bg-gradient-to-br from-violet-50 via-white to-fuchsia-50 px-6 py-8 shadow-sm sm:px-8 lg:flex-row lg:items-end lg:justify-between lg:px-10 lg:py-10">
+      <section className="mx-auto mt-5 flex w-[min(1240px,calc(100%-32px))] flex-col gap-6 overflow-hidden rounded-[1.75rem] border border-border/70 bg-gradient-to-br from-accent/60 via-card to-background px-6 py-8 shadow-sm sm:px-8 lg:flex-row lg:items-end lg:justify-between lg:px-10 lg:py-10">
         <div>
           <Badge variant="secondary" className="mb-4 gap-1.5">
             <PackageSearch className="size-3.5" />
@@ -170,7 +170,7 @@ export function ProductsPage() {
         </div>
 
         <Link
-          className={cn(buttonVariants({ variant: "outline" }), "w-fit bg-white/80 shadow-xs")}
+          className={cn(buttonVariants({ variant: "outline" }), "w-fit bg-card shadow-xs")}
           to="/businesses"
         >
           <Store className="size-4" />
@@ -184,7 +184,7 @@ export function ProductsPage() {
             <div className="flex items-center justify-between border-b border-border px-5 py-4">
               <div>
                 <div className="flex items-center gap-2 text-sm font-semibold">
-                  <SlidersHorizontal className="size-4 text-primary" />
+                  <SlidersHorizontal className="size-4 text-primary-text" />
                   Filters
                   {activeFilterCount > 0 && (
                     <Badge variant="secondary" className="px-2 py-0.5">{activeFilterCount}</Badge>
@@ -316,7 +316,7 @@ export function ProductsPage() {
         <section className="min-w-0">
           <div className="mb-5 flex flex-col gap-3 border-b border-border pb-5 sm:flex-row sm:items-end sm:justify-between">
             <div>
-              <p className="m-0 text-xs font-bold uppercase tracking-[.14em] text-primary">Products</p>
+              <p className="m-0 text-xs font-bold uppercase tracking-[.14em] text-primary-text">Products</p>
               <h2 className="mt-1 text-2xl font-bold tracking-[-.03em]">
                 {loading ? "Loading marketplace…" : `${products.length} ${products.length === 1 ? "product" : "products"}`}
               </h2>
@@ -346,7 +346,7 @@ export function ProductsPage() {
           </div>
 
           {error && (
-            <div className="mb-5 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+            <div className="mb-5 rounded-xl border border-danger-border bg-danger-soft px-4 py-3 text-sm text-danger-foreground">
               {error}
             </div>
           )}
@@ -368,7 +368,7 @@ export function ProductsPage() {
 
           {!loading && !error && products.length === 0 && (
             <div className="grid place-items-center rounded-2xl border border-dashed border-border bg-muted/30 px-6 py-16 text-center">
-              <span className="grid size-14 place-items-center rounded-2xl bg-card text-primary shadow-sm">
+              <span className="grid size-14 place-items-center rounded-2xl bg-card text-primary-text shadow-sm">
                 <PackageSearch className="size-6" />
               </span>
               <h3 className="mt-4 text-lg font-semibold">No products found</h3>
@@ -423,12 +423,12 @@ export function ProductsPage() {
                     <div className="p-4">
                       <div className="flex items-start justify-between gap-3">
                         <div className="min-w-0">
-                          <p className="m-0 truncate text-xs font-semibold text-primary">
+                          <p className="m-0 truncate text-xs font-semibold text-primary-text">
                             {product.category?.name ?? "Product"}
                           </p>
                           <Link
                             to={`/products/${product.id}/${product.slug}`}
-                            className="mt-1 line-clamp-2 block text-base font-semibold leading-snug text-foreground hover:text-primary"
+                            className="mt-1 line-clamp-2 block text-base font-semibold leading-snug text-foreground hover:text-primary-text"
                           >
                             {product.name}
                           </Link>
@@ -446,7 +446,7 @@ export function ProductsPage() {
                       <div className="mt-4 border-t border-border/70 pt-4">
                         <Link
                           to={`/businesses/${product.business.slug}`}
-                          className="flex items-center gap-2 text-sm font-semibold text-foreground hover:text-primary"
+                          className="flex items-center gap-2 text-sm font-semibold text-foreground hover:text-primary-text"
                         >
                           <Store className="size-4 text-muted-foreground" />
                           <span className="truncate">{product.business.name}</span>

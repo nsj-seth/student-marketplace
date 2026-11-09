@@ -136,20 +136,20 @@ export function CartPage() {
             </p>
           </div>
 
-          <Link className="inline-flex items-center gap-2 text-sm font-semibold text-primary" to="/products">
+          <Link className="inline-flex items-center gap-2 text-sm font-semibold text-primary-text" to="/products">
             Continue shopping <ArrowRight className="size-4" />
           </Link>
         </div>
 
         {error && (
-          <div className="mt-5 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+          <div className="mt-5 rounded-xl border border-danger-border bg-danger-soft px-4 py-3 text-sm text-danger-foreground">
             {error}
           </div>
         )}
 
         {isEmpty ? (
           <section className="mt-8 grid place-items-center rounded-[1.75rem] border border-dashed border-border bg-muted/25 px-6 py-16 text-center">
-            <span className="grid size-16 place-items-center rounded-2xl bg-card text-primary shadow-sm">
+            <span className="grid size-16 place-items-center rounded-2xl bg-card text-primary-text shadow-sm">
               <ShoppingBag className="size-7" />
             </span>
             <h2 className="mt-5 text-2xl font-bold tracking-[-.03em]">Your cart is waiting for something good.</h2>
@@ -171,13 +171,13 @@ export function CartPage() {
                 >
                   <header className="flex flex-col gap-3 border-b border-border bg-muted/30 px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
                     <div className="flex items-start gap-3">
-                      <span className="grid size-10 place-items-center rounded-xl bg-primary/10 text-primary">
+                      <span className="grid size-10 place-items-center rounded-xl bg-primary/10 text-primary-text">
                         <Store className="size-5" />
                       </span>
                       <div>
                         <Link
                           to={`/businesses/${group.business.slug}`}
-                          className="text-base font-semibold text-foreground hover:text-primary"
+                          className="text-base font-semibold text-foreground hover:text-primary-text"
                         >
                           {group.business.name}
                         </Link>
@@ -225,12 +225,12 @@ export function CartPage() {
                           </Link>
 
                           <div className="min-w-0">
-                            <p className="m-0 text-xs font-semibold text-primary">
+                            <p className="m-0 text-xs font-semibold text-primary-text">
                               {item.product.category?.name ?? "Product"}
                             </p>
                             <Link
                               to={`/products/${item.product.id}/${item.product.slug}`}
-                              className="mt-1 line-clamp-2 block text-sm font-semibold text-foreground hover:text-primary"
+                              className="mt-1 line-clamp-2 block text-sm font-semibold text-foreground hover:text-primary-text"
                             >
                               {item.product.name}
                             </Link>
@@ -249,7 +249,7 @@ export function CartPage() {
                                   aria-label="Decrease quantity"
                                   disabled={busyItem === item.id || item.quantity <= 1}
                                   onClick={() => void changeQuantity(item.id, item.quantity - 1)}
-                                  className="grid size-9 place-items-center text-muted-foreground transition hover:bg-muted hover:text-foreground disabled:opacity-40"
+                                  className="grid size-9 place-items-center text-muted-foreground transition hover:bg-muted hover:text-foreground disabled:saturate-50"
                                 >
                                   <Minus className="size-4" />
                                 </button>
@@ -263,7 +263,7 @@ export function CartPage() {
                                     item.quantity >= item.product.stock_quantity
                                   }
                                   onClick={() => void changeQuantity(item.id, item.quantity + 1)}
-                                  className="grid size-9 place-items-center text-muted-foreground transition hover:bg-muted hover:text-foreground disabled:opacity-40"
+                                  className="grid size-9 place-items-center text-muted-foreground transition hover:bg-muted hover:text-foreground disabled:saturate-50"
                                 >
                                   <Plus className="size-4" />
                                 </button>
@@ -274,7 +274,7 @@ export function CartPage() {
                                 type="button"
                                 disabled={busyItem === item.id}
                                 onClick={() => void remove(item.id)}
-                                className="inline-flex items-center gap-1.5 text-xs font-semibold text-red-600 transition hover:text-red-700 disabled:opacity-50"
+                                className="inline-flex items-center gap-1.5 text-xs font-semibold text-danger-foreground transition hover:text-danger-foreground disabled:saturate-50"
                               >
                                 <Trash2 className="size-3.5" />
                                 {busyItem === item.id ? "Updating…" : "Remove"}
@@ -293,7 +293,7 @@ export function CartPage() {
 
             <aside className="lg:sticky lg:top-[92px] lg:self-start">
               <div className="rounded-2xl border border-border bg-card p-5 shadow-sm">
-                <span className="text-xs font-bold uppercase tracking-[.14em] text-primary">Order summary</span>
+                <span className="text-xs font-bold uppercase tracking-[.14em] text-primary-text">Order summary</span>
                 <h2 className="mt-2 text-xl font-semibold">Ready to check out?</h2>
 
                 <div className="mt-5 space-y-3 text-sm">
@@ -333,14 +333,14 @@ export function CartPage() {
                   type="button"
                   disabled={clearing}
                   onClick={() => void clear()}
-                  className="mt-3 inline-flex h-10 w-full items-center justify-center gap-2 rounded-xl border border-border bg-background px-4 text-sm font-semibold text-foreground transition hover:bg-muted disabled:opacity-50"
+                  className="mt-3 inline-flex h-10 w-full items-center justify-center gap-2 rounded-xl border border-border bg-background px-4 text-sm font-semibold text-foreground transition hover:bg-muted disabled:saturate-50"
                 >
                   <Trash2 className="size-4" />
                   {clearing ? "Clearing…" : "Clear cart"}
                 </button>
 
                 <div className="mt-5 flex gap-3 rounded-xl bg-muted/50 p-3">
-                  <ShieldCheck className="mt-0.5 size-4 shrink-0 text-emerald-600" />
+                  <ShieldCheck className="mt-0.5 size-4 shrink-0 text-success-foreground" />
                   <p className="m-0 text-xs leading-5 text-muted-foreground">
                     Prices, stock and seller availability are rechecked before your order is created.
                   </p>

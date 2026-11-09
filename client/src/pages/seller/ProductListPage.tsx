@@ -199,19 +199,19 @@ export function ProductListPage() {
       </section>
 
       {message && (
-        <div className="mt-5 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700">
+        <div className="mt-5 rounded-xl border border-success-border bg-success-soft px-4 py-3 text-sm text-success-foreground">
           {message}
         </div>
       )}
       {error && (
-        <div className="mt-5 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+        <div className="mt-5 rounded-xl border border-danger-border bg-danger-soft px-4 py-3 text-sm text-danger-foreground">
           {error}
         </div>
       )}
 
       {products.length === 0 ? (
         <div className="mt-5 grid place-items-center rounded-2xl border border-dashed border-border bg-muted/25 px-6 py-14 text-center">
-          <Boxes className="size-7 text-primary" />
+          <Boxes className="size-7 text-primary-text" />
           <h2 className="mt-4 text-xl font-semibold">No products yet</h2>
           <p className="mt-2 text-sm text-muted-foreground">
             Add your first product to start building this storefront catalogue.
@@ -253,7 +253,7 @@ export function ProductListPage() {
                   <div className="min-w-0">
                     <div className="flex flex-wrap items-start justify-between gap-2">
                       <div>
-                        <span className="text-xs font-semibold text-primary">
+                        <span className="text-xs font-semibold text-primary-text">
                           {product.category?.name ?? "Unknown category"}
                         </span>
                         <h2 className="mt-1 text-lg font-semibold">{product.name}</h2>
@@ -363,7 +363,7 @@ export function ProductListPage() {
                     type="button"
                     disabled={busyId === product.id}
                     onClick={() => void remove(product)}
-                    className="inline-flex h-9 items-center gap-2 rounded-xl border border-red-200 bg-red-50 px-3 text-xs font-semibold text-red-700"
+                    className="inline-flex h-9 items-center gap-2 rounded-xl border border-danger-border bg-danger-soft px-3 text-xs font-semibold text-danger-foreground"
                   >
                     <Trash2 className="size-3.5" />
                     Remove

@@ -13,6 +13,10 @@
   --color-popover-foreground: var(--ds-popover-foreground);
   --color-primary: var(--ds-primary);
   --color-primary-foreground: var(--ds-primary-foreground);
+  --color-primary-text: var(--ds-primary-text);
+  --color-hero-foreground: var(--hero-foreground);
+  --color-hero-muted: var(--hero-muted);
+  --color-hero-accent: var(--hero-accent);
   --color-secondary: var(--ds-secondary);
   --color-secondary-foreground: var(--ds-secondary-foreground);
   --color-muted: var(--ds-muted);
@@ -20,6 +24,22 @@
   --color-accent: var(--ds-accent);
   --color-accent-foreground: var(--ds-accent-foreground);
   --color-destructive: var(--ds-destructive);
+  --color-info-soft: var(--ds-info-soft);
+  --color-info-foreground: var(--ds-info-foreground);
+  --color-info-border: var(--ds-info-border);
+  --color-info-strong: var(--ds-info-strong);
+  --color-warning-soft: var(--ds-warning-soft);
+  --color-warning-foreground: var(--ds-warning-foreground);
+  --color-warning-border: var(--ds-warning-border);
+  --color-warning-strong: var(--ds-warning-strong);
+  --color-success-soft: var(--ds-success-soft);
+  --color-success-foreground: var(--ds-success-foreground);
+  --color-success-border: var(--ds-success-border);
+  --color-success-strong: var(--ds-success-strong);
+  --color-danger-soft: var(--ds-danger-soft);
+  --color-danger-foreground: var(--ds-danger-foreground);
+  --color-danger-border: var(--ds-danger-border);
+  --color-danger-strong: var(--ds-danger-strong);
   --color-border: var(--ds-border);
   --color-input: var(--ds-input);
   --color-ring: var(--ds-ring);
@@ -40,6 +60,7 @@
   --ds-popover: #ffffff;
   --ds-popover-foreground: #17141f;
   --ds-primary: #6d28d9;
+  --ds-primary-text: #5b21b6;
   --ds-primary-foreground: #ffffff;
   --ds-secondary: #f0ecf8;
   --ds-secondary-foreground: #342a45;
@@ -49,37 +70,105 @@
   --ds-accent-foreground: #5b21b6;
   --ds-destructive: #dc2626;
   --ds-border: #e7e3ed;
-  --ds-input: #ded8e8;
-  --ds-ring: #8b5cf6;
+  --ds-input: #8b8199;
+  --ds-ring: #6d28d9;
   --ds-radius: 0.875rem;
   --ds-font-sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 
   font-family: var(--ds-font-sans);
-  color: #1d1730;
-  background: #f7f7fb;
+  color: var(--ds-foreground);
+  background: var(--ds-background);
+  color-scheme: light;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
-  --primary: #7c3aed;
-  --primary-dark: #5b21b6;
-  --primary-soft: #f2eaff;
-  --primary-softer: #faf7ff;
-  --accent: #22c55e;
-  --text: #1d1730;
-  --muted: #595264;
-  --surface: #ffffff;
-  --surface-alt: #fafaff;
-  --border: #e8e5ef;
-  --border-strong: #d9d3e7;
-  --danger: #dc2626;
-  --warning: #f59e0b;
-  --success: #16a34a;
-  --info: #3b82f6;
+  --primary: var(--ds-primary);
+  --primary-dark: var(--ds-primary-text);
+  --primary-soft: var(--ds-accent);
+  --primary-softer: var(--ds-muted);
+  --accent: var(--ds-success-strong);
+  --text: var(--ds-foreground);
+  --muted: var(--ds-muted-foreground);
+  --surface: var(--ds-card);
+  --surface-alt: var(--ds-muted);
+  --border: var(--ds-border);
+  --border-strong: var(--ds-input);
+  --danger: var(--ds-danger-foreground);
+  --warning: var(--ds-warning-foreground);
+  --success: var(--ds-success-foreground);
+  --info: var(--ds-info-foreground);
   --shadow-sm: 0 8px 24px rgba(55, 37, 89, 0.06);
   --shadow-md: 0 18px 46px rgba(55, 37, 89, 0.10);
   --radius-sm: 10px;
   --radius-md: 16px;
   --radius-lg: 24px;
   --max-width: 1240px;
+
+  --ds-danger-soft: #fff1f2;
+  --ds-danger-foreground: #991b1b;
+  --ds-danger-border: #e8a3ad;
+  --ds-danger-strong: #b91c1c;
+  --ds-success-soft: #ecfdf5;
+  --ds-success-foreground: #065f46;
+  --ds-success-border: #86c9af;
+  --ds-success-strong: #047857;
+  --ds-warning-soft: #fffbeb;
+  --ds-warning-foreground: #854d0e;
+  --ds-warning-border: #d4b370;
+  --ds-warning-strong: #92400e;
+  --ds-info-soft: #eff6ff;
+  --ds-info-foreground: #1e40af;
+  --ds-info-border: #93b4e5;
+  --ds-info-strong: #1d4ed8;
+  --hero-start: #e7e3ff;
+  --hero-end: #eef6ff;
+  --hero-glow: #e1d5ff;
+  --hero-edge: #eef6ff;
+  --hero-foreground: #251c48;
+  --hero-muted: #4a3d68;
+  --hero-accent: #5b21b6;
+
+}
+
+
+:root.dark {
+  color-scheme: dark;
+  --ds-background: #111522;
+  --ds-foreground: #f3f4fc;
+  --ds-card: #1b2233;
+  --ds-card-foreground: #f3f4fc;
+  --ds-popover: #1b2233;
+  --ds-popover-foreground: #f3f4fc;
+  --ds-primary: #7c3aed;
+  --ds-primary-text: #c4b5fd;
+  --ds-secondary: #30304c;
+  --ds-secondary-foreground: #eee9ff;
+  --ds-muted: #252e43;
+  --ds-muted-foreground: #c0c8db;
+  --ds-accent: #342950;
+  --ds-accent-foreground: #e1d5ff;
+  --ds-destructive: #b91c1c;
+  --ds-border: #414b63;
+  --ds-input: #7e88a0;
+  --ds-ring: #c4b5fd;
+  --ds-danger-soft: #3d202b;
+  --ds-danger-foreground: #ffb4bf;
+  --ds-danger-border: #9f5367;
+  --ds-success-soft: #123b32;
+  --ds-success-foreground: #91e5c3;
+  --ds-success-border: #437f6d;
+  --ds-warning-soft: #3d301e;
+  --ds-warning-foreground: #f7d58c;
+  --ds-warning-border: #95723a;
+  --ds-info-soft: #1e3452;
+  --ds-info-foreground: #b4d5ff;
+  --ds-info-border: #557ba7;
+  --hero-start: #263267;
+  --hero-end: #35224e;
+  --hero-glow: #343d7e;
+  --hero-edge: #35224e;
+  --hero-foreground: #ffffff;
+  --hero-muted: #e1ddf7;
+  --hero-accent: #ddd6fe;
 }
 
 /* Keep legacy defaults below utility styles so explicit component colours,
@@ -89,7 +178,7 @@
 html { scroll-behavior: smooth; }
 body { margin: 0; min-width: 320px; min-height: 100vh; background: #f7f7fb; color: var(--text); }
 a { color: var(--primary-dark); text-decoration: none; }
-a:hover { color: var(--primary); }
+a:hover { color: var(--primary-dark); }
 button, input, textarea, select { font: inherit; }
 button:not([data-ui]) { border: 0; }
 img { max-width: 100%; }
@@ -154,7 +243,7 @@ fieldset { border: 1px solid var(--border); border-radius: 14px; padding: 16px; 
 
 button:not([data-ui]), .button-link { display: inline-flex; align-items: center; justify-content: center; gap: 7px; border-radius: 11px; padding: 11px 16px; background: linear-gradient(135deg, #7c3aed, #6d28d9); color: #fff; font-weight: 800; cursor: pointer; text-decoration: none; box-shadow: 0 7px 18px rgba(124,58,237,.18); transition: transform .15s, box-shadow .15s, background .15s; }
 button:not([data-ui]):hover, .button-link:hover { color: #fff; transform: translateY(-1px); box-shadow: 0 10px 22px rgba(124,58,237,.22); }
-button:not([data-ui]):disabled { opacity: .55; cursor: not-allowed; transform: none; }
+button:not([data-ui]):disabled { opacity: 1; filter: saturate(.5); cursor: not-allowed; transform: none; }
 .secondary-button, .button-link--secondary { background: #f2eff7; color: #4b4558; box-shadow: none; }
 .secondary-button:hover, .button-link--secondary:hover { color: var(--primary-dark); background: #e9e2f7; box-shadow: none; }
 .danger-button { background: #dc2626; }
@@ -822,4 +911,61 @@ body {
   }
 }
 
+
+/* Shared branded surface: text has its own tested palette in each theme. */
+.hero-surface {
+  background: radial-gradient(ellipse at top left, var(--hero-glow), transparent 65%),
+    linear-gradient(125deg, var(--hero-start), var(--hero-end));
+  color: var(--hero-foreground);
+}
+.hero-image-scrim {
+  background: linear-gradient(to right, var(--hero-edge), transparent 85%);
+}
+.workspace-sidebar {
+  background: var(--ds-card);
+  color: var(--ds-foreground);
+  border-color: var(--ds-border);
+}
+.workspace-nav__link { color: var(--ds-muted-foreground); }
+.workspace-nav__link:hover, .workspace-nav__link--active {
+  background: var(--ds-accent);
+  color: var(--ds-accent-foreground);
+}
+.workspace-sidebar__heading, .workspace-sidebar__footer { border-color: var(--ds-border); }
+input:not([data-ui]), select, textarea {
+  background-color: var(--ds-card);
+  color: var(--ds-foreground);
+  border-color: var(--ds-input);
+}
+label { color: var(--ds-foreground); }
+input::placeholder, textarea::placeholder { color: var(--ds-muted-foreground); opacity: 1; }
+:where(a, button, input, select, textarea):focus-visible {
+  outline: 3px solid var(--ds-ring);
+  outline-offset: 3px;
+}
+
+/* Reviews and reports are shared legacy panels used inside modern pages. */
+.review-card, .review-form-card { background: var(--ds-card); color: var(--ds-foreground); }
+.review-summary { flex-wrap: wrap; color: var(--ds-muted-foreground); }
+.review-stars { color: var(--ds-warning-foreground); }
+.message--error {
+  background: var(--ds-danger-soft); color: var(--ds-danger-foreground); border-color: var(--ds-danger-border);
+}
+.message--success {
+  background: var(--ds-success-soft); color: var(--ds-success-foreground); border-color: var(--ds-success-border);
+}
+button.secondary-button, .button-link--secondary {
+  background: var(--ds-secondary); color: var(--ds-secondary-foreground);
+}
+button.secondary-button:hover, .button-link--secondary:hover {
+  background: var(--ds-accent); color: var(--ds-accent-foreground);
+}
+.workspace-sidebar__heading small, .review-card small { font-size: .875rem; }
+
 } /* components */
+
+/* Keep a visible keyboard outline even on controls with outline-none utilities. */
+:where(a, button, input, select, textarea):focus-visible {
+  outline: 3px solid var(--ds-ring);
+  outline-offset: 3px;
+}

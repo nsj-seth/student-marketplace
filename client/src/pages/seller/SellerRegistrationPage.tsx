@@ -112,19 +112,19 @@ export function SellerRegistrationPage() {
         </section>
 
         {message && (
-          <div className="mt-5 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700">
+          <div className="mt-5 rounded-xl border border-success-border bg-success-soft px-4 py-3 text-sm text-success-foreground">
             {message}
           </div>
         )}
         {error && (
-          <div className="mt-5 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+          <div className="mt-5 rounded-xl border border-danger-border bg-danger-soft px-4 py-3 text-sm text-danger-foreground">
             {error}
           </div>
         )}
 
         <div className="mt-6 grid gap-6 lg:grid-cols-[360px_minmax(0,1fr)]">
           <section className="rounded-2xl border border-border bg-card p-5 shadow-sm lg:sticky lg:top-[92px] lg:self-start">
-            <span className="text-xs font-bold uppercase tracking-[.14em] text-primary">
+            <span className="text-xs font-bold uppercase tracking-[.14em] text-primary-text">
               Start an application
             </span>
             <h2 className="mt-2 text-xl font-semibold">Choose business type</h2>
@@ -141,7 +141,7 @@ export function SellerRegistrationPage() {
                     : "border-border bg-background hover:bg-muted/40")
                 }
               >
-                <span className="grid size-10 shrink-0 place-items-center rounded-xl bg-primary/10 text-primary">
+                <span className="grid size-10 shrink-0 place-items-center rounded-xl bg-primary/10 text-primary-text">
                   <GraduationCap className="size-5" />
                 </span>
                 <span>
@@ -163,7 +163,7 @@ export function SellerRegistrationPage() {
                     : "border-border bg-background hover:bg-muted/40")
                 }
               >
-                <span className="grid size-10 shrink-0 place-items-center rounded-xl bg-primary/10 text-primary">
+                <span className="grid size-10 shrink-0 place-items-center rounded-xl bg-primary/10 text-primary-text">
                   <Building2 className="size-5" />
                 </span>
                 <span>
@@ -178,7 +178,7 @@ export function SellerRegistrationPage() {
                 data-ui="seller-start"
                 type="submit"
                 disabled={saving}
-                className="mt-2 inline-flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-primary px-4 text-sm font-semibold text-primary-foreground disabled:opacity-50"
+                className="mt-2 inline-flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-primary px-4 text-sm font-semibold text-primary-foreground disabled:saturate-50"
               >
                 <Store className="size-4" />
                 {saving ? "Starting..." : "Start seller application"}
@@ -189,7 +189,7 @@ export function SellerRegistrationPage() {
           <section className="min-w-0">
             <div className="mb-4 flex items-end justify-between gap-3">
               <div>
-                <span className="text-xs font-bold uppercase tracking-[.14em] text-primary">Applications</span>
+                <span className="text-xs font-bold uppercase tracking-[.14em] text-primary-text">Applications</span>
                 <h2 className="mt-1 text-2xl font-bold tracking-[-.03em]">Your seller applications</h2>
               </div>
               <span className="text-sm text-muted-foreground">{applications.length} total</span>
@@ -203,7 +203,7 @@ export function SellerRegistrationPage() {
               </div>
             ) : applications.length === 0 ? (
               <div className="grid place-items-center rounded-2xl border border-dashed border-border bg-muted/25 px-6 py-14 text-center">
-                <Store className="size-7 text-primary" />
+                <Store className="size-7 text-primary-text" />
                 <h3 className="mt-4 text-xl font-semibold">No applications yet</h3>
                 <p className="mt-2 max-w-md text-sm text-muted-foreground">
                   Choose a business type to begin your first seller application.
@@ -215,7 +215,7 @@ export function SellerRegistrationPage() {
                   <article key={application.id} className="rounded-2xl border border-border bg-card p-5 shadow-sm">
                     <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                       <div>
-                        <span className="text-xs font-semibold text-primary">
+                        <span className="text-xs font-semibold text-primary-text">
                           {businessTypeLabel(application.business_type)}
                         </span>
                         <h3 className="mt-1 text-lg font-semibold">
@@ -239,7 +239,7 @@ export function SellerRegistrationPage() {
                             to={"/sell/applications/" + application.id + "/student-verification"}
                           >
                             <span className="flex items-center gap-2">
-                              <BadgeCheck className="size-4 text-primary" />
+                              <BadgeCheck className="size-4 text-primary-text" />
                               Verify student email
                             </span>
                             <ArrowRight className="size-4 text-muted-foreground" />
@@ -251,7 +251,7 @@ export function SellerRegistrationPage() {
                           to={"/sell/applications/" + application.id + "/business-details"}
                         >
                           <span className="flex items-center gap-2">
-                            <Building2 className="size-4 text-primary" />
+                            <Building2 className="size-4 text-primary-text" />
                             Business details
                           </span>
                           <ArrowRight className="size-4 text-muted-foreground" />
@@ -260,38 +260,38 @@ export function SellerRegistrationPage() {
                     )}
 
                     {application.status === "PENDING" && (
-                      <div className="mt-5 flex gap-3 rounded-xl bg-amber-50 p-4">
-                        <Clock3 className="mt-0.5 size-4 shrink-0 text-amber-600" />
-                        <p className="m-0 text-sm leading-6 text-amber-800">
+                      <div className="mt-5 flex gap-3 rounded-xl bg-warning-soft p-4">
+                        <Clock3 className="mt-0.5 size-4 shrink-0 text-warning-foreground" />
+                        <p className="m-0 text-sm leading-6 text-warning-foreground">
                           Your application has been submitted and is waiting for admin review.
                         </p>
                       </div>
                     )}
 
                     {application.status === "APPROVED" && (
-                      <div className="mt-5 rounded-xl border border-emerald-200 bg-emerald-50 p-4">
+                      <div className="mt-5 rounded-xl border border-success-border bg-success-soft p-4">
                         <div className="flex gap-3">
-                          <BadgeCheck className="mt-0.5 size-4 shrink-0 text-emerald-600" />
+                          <BadgeCheck className="mt-0.5 size-4 shrink-0 text-success-foreground" />
                           <div>
-                            <strong className="text-sm text-emerald-800">Approved</strong>
-                            <p className="mt-1 text-sm leading-6 text-emerald-700">
+                            <strong className="text-sm text-success-foreground">Approved</strong>
+                            <p className="mt-1 text-sm leading-6 text-success-foreground">
                               Your business has been created and seller access has been granted.
                             </p>
                           </div>
                         </div>
-                        <Link className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-emerald-800" to="/seller/businesses">
+                        <Link className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-success-foreground" to="/seller/businesses">
                           Manage my businesses <ArrowRight className="size-4" />
                         </Link>
                       </div>
                     )}
 
                     {application.status === "REJECTED" && (
-                      <div className="mt-5 rounded-xl border border-red-200 bg-red-50 p-4">
+                      <div className="mt-5 rounded-xl border border-danger-border bg-danger-soft p-4">
                         <div className="flex gap-3">
-                          <XCircle className="mt-0.5 size-4 shrink-0 text-red-600" />
+                          <XCircle className="mt-0.5 size-4 shrink-0 text-danger-foreground" />
                           <div>
-                            <strong className="text-sm text-red-800">Application rejected</strong>
-                            <p className="mt-1 text-sm leading-6 text-red-700">
+                            <strong className="text-sm text-danger-foreground">Application rejected</strong>
+                            <p className="mt-1 text-sm leading-6 text-danger-foreground">
                               {application.review_note || "The application was not approved."}
                             </p>
                           </div>

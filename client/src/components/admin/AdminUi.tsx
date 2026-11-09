@@ -46,7 +46,7 @@ export function AdminEmptyState({
 }) {
   return (
     <div className="grid place-items-center rounded-2xl border border-dashed border-border bg-muted/25 px-6 py-14 text-center">
-      <span className="grid size-14 place-items-center rounded-2xl bg-card text-primary shadow-sm">
+      <span className="grid size-14 place-items-center rounded-2xl bg-card text-primary-text shadow-sm">
         {icon}
       </span>
       <h2 className="mt-4 text-xl font-semibold">{title}</h2>
@@ -71,14 +71,14 @@ export function AdminMetricCard({
 }) {
   const toneClass =
     tone === "success"
-      ? "bg-emerald-50 text-emerald-600"
+      ? "bg-success-soft text-success-foreground"
       : tone === "warning"
-        ? "bg-amber-50 text-amber-600"
+        ? "bg-warning-soft text-warning-foreground"
         : tone === "danger"
-          ? "bg-red-50 text-red-600"
+          ? "bg-danger-soft text-danger-foreground"
           : tone === "blue"
-            ? "bg-blue-50 text-blue-600"
-            : "bg-primary/10 text-primary";
+            ? "bg-info-soft text-info-foreground"
+            : "bg-primary/10 text-primary-text";
 
   return (
     <article className="rounded-2xl border border-border bg-card p-5 shadow-sm">

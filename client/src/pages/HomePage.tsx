@@ -89,13 +89,13 @@ function ProductCard({
 
         <div className="absolute left-3 top-3 flex flex-wrap gap-2">
           {featured && (
-            <Badge className="border-white/20 bg-white/90 text-primary shadow-sm backdrop-blur">
+            <Badge className="border-white/20 bg-card text-primary-text shadow-sm backdrop-blur">
               <Sparkles className="size-3" />
               Featured
             </Badge>
           )}
           {product.status === "OUT_OF_STOCK" && (
-            <Badge variant="secondary" className="bg-white/90 shadow-sm backdrop-blur">
+            <Badge variant="secondary" className="bg-card shadow-sm backdrop-blur">
               Out of stock
             </Badge>
           )}
@@ -117,13 +117,13 @@ function ProductCard({
 
         <Link
           to={`/products/${product.id}/${product.slug}`}
-          className="line-clamp-2 text-[15px] font-semibold leading-snug text-foreground transition-colors hover:text-primary"
+          className="line-clamp-2 text-[15px] font-semibold leading-snug text-foreground transition-colors hover:text-primary-text"
         >
           {product.name}
         </Link>
 
         <Link
-          className="mt-1.5 block truncate text-xs font-medium text-muted-foreground hover:text-primary"
+          className="mt-1.5 block truncate text-xs font-medium text-muted-foreground hover:text-primary-text"
           to={`/businesses/${product.business.slug}`}
         >
           {product.business.name}
@@ -155,7 +155,7 @@ function BusinessCard({
         <div className="absolute -right-8 -top-10 size-32 rounded-full border border-white/20" />
         <div className="absolute bottom-[-35px] left-1/3 size-24 rounded-full bg-white/10 blur-xl" />
         <div className="relative z-10 flex flex-wrap items-center justify-between gap-2 p-4">
-          <Badge className="border-white/20 bg-[#17111f] text-white">
+          <Badge className="border-border bg-card text-foreground">
             {business.business_type === "STUDENT_BUSINESS" ? "Student business" : "Community business"}
           </Badge>
           {featured && (
@@ -171,7 +171,7 @@ function BusinessCard({
           {logo ? (
             <img src={logo} alt={`${business.name} logo`} className="h-full w-full object-cover" />
           ) : (
-            <span className="text-xl font-bold text-primary">{business.name.slice(0, 2).toUpperCase()}</span>
+            <span className="text-xl font-bold text-primary-text">{business.name.slice(0, 2).toUpperCase()}</span>
           )}
         </div>
 
@@ -179,7 +179,7 @@ function BusinessCard({
           <div className="min-w-0">
             <Link
               to={`/businesses/${business.slug}`}
-              className="block truncate text-base font-semibold text-foreground hover:text-primary"
+              className="block truncate text-base font-semibold text-foreground hover:text-primary-text"
             >
               {business.name}
             </Link>
@@ -218,7 +218,7 @@ function BusinessCard({
 
           <Link
             to={`/businesses/${business.slug}`}
-            className="ml-auto flex items-center gap-1 font-semibold text-primary"
+            className="ml-auto flex items-center gap-1 font-semibold text-primary-text"
           >
             Visit <ArrowRight className="size-3.5" />
           </Link>
@@ -260,28 +260,27 @@ export function HomePage() {
 
   return (
     <main className="min-h-screen bg-background pb-16 text-foreground">
-      <section className="mx-auto mt-5 grid w-[min(1240px,calc(100%-32px))] overflow-hidden rounded-[2rem] border border-border/70 bg-[#17111f] shadow-2xl shadow-violet-950/10 lg:grid-cols-[1.08fr_.92fr]">
+      <section className="mx-auto mt-5 grid w-[min(1240px,calc(100%-32px))] overflow-hidden rounded-[2rem] border border-border/70 hero-surface shadow-2xl shadow-violet-950/10 lg:grid-cols-[1.08fr_.92fr]">
         <div className="relative z-10 flex flex-col justify-center px-6 py-12 sm:px-10 lg:px-14 lg:py-16">
-          <div className="absolute -left-20 top-10 size-64 rounded-full bg-violet-600/20 blur-3xl" />
           <div className="relative">
-            <Badge className="mb-5 border-white/10 bg-white/10 px-3 py-1.5 text-white backdrop-blur">
+            <Badge className="mb-5 border-border bg-card px-3 py-1.5 text-primary-text shadow-sm">
               <Sparkles className="size-3.5" />
               Student & community marketplace
             </Badge>
 
-            <h1 className="max-w-2xl text-4xl font-bold leading-[1.02] tracking-[-0.045em] text-white sm:text-5xl lg:text-[4.25rem]">
+            <h1 className="max-w-2xl text-4xl font-bold leading-[1.02] tracking-[-0.045em] text-hero-foreground sm:text-5xl lg:text-[4.25rem]">
               Find great things
-              <span className="block text-violet-200">
+              <span className="block text-hero-accent">
                 closer to home.
               </span>
             </h1>
 
-            <p className="mt-5 max-w-xl text-base leading-7 text-violet-100 sm:text-lg">
+            <p className="mt-5 max-w-xl text-base leading-7 text-hero-muted sm:text-lg">
               Discover products, services and growing businesses from students and communities around you.
             </p>
 
             <form
-              className="mt-8 max-w-2xl overflow-hidden rounded-2xl border border-white/10 bg-white p-2 shadow-xl"
+              className="mt-8 max-w-2xl overflow-hidden rounded-2xl border border-input bg-card p-2 shadow-xl"
               onSubmit={submitSearch}
             >
               <div className="mb-2 flex gap-1 px-1">
@@ -332,10 +331,10 @@ export function HomePage() {
               </div>
             </form>
 
-            <div className="mt-6 flex flex-wrap gap-x-6 gap-y-3 text-sm text-violet-100">
-              <span className="flex items-center gap-2"><BadgeCheck className="size-4 text-violet-300" /> Verified sellers</span>
-              <span className="flex items-center gap-2"><MapPin className="size-4 text-violet-300" /> Local discovery</span>
-              <span className="flex items-center gap-2"><Star className="size-4 text-violet-300" /> Customer reviews</span>
+            <div className="mt-6 flex flex-wrap gap-x-6 gap-y-3 text-sm text-hero-muted">
+              <span className="flex items-center gap-2"><BadgeCheck className="size-4 text-hero-accent" /> Verified sellers</span>
+              <span className="flex items-center gap-2"><MapPin className="size-4 text-hero-accent" /> Local discovery</span>
+              <span className="flex items-center gap-2"><Star className="size-4 text-hero-accent" /> Customer reviews</span>
             </div>
           </div>
         </div>
@@ -346,21 +345,21 @@ export function HomePage() {
           ) : (
             <div className="absolute inset-0 bg-gradient-to-br from-violet-700 to-fuchsia-900" />
           )}
-          <div className="absolute inset-0 bg-gradient-to-r from-[#17111f] via-[#17111f]/25 to-transparent lg:from-[#17111f]/75" />
+          <div className="hero-image-scrim absolute inset-0" />
           <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
 
           <div className="absolute bottom-5 left-5 right-5 grid gap-3 sm:left-8 sm:right-auto sm:w-[310px]">
             {heroProduct && (
               <Link
                 to={`/products/${heroProduct.id}/${heroProduct.slug}`}
-                className="rounded-2xl border border-white/15 bg-[#17111f] p-4 text-white shadow-xl backdrop-blur-xl transition hover:bg-[#2b1e3a]"
+                className="rounded-2xl border border-border bg-card p-4 text-foreground shadow-xl transition hover:bg-muted"
               >
                 <div className="flex items-center justify-between gap-3">
-                  <span className="text-xs font-medium text-white">Featured right now</span>
+                  <span className="text-xs font-medium text-muted-foreground">Featured right now</span>
                   <ArrowUpRight className="size-4" />
                 </div>
                 <strong className="mt-2 block text-base">{heroProduct.name}</strong>
-                <span className="mt-1 block text-sm font-semibold text-violet-200">{money(heroProduct.price)}</span>
+                <span className="mt-1 block text-sm font-semibold text-primary-text">{money(heroProduct.price)}</span>
               </Link>
             )}
           </div>
@@ -368,7 +367,7 @@ export function HomePage() {
       </section>
 
       {error && (
-        <div className="mx-auto mt-6 w-[min(1240px,calc(100%-32px))] rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+        <div className="mx-auto mt-6 w-[min(1240px,calc(100%-32px))] rounded-xl border border-danger-border bg-danger-soft px-4 py-3 text-sm text-danger-foreground">
           {error}
         </div>
       )}
@@ -386,10 +385,10 @@ export function HomePage() {
           <section className="mx-auto mt-14 w-[min(1240px,calc(100%-32px))]">
             <div className="mb-6 flex items-end justify-between gap-5">
               <div>
-                <span className="text-xs font-bold uppercase tracking-[.16em] text-primary">Explore by category</span>
+                <span className="text-xs font-bold uppercase tracking-[.16em] text-primary-text">Explore by category</span>
                 <h2 className="mt-2 text-2xl font-bold tracking-[-.03em] sm:text-3xl">Start with what you need.</h2>
               </div>
-              <Link className="hidden items-center gap-1 text-sm font-semibold text-primary sm:flex" to="/products">
+              <Link className="hidden items-center gap-1 text-sm font-semibold text-primary-text sm:flex" to="/products">
                 Browse everything <ArrowRight className="size-4" />
               </Link>
             </div>
@@ -403,7 +402,7 @@ export function HomePage() {
                     to={`/products?category=${encodeURIComponent(category.id)}`}
                     className="group rounded-2xl border border-border/80 bg-card p-4 text-center shadow-sm transition-all hover:-translate-y-0.5 hover:border-primary/20 hover:shadow-md"
                   >
-                    <span className="mx-auto grid size-11 place-items-center rounded-xl bg-primary/8 text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
+                    <span className="mx-auto grid size-11 place-items-center rounded-xl bg-primary/8 text-primary-text transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
                       <Icon className="size-5" strokeWidth={1.8} />
                     </span>
                     <span className="mt-3 block truncate text-sm font-semibold text-foreground">{category.name}</span>
@@ -417,11 +416,11 @@ export function HomePage() {
             <section className="mx-auto mt-16 w-[min(1240px,calc(100%-32px))]">
               <div className="mb-6 flex items-end justify-between gap-5">
                 <div>
-                  <span className="text-xs font-bold uppercase tracking-[.16em] text-primary">Handpicked</span>
+                  <span className="text-xs font-bold uppercase tracking-[.16em] text-primary-text">Handpicked</span>
                   <h2 className="mt-2 text-2xl font-bold tracking-[-.03em] sm:text-3xl">Featured marketplace finds</h2>
                   <p className="mt-2 text-sm text-muted-foreground">Popular products worth a closer look.</p>
                 </div>
-                <Link className="hidden items-center gap-1 text-sm font-semibold text-primary sm:flex" to="/products">
+                <Link className="hidden items-center gap-1 text-sm font-semibold text-primary-text sm:flex" to="/products">
                   Shop all <ArrowRight className="size-4" />
                 </Link>
               </div>
@@ -449,7 +448,7 @@ export function HomePage() {
             </div>
             <div className="flex items-center p-8 pt-0 lg:p-10 lg:pl-0">
               <Link
-                className={cn(buttonVariants({ variant: "secondary", size: "lg" }), "bg-white text-primary hover:bg-violet-50")}
+                className={cn(buttonVariants({ variant: "secondary", size: "lg" }), "bg-card text-primary-text hover:bg-accent")}
                 to="/sell"
               >
                 Start selling <ArrowRight className="size-4" />
@@ -461,11 +460,11 @@ export function HomePage() {
             <section className="mx-auto mt-16 w-[min(1240px,calc(100%-32px))]">
               <div className="mb-6 flex items-end justify-between gap-5">
                 <div>
-                  <span className="text-xs font-bold uppercase tracking-[.16em] text-primary">Businesses to know</span>
+                  <span className="text-xs font-bold uppercase tracking-[.16em] text-primary-text">Businesses to know</span>
                   <h2 className="mt-2 text-2xl font-bold tracking-[-.03em] sm:text-3xl">Featured stores</h2>
                   <p className="mt-2 text-sm text-muted-foreground">Discover sellers building something worth supporting.</p>
                 </div>
-                <Link className="hidden items-center gap-1 text-sm font-semibold text-primary sm:flex" to="/businesses">
+                <Link className="hidden items-center gap-1 text-sm font-semibold text-primary-text sm:flex" to="/businesses">
                   See all stores <ArrowRight className="size-4" />
                 </Link>
               </div>
@@ -481,11 +480,11 @@ export function HomePage() {
           <section className="mx-auto mt-16 w-[min(1240px,calc(100%-32px))]">
             <div className="mb-6 flex items-end justify-between gap-5">
               <div>
-                <span className="text-xs font-bold uppercase tracking-[.16em] text-primary">Fresh listings</span>
+                <span className="text-xs font-bold uppercase tracking-[.16em] text-primary-text">Fresh listings</span>
                 <h2 className="mt-2 text-2xl font-bold tracking-[-.03em] sm:text-3xl">New marketplace finds</h2>
                 <p className="mt-2 text-sm text-muted-foreground">Recently added products from across the community.</p>
               </div>
-              <Link className="hidden items-center gap-1 text-sm font-semibold text-primary sm:flex" to="/products?sort=NEWEST">
+              <Link className="hidden items-center gap-1 text-sm font-semibold text-primary-text sm:flex" to="/products?sort=NEWEST">
                 Browse newest <ArrowRight className="size-4" />
               </Link>
             </div>
@@ -506,10 +505,10 @@ export function HomePage() {
           <section className="mx-auto mt-16 w-[min(1240px,calc(100%-32px))]">
             <div className="mb-6 flex items-end justify-between gap-5">
               <div>
-                <span className="text-xs font-bold uppercase tracking-[.16em] text-primary">Meet new sellers</span>
+                <span className="text-xs font-bold uppercase tracking-[.16em] text-primary-text">Meet new sellers</span>
                 <h2 className="mt-2 text-2xl font-bold tracking-[-.03em] sm:text-3xl">Recently joined businesses</h2>
               </div>
-              <Link className="hidden items-center gap-1 text-sm font-semibold text-primary sm:flex" to="/businesses?sort=NEWEST">
+              <Link className="hidden items-center gap-1 text-sm font-semibold text-primary-text sm:flex" to="/businesses?sort=NEWEST">
                 Explore directory <ArrowRight className="size-4" />
               </Link>
             </div>
@@ -529,7 +528,7 @@ export function HomePage() {
 
           <section className="mx-auto mt-16 grid w-[min(1240px,calc(100%-32px))] gap-4 md:grid-cols-3">
             <article className="rounded-2xl border border-border/80 bg-card p-6">
-              <span className="grid size-10 place-items-center rounded-xl bg-primary/10 text-primary">
+              <span className="grid size-10 place-items-center rounded-xl bg-primary/10 text-primary-text">
                 <MapPin className="size-5" />
               </span>
               <h3 className="mt-4 text-base font-semibold">Discover locally</h3>
@@ -537,7 +536,7 @@ export function HomePage() {
             </article>
 
             <article className="rounded-2xl border border-border/80 bg-card p-6">
-              <span className="grid size-10 place-items-center rounded-xl bg-primary/10 text-primary">
+              <span className="grid size-10 place-items-center rounded-xl bg-primary/10 text-primary-text">
                 <CheckCircle2 className="size-5" />
               </span>
               <h3 className="mt-4 text-base font-semibold">Shop confidently</h3>
@@ -545,7 +544,7 @@ export function HomePage() {
             </article>
 
             <article className="rounded-2xl border border-border/80 bg-card p-6">
-              <span className="grid size-10 place-items-center rounded-xl bg-primary/10 text-primary">
+              <span className="grid size-10 place-items-center rounded-xl bg-primary/10 text-primary-text">
                 <Truck className="size-5" />
               </span>
               <h3 className="mt-4 text-base font-semibold">Track every order</h3>

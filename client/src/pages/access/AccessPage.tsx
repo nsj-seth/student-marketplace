@@ -16,7 +16,7 @@ export function AccessPage({ role }: { role: AppRole }) {
   return (
     <main className="min-h-screen bg-background pb-16 text-foreground">
       <section className="mx-auto mt-10 grid w-[min(680px,calc(100%-32px))] place-items-center rounded-[1.75rem] border border-border bg-card px-6 py-12 text-center shadow-sm">
-        <span className="grid size-16 place-items-center rounded-2xl bg-primary/10 text-primary">
+        <span className="grid size-16 place-items-center rounded-2xl bg-primary/10 text-primary-text">
           <ShieldCheck className="size-7" />
         </span>
         <Badge variant="secondary" className="mt-5">
@@ -33,7 +33,7 @@ export function AccessPage({ role }: { role: AppRole }) {
             Back home
           </Link>
           <span className="inline-flex items-center gap-2 rounded-xl border border-border bg-background px-4 py-2 text-xs font-medium text-muted-foreground">
-            <BadgeCheck className="size-4 text-emerald-600" />
+            <BadgeCheck className="size-4 text-success-foreground" />
             Server-side RBAC verification
           </span>
         </div>

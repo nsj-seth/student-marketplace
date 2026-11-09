@@ -80,7 +80,7 @@ export function AdminDashboardPage() {
       />
 
       {error && (
-        <div className="mt-5 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+        <div className="mt-5 rounded-xl border border-danger-border bg-danger-soft px-4 py-3 text-sm text-danger-foreground">
           {error}
         </div>
       )}
@@ -93,10 +93,10 @@ export function AdminDashboardPage() {
               className="group rounded-2xl border border-border bg-card p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
             >
               <div className="flex items-start justify-between gap-4">
-                <span className="grid size-10 place-items-center rounded-xl bg-amber-50 text-amber-600">
+                <span className="grid size-10 place-items-center rounded-xl bg-warning-soft text-warning-foreground">
                   <Store className="size-5" />
                 </span>
-                <ArrowRight className="size-4 text-muted-foreground transition group-hover:text-primary" />
+                <ArrowRight className="size-4 text-muted-foreground transition group-hover:text-primary-text" />
               </div>
               <span className="mt-4 block text-xs font-medium text-muted-foreground">Seller applications</span>
               <strong className="mt-1 block text-3xl">{data.metrics.pendingSellerApplications}</strong>
@@ -110,10 +110,10 @@ export function AdminDashboardPage() {
               className="group rounded-2xl border border-border bg-card p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
             >
               <div className="flex items-start justify-between gap-4">
-                <span className="grid size-10 place-items-center rounded-xl bg-red-50 text-red-600">
+                <span className="grid size-10 place-items-center rounded-xl bg-danger-soft text-danger-foreground">
                   <FileWarning className="size-5" />
                 </span>
-                <ArrowRight className="size-4 text-muted-foreground transition group-hover:text-primary" />
+                <ArrowRight className="size-4 text-muted-foreground transition group-hover:text-primary-text" />
               </div>
               <span className="mt-4 block text-xs font-medium text-muted-foreground">Moderation reports</span>
               <strong className="mt-1 block text-3xl">{data.metrics.pendingReports}</strong>
@@ -127,10 +127,10 @@ export function AdminDashboardPage() {
               className="group rounded-2xl border border-border bg-card p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
             >
               <div className="flex items-start justify-between gap-4">
-                <span className="grid size-10 place-items-center rounded-xl bg-blue-50 text-blue-600">
+                <span className="grid size-10 place-items-center rounded-xl bg-info-soft text-info-foreground">
                   <TrendingUp className="size-5" />
                 </span>
-                <ArrowRight className="size-4 text-muted-foreground transition group-hover:text-primary" />
+                <ArrowRight className="size-4 text-muted-foreground transition group-hover:text-primary-text" />
               </div>
               <span className="mt-4 block text-xs font-medium text-muted-foreground">Orders · 30 days</span>
               <strong className="mt-1 block text-3xl">{data.metrics.ordersLast30Days}</strong>
@@ -200,10 +200,10 @@ export function AdminDashboardPage() {
             <article className="rounded-2xl border border-border bg-card shadow-sm">
               <div className="flex items-center justify-between border-b border-border p-5">
                 <div>
-                  <span className="text-xs font-bold uppercase tracking-[.14em] text-primary">Orders</span>
+                  <span className="text-xs font-bold uppercase tracking-[.14em] text-primary-text">Orders</span>
                   <h2 className="mt-1 text-lg font-semibold">Overall status</h2>
                 </div>
-                <Link className="text-sm font-semibold text-primary" to="/admin/orders">View orders</Link>
+                <Link className="text-sm font-semibold text-primary-text" to="/admin/orders">View orders</Link>
               </div>
               <div className="divide-y divide-border">
                 {data.orderStatusBreakdown.map((item) => (
@@ -217,7 +217,7 @@ export function AdminDashboardPage() {
 
             <article className="rounded-2xl border border-border bg-card shadow-sm">
               <div className="border-b border-border p-5">
-                <span className="text-xs font-bold uppercase tracking-[.14em] text-primary">Fulfilment</span>
+                <span className="text-xs font-bold uppercase tracking-[.14em] text-primary-text">Fulfilment</span>
                 <h2 className="mt-1 text-lg font-semibold">Seller-order status</h2>
               </div>
               <div className="divide-y divide-border">
@@ -235,10 +235,10 @@ export function AdminDashboardPage() {
             <article className="rounded-2xl border border-border bg-card shadow-sm">
               <div className="flex items-center justify-between border-b border-border p-5">
                 <div>
-                  <span className="text-xs font-bold uppercase tracking-[.14em] text-primary">Latest activity</span>
+                  <span className="text-xs font-bold uppercase tracking-[.14em] text-primary-text">Latest activity</span>
                   <h2 className="mt-1 text-lg font-semibold">Recent orders</h2>
                 </div>
-                <Link className="text-sm font-semibold text-primary" to="/admin/orders">View all</Link>
+                <Link className="text-sm font-semibold text-primary-text" to="/admin/orders">View all</Link>
               </div>
               <div className="divide-y divide-border">
                 {data.recentOrders.map((order) => (
@@ -266,15 +266,15 @@ export function AdminDashboardPage() {
             <article className="rounded-2xl border border-border bg-card shadow-sm">
               <div className="flex items-center justify-between border-b border-border p-5">
                 <div>
-                  <span className="text-xs font-bold uppercase tracking-[.14em] text-primary">Performance</span>
+                  <span className="text-xs font-bold uppercase tracking-[.14em] text-primary-text">Performance</span>
                   <h2 className="mt-1 text-lg font-semibold">Top businesses</h2>
                 </div>
-                <Link className="text-sm font-semibold text-primary" to="/admin/businesses">Manage</Link>
+                <Link className="text-sm font-semibold text-primary-text" to="/admin/businesses">Manage</Link>
               </div>
               <div className="divide-y divide-border">
                 {data.topBusinesses.map((business, index) => (
                   <div className="grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3 p-4" key={business.business_id}>
-                    <span className="grid size-8 place-items-center rounded-lg bg-primary/10 text-xs font-bold text-primary">{index + 1}</span>
+                    <span className="grid size-8 place-items-center rounded-lg bg-primary/10 text-xs font-bold text-primary-text">{index + 1}</span>
                     <div className="min-w-0">
                       <strong className="block truncate text-sm">{business.business_name}</strong>
                       <small className="text-xs text-muted-foreground">
@@ -290,7 +290,7 @@ export function AdminDashboardPage() {
 
           <section className="mt-5">
             <div className="mb-4">
-              <span className="text-xs font-bold uppercase tracking-[.14em] text-primary">Operations</span>
+              <span className="text-xs font-bold uppercase tracking-[.14em] text-primary-text">Operations</span>
               <h2 className="mt-1 text-2xl font-bold tracking-[-.03em]">Manage marketplace</h2>
             </div>
             <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
@@ -309,7 +309,7 @@ export function AdminDashboardPage() {
                   className="group rounded-2xl border border-border bg-card p-4 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
                   to={String(to)}
                 >
-                  <span className="grid size-9 place-items-center rounded-xl bg-primary/10 text-primary">
+                  <span className="grid size-9 place-items-center rounded-xl bg-primary/10 text-primary-text">
                     <Icon className="size-4" />
                   </span>
                   <strong className="mt-3 block text-sm">{String(title)}</strong>
@@ -321,17 +321,17 @@ export function AdminDashboardPage() {
 
           <section className="mt-5 grid gap-4 md:grid-cols-3">
             <div className="rounded-2xl border border-border bg-card p-5 shadow-sm">
-              <span className="text-xs font-bold uppercase tracking-[.14em] text-primary">Business mix</span>
+              <span className="text-xs font-bold uppercase tracking-[.14em] text-primary-text">Business mix</span>
               <strong className="mt-2 block text-2xl">{data.metrics.studentBusinesses}</strong>
               <small className="text-xs text-muted-foreground">Student businesses</small>
             </div>
             <div className="rounded-2xl border border-border bg-card p-5 shadow-sm">
-              <span className="text-xs font-bold uppercase tracking-[.14em] text-primary">Business mix</span>
+              <span className="text-xs font-bold uppercase tracking-[.14em] text-primary-text">Business mix</span>
               <strong className="mt-2 block text-2xl">{data.metrics.otherBusinesses}</strong>
               <small className="text-xs text-muted-foreground">Other businesses</small>
             </div>
             <div className="rounded-2xl border border-border bg-card p-5 shadow-sm">
-              <span className="text-xs font-bold uppercase tracking-[.14em] text-primary">30-day value</span>
+              <span className="text-xs font-bold uppercase tracking-[.14em] text-primary-text">30-day value</span>
               <strong className="mt-2 block text-2xl">{money(data.metrics.orderValueLast30Days)}</strong>
               <small className="text-xs text-muted-foreground">Order value, not captured payments</small>
             </div>

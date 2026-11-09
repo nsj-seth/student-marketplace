@@ -94,10 +94,10 @@ export function BusinessStorefrontPage() {
     return (
       <main className="min-h-screen bg-background pb-16">
         <section className="mx-auto mt-8 w-[min(760px,calc(100%-32px))] rounded-2xl border border-border bg-card p-8 text-center shadow-sm">
-          <Building2 className="mx-auto size-8 text-primary" />
+          <Building2 className="mx-auto size-8 text-primary-text" />
           <h1 className="mt-4 text-2xl font-bold">Storefront unavailable</h1>
           <p className="mt-2 text-sm text-muted-foreground">{error || "Business not found."}</p>
-          <Link className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-primary" to="/businesses">
+          <Link className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-primary-text" to="/businesses">
             Back to businesses
           </Link>
         </section>
@@ -112,9 +112,9 @@ export function BusinessStorefrontPage() {
     <main className="min-h-screen bg-background pb-16 text-foreground">
       <div className="mx-auto mt-5 w-[min(1240px,calc(100%-32px))]">
         <nav className="mb-5 flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
-          <Link className="hover:text-primary" to="/">Home</Link>
+          <Link className="hover:text-primary-text" to="/">Home</Link>
           <span>/</span>
-          <Link className="hover:text-primary" to="/businesses">Stores</Link>
+          <Link className="hover:text-primary-text" to="/businesses">Stores</Link>
           <span>/</span>
           <span className="max-w-[280px] truncate text-foreground">{business.name}</span>
         </nav>
@@ -132,7 +132,7 @@ export function BusinessStorefrontPage() {
                   {logoUrl ? (
                     <img src={logoUrl} alt={`${business.name} logo`} className="h-full w-full object-cover" />
                   ) : (
-                    <span className="text-2xl font-bold text-primary">
+                    <span className="text-2xl font-bold text-primary-text">
                       {business.name.slice(0, 2).toUpperCase()}
                     </span>
                   )}
@@ -196,7 +196,7 @@ export function BusinessStorefrontPage() {
 
         <section className="mt-6 grid gap-4 lg:grid-cols-3">
           <div className="rounded-2xl border border-border bg-card p-5 shadow-sm">
-            <span className="grid size-10 place-items-center rounded-xl bg-primary/10 text-primary">
+            <span className="grid size-10 place-items-center rounded-xl bg-primary/10 text-primary-text">
               <MapPin className="size-5" />
             </span>
             <h2 className="mt-4 text-base font-semibold">Store details</h2>
@@ -219,14 +219,14 @@ export function BusinessStorefrontPage() {
           </div>
 
           <div className="rounded-2xl border border-border bg-card p-5 shadow-sm">
-            <span className="grid size-10 place-items-center rounded-xl bg-primary/10 text-primary">
+            <span className="grid size-10 place-items-center rounded-xl bg-primary/10 text-primary-text">
               <Truck className="size-5" />
             </span>
             <h2 className="mt-4 text-base font-semibold">Fulfilment</h2>
             <div className="mt-4 space-y-3">
               {business.pickup_enabled && (
                 <div className="flex gap-3 rounded-xl bg-muted/60 p-3">
-                  <CheckCircle2 className="mt-0.5 size-4 shrink-0 text-emerald-600" />
+                  <CheckCircle2 className="mt-0.5 size-4 shrink-0 text-success-foreground" />
                   <div>
                     <strong className="block text-sm">Customer pickup</strong>
                     <span className="mt-1 block text-xs leading-5 text-muted-foreground">
@@ -237,7 +237,7 @@ export function BusinessStorefrontPage() {
               )}
               {business.seller_delivery_enabled && (
                 <div className="flex gap-3 rounded-xl bg-muted/60 p-3">
-                  <CheckCircle2 className="mt-0.5 size-4 shrink-0 text-emerald-600" />
+                  <CheckCircle2 className="mt-0.5 size-4 shrink-0 text-success-foreground" />
                   <div>
                     <strong className="block text-sm">Seller delivery</strong>
                     <span className="mt-1 block text-xs leading-5 text-muted-foreground">
@@ -250,7 +250,7 @@ export function BusinessStorefrontPage() {
           </div>
 
           <div className="rounded-2xl border border-border bg-card p-5 shadow-sm">
-            <span className="grid size-10 place-items-center rounded-xl bg-primary/10 text-primary">
+            <span className="grid size-10 place-items-center rounded-xl bg-primary/10 text-primary-text">
               <Globe2 className="size-5" />
             </span>
             <h2 className="mt-4 text-base font-semibold">Online presence</h2>
@@ -274,7 +274,7 @@ export function BusinessStorefrontPage() {
         <section className="mt-10">
           <div className="mb-6 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
             <div>
-              <span className="text-xs font-bold uppercase tracking-[.14em] text-primary">Shop the store</span>
+              <span className="text-xs font-bold uppercase tracking-[.14em] text-primary-text">Shop the store</span>
               <h2 className="mt-1 text-2xl font-bold tracking-[-.03em]">Products from {business.name}</h2>
             </div>
             <span className="text-sm text-muted-foreground">
@@ -284,7 +284,7 @@ export function BusinessStorefrontPage() {
 
           {products.length === 0 ? (
             <div className="grid place-items-center rounded-2xl border border-dashed border-border bg-muted/30 px-6 py-14 text-center">
-              <Package className="size-7 text-primary" />
+              <Package className="size-7 text-primary-text" />
               <h3 className="mt-4 text-lg font-semibold">No products yet</h3>
               <p className="mt-2 text-sm text-muted-foreground">
                 This store does not currently have any public products.
@@ -325,10 +325,10 @@ export function BusinessStorefrontPage() {
                     </Link>
 
                     <div className="p-4">
-                      <p className="m-0 text-xs font-semibold text-primary">{product.category?.name ?? "Product"}</p>
+                      <p className="m-0 text-xs font-semibold text-primary-text">{product.category?.name ?? "Product"}</p>
                       <Link
                         to={`/products/${product.id}/${product.slug}`}
-                        className="mt-1 line-clamp-2 block text-base font-semibold leading-snug text-foreground hover:text-primary"
+                        className="mt-1 line-clamp-2 block text-base font-semibold leading-snug text-foreground hover:text-primary-text"
                       >
                         {product.name}
                       </Link>
@@ -345,7 +345,7 @@ export function BusinessStorefrontPage() {
                           <span className="text-xs text-muted-foreground">New listing</span>
                         )}
 
-                        <ArrowRight className="size-4 text-muted-foreground transition group-hover:text-primary" />
+                        <ArrowRight className="size-4 text-muted-foreground transition group-hover:text-primary-text" />
                       </div>
                     </div>
                   </article>

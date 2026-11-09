@@ -66,10 +66,10 @@ export function AdminSellerApplicationDetailPage() {
     return (
       <main className="min-h-screen bg-background p-5 sm:p-6">
         <section className="rounded-2xl border border-border bg-card p-8 text-center shadow-sm">
-          <Store className="mx-auto size-8 text-primary" />
+          <Store className="mx-auto size-8 text-primary-text" />
           <h1 className="mt-4 text-2xl font-bold">Application not found</h1>
-          <p className="mt-2 text-sm text-red-600">{error}</p>
-          <Link className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-primary" to="/admin/seller-applications">
+          <p className="mt-2 text-sm text-danger-foreground">{error}</p>
+          <Link className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-primary-text" to="/admin/seller-applications">
             <ArrowLeft className="size-4" />
             Back to applications
           </Link>
@@ -81,13 +81,13 @@ export function AdminSellerApplicationDetailPage() {
   return (
     <main className="min-h-screen bg-background p-5 text-foreground sm:p-6">
       <section className="rounded-[1.75rem] border border-border bg-card p-6 shadow-sm sm:p-8">
-        <Link className="inline-flex items-center gap-2 text-sm font-semibold text-primary" to="/admin/seller-applications">
+        <Link className="inline-flex items-center gap-2 text-sm font-semibold text-primary-text" to="/admin/seller-applications">
           <ArrowLeft className="size-4" />
           Seller applications
         </Link>
         <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
           <div>
-            <span className="text-xs font-bold uppercase tracking-[.14em] text-primary">Application review</span>
+            <span className="text-xs font-bold uppercase tracking-[.14em] text-primary-text">Application review</span>
             <h1 className="mt-2 text-3xl font-bold tracking-[-.04em]">{application.business_name ?? "Seller application"}</h1>
           </div>
           <Badge variant={application.status === "PENDING" ? "warning" : application.status === "APPROVED" ? "success" : "destructive"}>
@@ -96,13 +96,13 @@ export function AdminSellerApplicationDetailPage() {
         </div>
       </section>
 
-      {message && <div className="mt-5 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700">{message}</div>}
-      {error && <div className="mt-5 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">{error}</div>}
+      {message && <div className="mt-5 rounded-xl border border-success-border bg-success-soft px-4 py-3 text-sm text-success-foreground">{message}</div>}
+      {error && <div className="mt-5 rounded-xl border border-danger-border bg-danger-soft px-4 py-3 text-sm text-danger-foreground">{error}</div>}
 
       <div className="mt-5 grid gap-5 xl:grid-cols-2">
         <section className="rounded-2xl border border-border bg-card p-5 shadow-sm">
           <div className="flex items-center gap-2">
-            <GraduationCap className="size-5 text-primary" />
+            <GraduationCap className="size-5 text-primary-text" />
             <h2 className="text-lg font-semibold">Applicant</h2>
           </div>
           <div className="mt-4 space-y-3">
@@ -136,7 +136,7 @@ export function AdminSellerApplicationDetailPage() {
 
         <section className="rounded-2xl border border-border bg-card p-5 shadow-sm">
           <div className="flex items-center gap-2">
-            <Building2 className="size-5 text-primary" />
+            <Building2 className="size-5 text-primary-text" />
             <h2 className="text-lg font-semibold">Business details</h2>
           </div>
           <div className="mt-4 space-y-3 text-sm">
@@ -154,7 +154,7 @@ export function AdminSellerApplicationDetailPage() {
       {application.status === "PENDING" ? (
         <section className="mt-5 rounded-2xl border border-border bg-card p-5 shadow-sm">
           <div className="flex items-center gap-2">
-            <BadgeCheck className="size-5 text-primary" />
+            <BadgeCheck className="size-5 text-primary-text" />
             <h2 className="text-lg font-semibold">Review decision</h2>
           </div>
 
@@ -175,7 +175,7 @@ export function AdminSellerApplicationDetailPage() {
               type="button"
               disabled={saving}
               onClick={() => void review("APPROVE")}
-              className="h-10 rounded-xl bg-emerald-600 px-4 text-sm font-semibold text-white disabled:opacity-50"
+              className="h-10 rounded-xl bg-success-strong px-4 text-sm font-semibold text-white disabled:saturate-50"
             >
               Approve
             </button>
@@ -184,7 +184,7 @@ export function AdminSellerApplicationDetailPage() {
               type="button"
               disabled={saving}
               onClick={() => void review("REJECT")}
-              className="h-10 rounded-xl border border-red-200 bg-red-50 px-4 text-sm font-semibold text-red-700 disabled:opacity-50"
+              className="h-10 rounded-xl border border-danger-border bg-danger-soft px-4 text-sm font-semibold text-danger-foreground disabled:saturate-50"
             >
               Reject
             </button>

@@ -80,7 +80,7 @@ export function WishlistPage() {
   return (
     <main className="min-h-screen bg-background pb-16 text-foreground">
       <div className="mx-auto mt-5 w-[min(1100px,calc(100%-32px))]">
-        <section className="flex flex-col gap-5 rounded-[1.75rem] border border-border bg-gradient-to-br from-violet-50 via-white to-fuchsia-50 p-6 shadow-sm sm:flex-row sm:items-center sm:justify-between sm:p-8">
+        <section className="flex flex-col gap-5 rounded-[1.75rem] border border-border bg-gradient-to-br from-accent/60 via-card to-background p-6 shadow-sm sm:flex-row sm:items-center sm:justify-between sm:p-8">
           <div>
             <Badge variant="secondary" className="mb-3 gap-1.5">
               <Heart className="size-3.5" />
@@ -92,7 +92,7 @@ export function WishlistPage() {
             </p>
           </div>
 
-          <div className="rounded-2xl border border-border bg-white/75 px-5 py-4 text-center shadow-sm">
+          <div className="rounded-2xl border border-border bg-card px-5 py-4 text-center shadow-sm">
             <strong className="block text-2xl">{items.length}</strong>
             <span className="text-xs text-muted-foreground">saved item{items.length === 1 ? "" : "s"}</span>
           </div>
@@ -103,12 +103,12 @@ export function WishlistPage() {
 
           <section className="min-w-0">
             {error && (
-              <div className="mb-5 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+              <div className="mb-5 rounded-xl border border-danger-border bg-danger-soft px-4 py-3 text-sm text-danger-foreground">
                 {error}
               </div>
             )}
             {notice && (
-              <div className="mb-5 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700">
+              <div className="mb-5 rounded-xl border border-success-border bg-success-soft px-4 py-3 text-sm text-success-foreground">
                 {notice}
               </div>
             )}
@@ -129,7 +129,7 @@ export function WishlistPage() {
 
             {!loading && !error && items.length === 0 && (
               <div className="grid place-items-center rounded-2xl border border-dashed border-border bg-muted/25 px-6 py-14 text-center">
-                <span className="grid size-14 place-items-center rounded-2xl bg-card text-primary shadow-sm">
+                <span className="grid size-14 place-items-center rounded-2xl bg-card text-primary-text shadow-sm">
                   <Heart className="size-6" />
                 </span>
                 <h2 className="mt-4 text-xl font-semibold">No saved products yet</h2>
@@ -180,11 +180,11 @@ export function WishlistPage() {
                       </Link>
 
                       <div className="p-4">
-                        <p className="m-0 text-xs font-semibold text-primary">
+                        <p className="m-0 text-xs font-semibold text-primary-text">
                           {product.category?.name ?? "Product"}
                         </p>
                         <Link
-                          className="mt-1 line-clamp-2 block text-base font-semibold text-foreground hover:text-primary"
+                          className="mt-1 line-clamp-2 block text-base font-semibold text-foreground hover:text-primary-text"
                           to={`/products/${product.id}/${product.slug}`}
                         >
                           {product.name}
@@ -192,7 +192,7 @@ export function WishlistPage() {
                         <p className="mt-3 text-lg font-bold">GH₵{product.price.toFixed(2)}</p>
                         <p className="mt-1 text-xs text-muted-foreground">
                           by{" "}
-                          <Link className="font-semibold hover:text-primary" to={`/businesses/${product.business.slug}`}>
+                          <Link className="font-semibold hover:text-primary-text" to={`/businesses/${product.business.slug}`}>
                             {product.business.name}
                           </Link>
                         </p>
@@ -203,7 +203,7 @@ export function WishlistPage() {
                             type="button"
                             disabled={unavailable || busyProductId === product.id}
                             onClick={() => void add(product.id)}
-                            className="inline-flex h-10 flex-1 items-center justify-center gap-2 rounded-xl bg-primary px-3 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90 disabled:opacity-50"
+                            className="inline-flex h-10 flex-1 items-center justify-center gap-2 rounded-xl bg-primary px-3 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90 disabled:saturate-50"
                           >
                             <ShoppingCart className="size-4" />
                             {busyProductId === product.id ? "Working…" : unavailable ? "Unavailable" : "Add to cart"}
@@ -215,7 +215,7 @@ export function WishlistPage() {
                             aria-label={`Remove ${product.name} from wishlist`}
                             disabled={busyProductId === product.id}
                             onClick={() => void remove(product.id)}
-                            className="grid size-10 place-items-center rounded-xl border border-border bg-background text-red-600 transition hover:bg-red-50 disabled:opacity-50"
+                            className="grid size-10 place-items-center rounded-xl border border-border bg-background text-danger-foreground transition hover:bg-danger-soft disabled:saturate-50"
                           >
                             <Trash2 className="size-4" />
                           </button>
@@ -229,8 +229,8 @@ export function WishlistPage() {
 
             {!loading && items.length > 0 && (
               <div className="mt-6 flex flex-wrap items-center justify-between gap-3 border-t border-border pt-5">
-                <Link className="text-sm font-semibold text-primary" to="/products">Keep browsing products</Link>
-                <Link className="inline-flex items-center gap-2 text-sm font-semibold text-primary" to="/cart">
+                <Link className="text-sm font-semibold text-primary-text" to="/products">Keep browsing products</Link>
+                <Link className="inline-flex items-center gap-2 text-sm font-semibold text-primary-text" to="/cart">
                   Go to cart <ArrowRight className="size-4" />
                 </Link>
               </div>

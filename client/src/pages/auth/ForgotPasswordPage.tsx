@@ -43,7 +43,7 @@ export function ForgotPasswordPage() {
         onSubmit={handleSubmit}
         className="rounded-[1.75rem] border border-border bg-card p-6 shadow-xl shadow-primary/5 sm:p-8"
       >
-        <span className="text-xs font-bold uppercase tracking-[.14em] text-primary">
+        <span className="text-xs font-bold uppercase tracking-[.14em] text-primary-text">
           Reset password
         </span>
         <h2 className="mt-2 text-3xl font-bold tracking-[-.04em]">Check your email</h2>
@@ -66,23 +66,23 @@ export function ForgotPasswordPage() {
         </label>
 
         {error && (
-          <div className="mt-4 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">{error}</div>
+          <div className="mt-4 rounded-xl border border-danger-border bg-danger-soft px-4 py-3 text-sm text-danger-foreground">{error}</div>
         )}
         {message && (
-          <div className="mt-4 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700">{message}</div>
+          <div className="mt-4 rounded-xl border border-success-border bg-success-soft px-4 py-3 text-sm text-success-foreground">{message}</div>
         )}
 
         <button
           data-ui="auth-submit"
           type="submit"
           disabled={submitting}
-          className="mt-6 inline-flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-primary px-4 text-sm font-semibold text-primary-foreground disabled:opacity-50"
+          className="mt-6 inline-flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-primary px-4 text-sm font-semibold text-primary-foreground disabled:saturate-50"
         >
           <Send className="size-4" />
           {submitting ? "Sending..." : "Send reset link"}
         </button>
 
-        <Link className="mt-6 flex items-center justify-center gap-2 text-sm font-semibold text-primary" to="/login">
+        <Link className="mt-6 flex items-center justify-center gap-2 text-sm font-semibold text-primary-text" to="/login">
           <ArrowLeft className="size-4" />
           Back to sign in
         </Link>

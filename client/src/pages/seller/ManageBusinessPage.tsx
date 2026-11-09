@@ -255,11 +255,11 @@ export function ManageBusinessPage() {
     return (
       <main className="min-h-screen bg-background p-5 sm:p-6">
         <section className="rounded-2xl border border-border bg-card p-8 text-center shadow-sm">
-          <Building2 className="mx-auto size-8 text-primary" />
+          <Building2 className="mx-auto size-8 text-primary-text" />
           <h1 className="mt-4 text-2xl font-bold">Business not found</h1>
-          {error && <p className="mt-2 text-sm text-red-600">{error}</p>}
+          {error && <p className="mt-2 text-sm text-danger-foreground">{error}</p>}
           <Link
-            className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-primary"
+            className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-primary-text"
             to="/seller/businesses"
           >
             <ArrowLeft className="size-4" />
@@ -319,12 +319,12 @@ export function ManageBusinessPage() {
       </section>
 
       {message && (
-        <div className="mt-5 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700">
+        <div className="mt-5 rounded-xl border border-success-border bg-success-soft px-4 py-3 text-sm text-success-foreground">
           {message}
         </div>
       )}
       {error && (
-        <div className="mt-5 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+        <div className="mt-5 rounded-xl border border-danger-border bg-danger-soft px-4 py-3 text-sm text-danger-foreground">
           {error}
         </div>
       )}
@@ -494,7 +494,7 @@ export function ManageBusinessPage() {
         <aside className="xl:sticky xl:top-[92px] xl:self-start">
           <section className="rounded-2xl border border-border bg-card p-5 shadow-sm">
             <div className="flex items-center gap-2">
-              <ImageIcon className="size-5 text-primary" />
+              <ImageIcon className="size-5 text-primary-text" />
               <h2 className="text-lg font-semibold">Business logo</h2>
             </div>
 
@@ -529,7 +529,7 @@ export function ManageBusinessPage() {
               data-ui="business-save"
               type="submit"
               disabled={!canSave || saving || uploading}
-              className="mt-5 inline-flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-primary px-4 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90 disabled:opacity-50"
+              className="mt-5 inline-flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-primary px-4 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90 disabled:saturate-50"
             >
               <Save className="size-4" />
               {saving ? "Saving..." : "Save business changes"}
@@ -543,7 +543,7 @@ export function ManageBusinessPage() {
                 Manage products
               </Link>
               <Link
-                className="inline-flex items-center justify-center gap-2 text-sm font-semibold text-primary"
+                className="inline-flex items-center justify-center gap-2 text-sm font-semibold text-primary-text"
                 to="/seller/businesses"
               >
                 <ArrowLeft className="size-4" />

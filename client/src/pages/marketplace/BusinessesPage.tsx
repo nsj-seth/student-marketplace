@@ -126,7 +126,7 @@ export function BusinessesPage() {
 
   return (
     <main className="min-h-screen bg-background pb-16 text-foreground">
-      <section className="mx-auto mt-5 flex w-[min(1240px,calc(100%-32px))] flex-col gap-6 overflow-hidden rounded-[1.75rem] border border-border/70 bg-gradient-to-br from-violet-50 via-white to-fuchsia-50 px-6 py-8 shadow-sm sm:px-8 lg:flex-row lg:items-end lg:justify-between lg:px-10 lg:py-10">
+      <section className="mx-auto mt-5 flex w-[min(1240px,calc(100%-32px))] flex-col gap-6 overflow-hidden rounded-[1.75rem] border border-border/70 bg-gradient-to-br from-accent/60 via-card to-background px-6 py-8 shadow-sm sm:px-8 lg:flex-row lg:items-end lg:justify-between lg:px-10 lg:py-10">
         <div>
           <Badge variant="secondary" className="mb-4 gap-1.5">
             <Building2 className="size-3.5" />
@@ -141,7 +141,7 @@ export function BusinessesPage() {
         </div>
 
         <Link
-          className={cn(buttonVariants({ variant: "outline" }), "w-fit bg-white/80 shadow-xs")}
+          className={cn(buttonVariants({ variant: "outline" }), "w-fit bg-card shadow-xs")}
           to="/products"
         >
           <Store className="size-4" />
@@ -155,7 +155,7 @@ export function BusinessesPage() {
             <div className="flex items-center justify-between border-b border-border px-5 py-4">
               <div>
                 <div className="flex items-center gap-2 text-sm font-semibold">
-                  <SlidersHorizontal className="size-4 text-primary" />
+                  <SlidersHorizontal className="size-4 text-primary-text" />
                   Store filters
                   {activeFilterCount > 0 && (
                     <Badge variant="secondary" className="px-2 py-0.5">{activeFilterCount}</Badge>
@@ -253,7 +253,7 @@ export function BusinessesPage() {
         <section className="min-w-0">
           <div className="mb-5 flex flex-col gap-3 border-b border-border pb-5 sm:flex-row sm:items-end sm:justify-between">
             <div>
-              <p className="m-0 text-xs font-bold uppercase tracking-[.14em] text-primary">Stores</p>
+              <p className="m-0 text-xs font-bold uppercase tracking-[.14em] text-primary-text">Stores</p>
               <h2 className="mt-1 text-2xl font-bold tracking-[-.03em]">
                 {loading ? "Loading stores…" : `${businesses.length} ${businesses.length === 1 ? "store" : "stores"}`}
               </h2>
@@ -280,7 +280,7 @@ export function BusinessesPage() {
           </div>
 
           {error && (
-            <div className="mb-5 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+            <div className="mb-5 rounded-xl border border-danger-border bg-danger-soft px-4 py-3 text-sm text-danger-foreground">
               {error}
             </div>
           )}
@@ -302,7 +302,7 @@ export function BusinessesPage() {
 
           {!loading && !error && businesses.length === 0 && (
             <div className="grid place-items-center rounded-2xl border border-dashed border-border bg-muted/30 px-6 py-16 text-center">
-              <span className="grid size-14 place-items-center rounded-2xl bg-card text-primary shadow-sm">
+              <span className="grid size-14 place-items-center rounded-2xl bg-card text-primary-text shadow-sm">
                 <Building2 className="size-6" />
               </span>
               <h3 className="mt-4 text-lg font-semibold">No stores found</h3>
@@ -333,7 +333,7 @@ export function BusinessesPage() {
                     <div className="relative h-24 overflow-hidden bg-gradient-to-br from-violet-700 via-primary to-fuchsia-500">
                       <div className="absolute -right-10 -top-10 size-32 rounded-full border border-white/20" />
                       <div className="absolute left-4 top-4">
-                        <Badge className="border-white/20 bg-[#17111f] text-white">
+                        <Badge className="border-border bg-card text-foreground">
                           {business.business_type === "STUDENT_BUSINESS" ? "Student business" : "Community business"}
                         </Badge>
                       </div>
@@ -344,7 +344,7 @@ export function BusinessesPage() {
                         {logo ? (
                           <img src={logo} alt={`${business.name} logo`} className="h-full w-full object-cover" />
                         ) : (
-                          <span className="text-xl font-bold text-primary">
+                          <span className="text-xl font-bold text-primary-text">
                             {business.name.slice(0, 2).toUpperCase()}
                           </span>
                         )}
@@ -354,7 +354,7 @@ export function BusinessesPage() {
                         <div className="min-w-0">
                           <Link
                             to={`/businesses/${business.slug}`}
-                            className="block truncate text-lg font-semibold text-foreground hover:text-primary"
+                            className="block truncate text-lg font-semibold text-foreground hover:text-primary-text"
                           >
                             {business.name}
                           </Link>

@@ -88,7 +88,7 @@ export function SellerOrdersPage() {
         </div>
 
         <Link
-          className="inline-flex items-center gap-2 text-sm font-semibold text-primary"
+          className="inline-flex items-center gap-2 text-sm font-semibold text-primary-text"
           to="/seller/businesses"
         >
           My businesses <ArrowRight className="size-4" />
@@ -131,7 +131,7 @@ export function SellerOrdersPage() {
       </section>
 
       {error && (
-        <div className="mt-5 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+        <div className="mt-5 rounded-xl border border-danger-border bg-danger-soft px-4 py-3 text-sm text-danger-foreground">
           {error}
         </div>
       )}
@@ -149,7 +149,7 @@ export function SellerOrdersPage() {
 
       {!loading && orders.length === 0 && (
         <div className="mt-5 grid place-items-center rounded-2xl border border-dashed border-border bg-muted/25 px-6 py-14 text-center">
-          <Filter className="size-7 text-primary" />
+          <Filter className="size-7 text-primary-text" />
           <h2 className="mt-4 text-xl font-semibold">
             No orders in this view
           </h2>
@@ -168,7 +168,7 @@ export function SellerOrdersPage() {
             >
               <div className="flex flex-col gap-4 border-b border-border bg-muted/30 p-5 sm:flex-row sm:items-start sm:justify-between">
                 <div>
-                  <span className="text-xs font-semibold text-primary">
+                  <span className="text-xs font-semibold text-primary-text">
                     {order.business_name}
                   </span>
                   <h2 className="mt-1 text-lg font-semibold">

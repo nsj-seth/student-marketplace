@@ -157,9 +157,9 @@ export function StudentVerificationPage() {
     return (
       <main className="min-h-screen bg-background pb-16">
         <section className="mx-auto mt-8 w-[min(720px,calc(100%-32px))] rounded-2xl border border-border bg-card p-8 text-center shadow-sm">
-          <GraduationCap className="mx-auto size-8 text-primary" />
+          <GraduationCap className="mx-auto size-8 text-primary-text" />
           <h1 className="mt-4 text-2xl font-bold">Application not found</h1>
-          <Link className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-primary" to="/sell">
+          <Link className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-primary-text" to="/sell">
             <ArrowLeft className="size-4" />
             Back to seller registration
           </Link>
@@ -172,12 +172,12 @@ export function StudentVerificationPage() {
     return (
       <main className="min-h-screen bg-background pb-16">
         <section className="mx-auto mt-8 w-[min(720px,calc(100%-32px))] rounded-2xl border border-border bg-card p-8 text-center shadow-sm">
-          <ShieldCheck className="mx-auto size-8 text-primary" />
+          <ShieldCheck className="mx-auto size-8 text-primary-text" />
           <h1 className="mt-4 text-2xl font-bold">Verification not required</h1>
           <p className="mt-2 text-sm text-muted-foreground">
             This application is for a community business.
           </p>
-          <Link className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-primary" to="/sell">
+          <Link className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-primary-text" to="/sell">
             <ArrowLeft className="size-4" />
             Back to seller registration
           </Link>
@@ -191,7 +191,7 @@ export function StudentVerificationPage() {
   return (
     <main className="min-h-screen bg-background pb-16 text-foreground">
       <div className="mx-auto mt-5 w-[min(900px,calc(100%-32px))]">
-        <section className="rounded-[1.75rem] border border-border bg-gradient-to-br from-violet-50 via-white to-fuchsia-50 p-6 shadow-sm sm:p-8">
+        <section className="rounded-[1.75rem] border border-border bg-gradient-to-br from-accent/60 via-card to-background p-6 shadow-sm sm:p-8">
           <Badge variant="secondary" className="mb-3 gap-1.5">
             <GraduationCap className="size-3.5" />
             Seller onboarding · Student verification
@@ -203,12 +203,12 @@ export function StudentVerificationPage() {
         </section>
 
         {message && (
-          <div className="mt-5 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700">
+          <div className="mt-5 rounded-xl border border-success-border bg-success-soft px-4 py-3 text-sm text-success-foreground">
             {message}
           </div>
         )}
         {error && (
-          <div className="mt-5 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+          <div className="mt-5 rounded-xl border border-danger-border bg-danger-soft px-4 py-3 text-sm text-danger-foreground">
             {error}
           </div>
         )}
@@ -216,7 +216,7 @@ export function StudentVerificationPage() {
         <section className="mt-5 rounded-2xl border border-border bg-card p-6 shadow-sm">
           {verified ? (
             <div className="text-center">
-              <span className="mx-auto grid size-14 place-items-center rounded-2xl bg-emerald-50 text-emerald-600">
+              <span className="mx-auto grid size-14 place-items-center rounded-2xl bg-success-soft text-success-foreground">
                 <BadgeCheck className="size-7" />
               </span>
               <h2 className="mt-4 text-2xl font-bold">Student email verified</h2>
@@ -240,7 +240,7 @@ export function StudentVerificationPage() {
                   ["3", "Confirm email"]
                 ].map(([step, label]) => (
                   <div key={step} className="rounded-xl border border-border bg-muted/30 p-3">
-                    <span className="text-xs font-bold text-primary">{step}</span>
+                    <span className="text-xs font-bold text-primary-text">{step}</span>
                     <strong className="mt-1 block text-sm">{label}</strong>
                   </div>
                 ))}
@@ -283,7 +283,7 @@ export function StudentVerificationPage() {
                   data-ui="student-verification-request"
                   type="submit"
                   disabled={requesting}
-                  className="inline-flex h-11 items-center justify-center gap-2 rounded-xl bg-primary px-4 text-sm font-semibold text-primary-foreground disabled:opacity-50"
+                  className="inline-flex h-11 items-center justify-center gap-2 rounded-xl bg-primary px-4 text-sm font-semibold text-primary-foreground disabled:saturate-50"
                 >
                   <Send className="size-4" />
                   {requesting
@@ -295,12 +295,12 @@ export function StudentVerificationPage() {
               </form>
 
               {developmentCode && (
-                <div className="mt-5 rounded-xl border border-amber-200 bg-amber-50 p-4">
-                  <span className="text-xs font-semibold text-amber-700">Development verification code</span>
-                  <strong className="mt-1 block text-2xl tracking-[.18em] text-amber-900">
+                <div className="mt-5 rounded-xl border border-warning-border bg-warning-soft p-4">
+                  <span className="text-xs font-semibold text-warning-foreground">Development verification code</span>
+                  <strong className="mt-1 block text-2xl tracking-[.18em] text-warning-foreground">
                     {developmentCode}
                   </strong>
-                  <p className="mt-2 text-xs leading-5 text-amber-700">
+                  <p className="mt-2 text-xs leading-5 text-warning-foreground">
                     This appears only because an email provider is not configured in development.
                   </p>
                 </div>
@@ -325,7 +325,7 @@ export function StudentVerificationPage() {
                     data-ui="student-verification-confirm"
                     type="submit"
                     disabled={confirming || code.length !== 6}
-                    className="mt-4 inline-flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-primary px-4 text-sm font-semibold text-primary-foreground disabled:opacity-50"
+                    className="mt-4 inline-flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-primary px-4 text-sm font-semibold text-primary-foreground disabled:saturate-50"
                   >
                     <ShieldCheck className="size-4" />
                     {confirming ? "Verifying..." : "Verify email"}
@@ -336,7 +336,7 @@ export function StudentVerificationPage() {
           )}
         </section>
 
-        <Link className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-primary" to="/sell">
+        <Link className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-primary-text" to="/sell">
           <ArrowLeft className="size-4" />
           Back to seller registration
         </Link>

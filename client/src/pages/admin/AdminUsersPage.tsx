@@ -142,7 +142,7 @@ export function AdminUsersPage() {
       </form>
 
       {error && (
-        <div className="mt-5 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+        <div className="mt-5 rounded-xl border border-danger-border bg-danger-soft px-4 py-3 text-sm text-danger-foreground">
           {error}
         </div>
       )}
@@ -176,7 +176,7 @@ export function AdminUsersPage() {
               <article key={account.id} className="rounded-2xl border border-border bg-card p-5 shadow-sm">
                 <div className="flex items-start justify-between gap-4">
                   <div className="flex min-w-0 items-center gap-3">
-                    <span className="grid size-11 shrink-0 place-items-center rounded-xl bg-primary/10 text-sm font-bold text-primary">
+                    <span className="grid size-11 shrink-0 place-items-center rounded-xl bg-primary/10 text-sm font-bold text-primary-text">
                       {(account.full_name?.[0] ?? account.email?.[0] ?? "U").toUpperCase()}
                     </span>
                     <div className="min-w-0">
@@ -205,7 +205,7 @@ export function AdminUsersPage() {
                 </div>
 
                 {account.suspension_reason && (
-                  <div className="mt-4 rounded-xl border border-red-200 bg-red-50 p-3 text-sm text-red-700">
+                  <div className="mt-4 rounded-xl border border-danger-border bg-danger-soft p-3 text-sm text-danger-foreground">
                     <strong>Suspension reason:</strong> {account.suspension_reason}
                   </div>
                 )}
@@ -213,7 +213,7 @@ export function AdminUsersPage() {
                 <div className="mt-4 flex items-center justify-between gap-3 border-t border-border pt-4">
                   {(isAdmin || isSelf) && account.account_status === "ACTIVE" ? (
                     <span className="flex items-center gap-2 text-xs text-muted-foreground">
-                      <ShieldCheck className="size-4 text-emerald-600" />
+                      <ShieldCheck className="size-4 text-success-foreground" />
                       Admin accounts are protected from suspension.
                     </span>
                   ) : (
@@ -225,10 +225,10 @@ export function AdminUsersPage() {
                     disabled={isAdmin || isSelf}
                     onClick={() => { setSelected(account); setReason(""); }}
                     className={
-                      "inline-flex h-9 items-center rounded-xl border px-3 text-xs font-semibold disabled:opacity-40 " +
+                      "inline-flex h-9 items-center rounded-xl border px-3 text-xs font-semibold disabled:saturate-50 " +
                       (account.account_status === "ACTIVE"
-                        ? "border-red-200 bg-red-50 text-red-700"
-                        : "border-emerald-200 bg-emerald-50 text-emerald-700")
+                        ? "border-danger-border bg-danger-soft text-danger-foreground"
+                        : "border-success-border bg-success-soft text-success-foreground")
                     }
                   >
                     {account.account_status === "ACTIVE" ? "Suspend" : "Reactivate"}
@@ -247,7 +247,7 @@ export function AdminUsersPage() {
             type="button"
             disabled={page <= 1}
             onClick={() => void load(page - 1)}
-            className="rounded-xl border border-border bg-background px-3 py-2 text-sm font-semibold disabled:opacity-40"
+            className="rounded-xl border border-border bg-background px-3 py-2 text-sm font-semibold disabled:saturate-50"
           >
             Previous
           </button>
@@ -257,7 +257,7 @@ export function AdminUsersPage() {
             type="button"
             disabled={page >= totalPages}
             onClick={() => void load(page + 1)}
-            className="rounded-xl border border-border bg-background px-3 py-2 text-sm font-semibold disabled:opacity-40"
+            className="rounded-xl border border-border bg-background px-3 py-2 text-sm font-semibold disabled:saturate-50"
           >
             Next
           </button>
@@ -267,7 +267,7 @@ export function AdminUsersPage() {
       {selected && (
         <section className="mt-5 rounded-2xl border border-border bg-card p-5 shadow-sm">
           <div className="flex items-center gap-3">
-            <span className="grid size-10 place-items-center rounded-xl bg-primary/10 text-primary">
+            <span className="grid size-10 place-items-center rounded-xl bg-primary/10 text-primary-text">
               <UserRound className="size-5" />
             </span>
             <div>
@@ -304,7 +304,7 @@ export function AdminUsersPage() {
               type="button"
               disabled={saving || (selected.account_status === "ACTIVE" && reason.trim().length < 3)}
               onClick={() => void confirmStatusChange()}
-              className="h-10 rounded-xl bg-primary px-4 text-sm font-semibold text-primary-foreground disabled:opacity-50"
+              className="h-10 rounded-xl bg-primary px-4 text-sm font-semibold text-primary-foreground disabled:saturate-50"
             >
               {saving ? "Saving..." : selected.account_status === "ACTIVE" ? "Confirm suspension" : "Reactivate account"}
             </button>

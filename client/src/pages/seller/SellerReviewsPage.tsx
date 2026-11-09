@@ -86,7 +86,7 @@ export function SellerReviewsPage() {
       </section>
 
       {error && (
-        <div className="mt-5 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+        <div className="mt-5 rounded-xl border border-danger-border bg-danger-soft px-4 py-3 text-sm text-danger-foreground">
           {error}
         </div>
       )}
@@ -110,7 +110,7 @@ export function SellerReviewsPage() {
 
       {reviews.length === 0 ? (
         <div className="mt-5 grid place-items-center rounded-2xl border border-dashed border-border bg-muted/25 px-6 py-14 text-center">
-          <MessageSquareText className="size-7 text-primary" />
+          <MessageSquareText className="size-7 text-primary-text" />
           <h2 className="mt-4 text-xl font-semibold">
             No reviews yet
           </h2>
@@ -127,7 +127,7 @@ export function SellerReviewsPage() {
             >
               <div className="flex items-start justify-between gap-4">
                 <div>
-                  <span className="flex items-center gap-1.5 text-xs font-semibold text-primary">
+                  <span className="flex items-center gap-1.5 text-xs font-semibold text-primary-text">
                     <Store className="size-3.5" />
                     {review.target_type === "BUSINESS"
                       ? "Business review"

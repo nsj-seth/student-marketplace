@@ -37,10 +37,10 @@ export function AdminOrderDetailPage() {
     return (
       <main className="min-h-screen bg-background p-5 sm:p-6">
         <section className="rounded-2xl border border-border bg-card p-8 text-center shadow-sm">
-          <Package className="mx-auto size-8 text-primary" />
+          <Package className="mx-auto size-8 text-primary-text" />
           <h1 className="mt-4 text-2xl font-bold">Order unavailable</h1>
-          <p className="mt-2 text-sm text-red-600">{error || "Order not found."}</p>
-          <Link className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-primary" to="/admin/orders">
+          <p className="mt-2 text-sm text-danger-foreground">{error || "Order not found."}</p>
+          <Link className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-primary-text" to="/admin/orders">
             <ArrowLeft className="size-4" />
             Back to orders
           </Link>
@@ -52,13 +52,13 @@ export function AdminOrderDetailPage() {
   return (
     <main className="min-h-screen bg-background p-5 text-foreground sm:p-6">
       <section className="rounded-[1.75rem] border border-border bg-card p-6 shadow-sm sm:p-8">
-        <Link className="inline-flex items-center gap-2 text-sm font-semibold text-primary" to="/admin/orders">
+        <Link className="inline-flex items-center gap-2 text-sm font-semibold text-primary-text" to="/admin/orders">
           <ArrowLeft className="size-4" />
           Orders
         </Link>
         <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
           <div>
-            <span className="text-xs font-bold uppercase tracking-[.14em] text-primary">Admin order review</span>
+            <span className="text-xs font-bold uppercase tracking-[.14em] text-primary-text">Admin order review</span>
             <h1 className="mt-2 text-3xl font-bold tracking-[-.04em]">{order.order_number}</h1>
           </div>
           <div className="flex flex-col items-start gap-2 sm:items-end">
@@ -70,7 +70,7 @@ export function AdminOrderDetailPage() {
 
       <section className="mt-5 rounded-2xl border border-border bg-card p-5 shadow-sm">
         <div className="flex items-center gap-2">
-          <UserRound className="size-5 text-primary" />
+          <UserRound className="size-5 text-primary-text" />
           <h2 className="text-lg font-semibold">Customer</h2>
         </div>
         <div className="mt-4 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
@@ -104,7 +104,7 @@ export function AdminOrderDetailPage() {
           <section key={sellerOrder.id} className="overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
             <div className="flex flex-col gap-3 border-b border-border bg-muted/30 p-5 sm:flex-row sm:items-start sm:justify-between">
               <div>
-                <span className="text-xs font-semibold text-primary">{sellerOrder.seller_order_number}</span>
+                <span className="text-xs font-semibold text-primary-text">{sellerOrder.seller_order_number}</span>
                 <h2 className="mt-1 text-lg font-semibold">{sellerOrder.business_name}</h2>
               </div>
               <Badge variant="outline">{sellerOrder.status.replaceAll("_", " ")}</Badge>
@@ -142,7 +142,7 @@ export function AdminOrderDetailPage() {
                 <div className="mt-4">
                   {sellerOrder.timeline.map((entry, index) => (
                     <div className="relative flex gap-3 pb-5" key={entry.id}>
-                      <div className="relative z-10 mt-0.5 grid size-8 shrink-0 place-items-center rounded-full bg-primary/10 text-primary">
+                      <div className="relative z-10 mt-0.5 grid size-8 shrink-0 place-items-center rounded-full bg-primary/10 text-primary-text">
                         <CheckCircle2 className="size-4" />
                       </div>
                       {index < sellerOrder.timeline.length - 1 && (

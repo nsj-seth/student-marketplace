@@ -108,13 +108,13 @@ export function SellerOrderDetailPage() {
     return (
       <main className="min-h-screen bg-background p-5 sm:p-6">
         <section className="rounded-2xl border border-border bg-card p-8 text-center shadow-sm">
-          <PackageCheck className="mx-auto size-8 text-primary" />
+          <PackageCheck className="mx-auto size-8 text-primary-text" />
           <h1 className="mt-4 text-2xl font-bold">Seller order unavailable</h1>
-          <p className="mt-2 text-sm text-red-600">
+          <p className="mt-2 text-sm text-danger-foreground">
             {error || "Order not found."}
           </p>
           <Link
-            className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-primary"
+            className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-primary-text"
             to="/seller/orders"
           >
             <ArrowLeft className="size-4" />
@@ -130,13 +130,13 @@ export function SellerOrderDetailPage() {
       <section className="flex flex-col gap-5 rounded-[1.75rem] border border-border bg-card p-6 shadow-sm sm:flex-row sm:items-end sm:justify-between sm:p-8">
         <div>
           <Link
-            className="mb-3 inline-flex items-center gap-2 text-sm font-semibold text-primary"
+            className="mb-3 inline-flex items-center gap-2 text-sm font-semibold text-primary-text"
             to="/seller/orders"
           >
             <ArrowLeft className="size-4" />
             Seller orders
           </Link>
-          <span className="block text-xs font-semibold text-primary">
+          <span className="block text-xs font-semibold text-primary-text">
             {order.business_name}
           </span>
           <h1 className="mt-1 text-3xl font-bold tracking-[-.04em]">
@@ -154,12 +154,12 @@ export function SellerOrderDetailPage() {
       </section>
 
       {error && (
-        <div className="mt-5 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+        <div className="mt-5 rounded-xl border border-danger-border bg-danger-soft px-4 py-3 text-sm text-danger-foreground">
           {error}
         </div>
       )}
       {success && (
-        <div className="mt-5 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700">
+        <div className="mt-5 rounded-xl border border-success-border bg-success-soft px-4 py-3 text-sm text-success-foreground">
           {success}
         </div>
       )}
@@ -168,7 +168,7 @@ export function SellerOrderDetailPage() {
         <div className="space-y-5">
           <section className="rounded-2xl border border-border bg-card p-5 shadow-sm">
             <div className="flex items-start gap-3">
-              <span className="grid size-10 shrink-0 place-items-center rounded-xl bg-primary/10 text-primary">
+              <span className="grid size-10 shrink-0 place-items-center rounded-xl bg-primary/10 text-primary-text">
                 <UserRound className="size-5" />
               </span>
               <div>
@@ -269,7 +269,7 @@ export function SellerOrderDetailPage() {
 
           <section className="rounded-2xl border border-border bg-card p-5 shadow-sm">
             <div className="flex items-center gap-2">
-              <Clock3 className="size-5 text-primary" />
+              <Clock3 className="size-5 text-primary-text" />
               <h2 className="text-lg font-semibold">Order timeline</h2>
             </div>
 
@@ -281,7 +281,7 @@ export function SellerOrderDetailPage() {
               <div className="mt-5">
                 {order.timeline.map((entry, index) => (
                   <div className="relative flex gap-3 pb-5" key={entry.id}>
-                    <div className="relative z-10 mt-0.5 grid size-8 shrink-0 place-items-center rounded-full bg-primary/10 text-primary">
+                    <div className="relative z-10 mt-0.5 grid size-8 shrink-0 place-items-center rounded-full bg-primary/10 text-primary-text">
                       <CheckCircle2 className="size-4" />
                     </div>
                     {index < order.timeline.length - 1 && (
@@ -309,7 +309,7 @@ export function SellerOrderDetailPage() {
 
         <aside className="xl:sticky xl:top-[92px] xl:self-start">
           <section className="rounded-2xl border border-border bg-card p-5 shadow-sm">
-            <span className="text-xs font-bold uppercase tracking-[.14em] text-primary">
+            <span className="text-xs font-bold uppercase tracking-[.14em] text-primary-text">
               Update order
             </span>
             <h2 className="mt-2 text-xl font-semibold">
@@ -325,7 +325,7 @@ export function SellerOrderDetailPage() {
                 type="button"
                 disabled={busy}
                 onClick={() => void transition(action.status)}
-                className="mt-5 inline-flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-primary px-4 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90 disabled:opacity-50"
+                className="mt-5 inline-flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-primary px-4 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90 disabled:saturate-50"
               >
                 <PackageCheck className="size-4" />
                 {busy ? "Updating..." : action.label}
@@ -335,7 +335,7 @@ export function SellerOrderDetailPage() {
             {order.status === "PENDING" && (
               <div className="mt-5 border-t border-border pt-5">
                 <div className="flex items-center gap-2">
-                  <XCircle className="size-4 text-red-600" />
+                  <XCircle className="size-4 text-danger-foreground" />
                   <strong className="text-sm">Reject order</strong>
                 </div>
                 <label className="mt-3 grid gap-1.5 text-xs font-semibold text-muted-foreground">
@@ -355,7 +355,7 @@ export function SellerOrderDetailPage() {
                   onClick={() =>
                     void transition("REJECTED", rejectReason)
                   }
-                  className="mt-3 inline-flex h-10 w-full items-center justify-center rounded-xl border border-red-200 bg-red-50 px-4 text-sm font-semibold text-red-700 transition hover:bg-red-100 disabled:opacity-50"
+                  className="mt-3 inline-flex h-10 w-full items-center justify-center rounded-xl border border-danger-border bg-danger-soft px-4 text-sm font-semibold text-danger-foreground transition hover:bg-danger-soft disabled:saturate-50"
                 >
                   Reject order
                 </button>

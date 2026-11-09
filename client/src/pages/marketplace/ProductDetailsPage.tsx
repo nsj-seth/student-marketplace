@@ -157,7 +157,7 @@ export function ProductDetailsPage() {
     return (
       <main className="min-h-screen bg-background pb-16">
         <section className="mx-auto mt-8 w-[min(760px,calc(100%-32px))] rounded-2xl border border-border bg-card p-8 text-center shadow-sm">
-          <Package className="mx-auto size-8 text-primary" />
+          <Package className="mx-auto size-8 text-primary-text" />
           <h1 className="mt-4 text-2xl font-bold">Product unavailable</h1>
           <p className="mt-2 text-sm text-muted-foreground">{error || "Product not found."}</p>
           <Link className={cn(buttonVariants({ variant: "outline" }), "mt-6")} to="/products">
@@ -177,9 +177,9 @@ export function ProductDetailsPage() {
     <main className="min-h-screen bg-background pb-16 text-foreground">
       <div className="mx-auto mt-5 w-[min(1240px,calc(100%-32px))]">
         <nav className="mb-5 flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
-          <Link className="hover:text-primary" to="/">Home</Link>
+          <Link className="hover:text-primary-text" to="/">Home</Link>
           <span>/</span>
-          <Link className="hover:text-primary" to="/products">Products</Link>
+          <Link className="hover:text-primary-text" to="/products">Products</Link>
           <span>/</span>
           <span className="max-w-[280px] truncate text-foreground">{product.name}</span>
         </nav>
@@ -281,10 +281,10 @@ export function ProductDetailsPage() {
               <div className="mt-6 rounded-2xl border border-border bg-background p-4">
                 <div className="flex items-start justify-between gap-4">
                   <div>
-                    <span className="text-xs font-bold uppercase tracking-[.12em] text-primary">Sold by</span>
+                    <span className="text-xs font-bold uppercase tracking-[.12em] text-primary-text">Sold by</span>
                     <Link
                       to={`/businesses/${product.business.slug}`}
-                      className="mt-1 block text-lg font-semibold text-foreground hover:text-primary"
+                      className="mt-1 block text-lg font-semibold text-foreground hover:text-primary-text"
                     >
                       {product.business.name}
                     </Link>
@@ -306,13 +306,13 @@ export function ProductDetailsPage() {
                 <div className="mt-4 flex flex-wrap gap-2">
                   {product.business.pickup_enabled && (
                     <Badge variant="outline" className="gap-1.5">
-                      <CheckCircle2 className="size-3.5 text-emerald-600" />
+                      <CheckCircle2 className="size-3.5 text-success-foreground" />
                       Pickup
                     </Badge>
                   )}
                   {product.business.seller_delivery_enabled && (
                     <Badge variant="outline" className="gap-1.5">
-                      <Truck className="size-3.5 text-emerald-600" />
+                      <Truck className="size-3.5 text-success-foreground" />
                       Seller delivery
                     </Badge>
                   )}
@@ -320,17 +320,17 @@ export function ProductDetailsPage() {
               </div>
 
               {wishlistError && (
-                <div className="mt-4 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+                <div className="mt-4 rounded-xl border border-danger-border bg-danger-soft px-4 py-3 text-sm text-danger-foreground">
                   {wishlistError}
                 </div>
               )}
               {cartError && (
-                <div className="mt-4 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+                <div className="mt-4 rounded-xl border border-danger-border bg-danger-soft px-4 py-3 text-sm text-danger-foreground">
                   {cartError}
                 </div>
               )}
               {cartMessage && (
-                <div className="mt-4 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700">
+                <div className="mt-4 rounded-xl border border-success-border bg-success-soft px-4 py-3 text-sm text-success-foreground">
                   {cartMessage} <Link className="font-semibold underline" to="/cart">View cart</Link>
                 </div>
               )}
@@ -342,7 +342,7 @@ export function ProductDetailsPage() {
                     type="button"
                     disabled={unavailable || cartLoading}
                     onClick={() => void handleAddToCart()}
-                    className="inline-flex h-12 items-center justify-center gap-2 rounded-xl bg-primary px-5 text-sm font-semibold text-primary-foreground shadow-sm transition hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-50"
+                    className="inline-flex h-12 items-center justify-center gap-2 rounded-xl bg-primary px-5 text-sm font-semibold text-primary-foreground shadow-sm transition hover:bg-primary/90 disabled:cursor-not-allowed disabled:saturate-50"
                   >
                     <ShoppingCart className="size-4" />
                     {unavailable ? "Currently unavailable" : cartLoading ? "Adding…" : "Add to cart"}
@@ -361,9 +361,9 @@ export function ProductDetailsPage() {
                     disabled={wishlistLoading}
                     onClick={() => void toggleWishlist()}
                     className={cn(
-                      "inline-flex h-12 items-center justify-center gap-2 rounded-xl border px-5 text-sm font-semibold transition disabled:opacity-50",
+                      "inline-flex h-12 items-center justify-center gap-2 rounded-xl border px-5 text-sm font-semibold transition disabled:saturate-50",
                       wishlisted
-                        ? "border-primary/20 bg-primary/10 text-primary"
+                        ? "border-primary/20 bg-primary/10 text-primary-text"
                         : "border-border bg-background text-foreground hover:bg-muted"
                     )}
                   >

@@ -20,10 +20,10 @@ export class ErrorBoundary extends Component<Props, State> {
       return (
         <main className="min-h-screen bg-background px-4 py-10 text-foreground">
           <section className="mx-auto grid w-full max-w-2xl place-items-center rounded-[1.75rem] border border-border bg-card px-6 py-12 text-center shadow-sm">
-            <span className="grid size-16 place-items-center rounded-2xl bg-amber-50 text-amber-600">
+            <span className="grid size-16 place-items-center rounded-2xl bg-warning-soft text-warning-foreground">
               <AlertTriangle className="size-7" />
             </span>
-            <span className="mt-5 text-xs font-bold uppercase tracking-[.14em] text-amber-600">
+            <span className="mt-5 text-xs font-bold uppercase tracking-[.14em] text-warning-foreground">
               Something went wrong
             </span>
             <h1 className="mt-3 text-3xl font-bold tracking-[-.04em]">

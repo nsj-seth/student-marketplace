@@ -220,9 +220,9 @@ export function ProductImagesPage() {
     return (
       <main className="min-h-screen bg-background p-5 sm:p-6">
         <section className="rounded-2xl border border-border bg-card p-8 text-center shadow-sm">
-          <ImageIcon className="mx-auto size-8 text-primary" />
+          <ImageIcon className="mx-auto size-8 text-primary-text" />
           <h1 className="mt-4 text-2xl font-bold">Product not found</h1>
-          {error && <p className="mt-2 text-sm text-red-600">{error}</p>}
+          {error && <p className="mt-2 text-sm text-danger-foreground">{error}</p>}
         </section>
       </main>
     );
@@ -245,7 +245,7 @@ export function ProductImagesPage() {
         </div>
 
         <Link
-          className="inline-flex items-center gap-2 text-sm font-semibold text-primary"
+          className="inline-flex items-center gap-2 text-sm font-semibold text-primary-text"
           to={"/seller/businesses/" + businessId + "/products"}
         >
           <ArrowLeft className="size-4" />
@@ -254,13 +254,13 @@ export function ProductImagesPage() {
       </section>
 
       {message && (
-        <div className="mt-5 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700">
+        <div className="mt-5 rounded-xl border border-success-border bg-success-soft px-4 py-3 text-sm text-success-foreground">
           {message}
         </div>
       )}
 
       {error && (
-        <div className="mt-5 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+        <div className="mt-5 rounded-xl border border-danger-border bg-danger-soft px-4 py-3 text-sm text-danger-foreground">
           {error}
         </div>
       )}
@@ -290,7 +290,7 @@ export function ProductImagesPage() {
 
       {product.images.length === 0 ? (
         <div className="mt-5 grid place-items-center rounded-2xl border border-dashed border-border bg-muted/25 px-6 py-14 text-center">
-          <ImageIcon className="size-7 text-primary" />
+          <ImageIcon className="size-7 text-primary-text" />
           <h2 className="mt-4 text-xl font-semibold">No images yet</h2>
           <p className="mt-2 text-sm text-muted-foreground">
             Add product photography to improve how this listing appears to customers.
@@ -333,7 +333,7 @@ export function ProductImagesPage() {
                     type="button"
                     disabled={index === 0 || busyId === image.id}
                     onClick={() => void move(index, -1)}
-                    className="inline-flex h-9 items-center justify-center gap-1.5 rounded-xl border border-border bg-background px-3 text-xs font-semibold disabled:opacity-40"
+                    className="inline-flex h-9 items-center justify-center gap-1.5 rounded-xl border border-border bg-background px-3 text-xs font-semibold disabled:saturate-50"
                   >
                     <ArrowUp className="size-3.5" />
                     Move up
@@ -347,7 +347,7 @@ export function ProductImagesPage() {
                       busyId === image.id
                     }
                     onClick={() => void move(index, 1)}
-                    className="inline-flex h-9 items-center justify-center gap-1.5 rounded-xl border border-border bg-background px-3 text-xs font-semibold disabled:opacity-40"
+                    className="inline-flex h-9 items-center justify-center gap-1.5 rounded-xl border border-border bg-background px-3 text-xs font-semibold disabled:saturate-50"
                   >
                     <ArrowDown className="size-3.5" />
                     Move down
@@ -359,7 +359,7 @@ export function ProductImagesPage() {
                       type="button"
                       disabled={busyId === image.id}
                       onClick={() => void makePrimary(image)}
-                      className="inline-flex h-9 items-center justify-center gap-1.5 rounded-xl border border-border bg-background px-3 text-xs font-semibold disabled:opacity-40"
+                      className="inline-flex h-9 items-center justify-center gap-1.5 rounded-xl border border-border bg-background px-3 text-xs font-semibold disabled:saturate-50"
                     >
                       <Star className="size-3.5" />
                       Make primary
@@ -371,7 +371,7 @@ export function ProductImagesPage() {
                     type="button"
                     disabled={busyId === image.id}
                     onClick={() => void remove(image)}
-                    className="inline-flex h-9 items-center justify-center gap-1.5 rounded-xl border border-red-200 bg-red-50 px-3 text-xs font-semibold text-red-700 disabled:opacity-40"
+                    className="inline-flex h-9 items-center justify-center gap-1.5 rounded-xl border border-danger-border bg-danger-soft px-3 text-xs font-semibold text-danger-foreground disabled:saturate-50"
                   >
                     <Trash2 className="size-3.5" />
                     Remove
@@ -385,7 +385,7 @@ export function ProductImagesPage() {
 
       <div className="mt-6">
         <Link
-          className="inline-flex items-center gap-2 text-sm font-semibold text-primary"
+          className="inline-flex items-center gap-2 text-sm font-semibold text-primary-text"
           to={
             "/seller/businesses/" +
             businessId +

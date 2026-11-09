@@ -109,7 +109,7 @@ export function AdminOrdersPage() {
         <button data-ui="admin-order-search" type="submit" className="h-10 self-end rounded-xl bg-primary px-4 text-sm font-semibold text-primary-foreground">Search</button>
       </form>
 
-      {error && <div className="mt-5 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">{error}</div>}
+      {error && <div className="mt-5 rounded-xl border border-danger-border bg-danger-soft px-4 py-3 text-sm text-danger-foreground">{error}</div>}
 
       <p className="mt-5 text-sm text-muted-foreground">
         <strong className="text-foreground">{total}</strong> matching order{total === 1 ? "" : "s"}
@@ -166,9 +166,9 @@ export function AdminOrdersPage() {
 
       {totalPages > 1 && (
         <div className="mt-5 flex items-center justify-between rounded-2xl border border-border bg-card p-3 shadow-sm">
-          <button data-ui="admin-orders-prev" type="button" disabled={page <= 1} onClick={() => void load(page - 1)} className="rounded-xl border border-border px-3 py-2 text-sm font-semibold disabled:opacity-40">Previous</button>
+          <button data-ui="admin-orders-prev" type="button" disabled={page <= 1} onClick={() => void load(page - 1)} className="rounded-xl border border-border px-3 py-2 text-sm font-semibold disabled:saturate-50">Previous</button>
           <span className="text-sm text-muted-foreground">Page {page} of {totalPages}</span>
-          <button data-ui="admin-orders-next" type="button" disabled={page >= totalPages} onClick={() => void load(page + 1)} className="rounded-xl border border-border px-3 py-2 text-sm font-semibold disabled:opacity-40">Next</button>
+          <button data-ui="admin-orders-next" type="button" disabled={page >= totalPages} onClick={() => void load(page + 1)} className="rounded-xl border border-border px-3 py-2 text-sm font-semibold disabled:saturate-50">Next</button>
         </div>
       )}
     </main>

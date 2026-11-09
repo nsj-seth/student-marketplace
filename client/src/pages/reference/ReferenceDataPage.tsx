@@ -28,7 +28,7 @@ export function ReferenceDataPage() {
   return (
     <main className="min-h-screen bg-background pb-16 text-foreground">
       <div className="mx-auto mt-5 w-[min(1100px,calc(100%-32px))]">
-        <section className="rounded-[1.75rem] border border-border bg-gradient-to-br from-violet-50 via-white to-fuchsia-50 p-6 shadow-sm sm:p-8">
+        <section className="rounded-[1.75rem] border border-border bg-gradient-to-br from-accent/60 via-card to-background p-6 shadow-sm sm:p-8">
           <Badge variant="secondary" className="mb-3 gap-1.5">
             <BookOpen className="size-3.5" />
             Marketplace reference data
@@ -42,7 +42,7 @@ export function ReferenceDataPage() {
         </section>
 
         {error && (
-          <div className="mt-5 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+          <div className="mt-5 rounded-xl border border-danger-border bg-danger-soft px-4 py-3 text-sm text-danger-foreground">
             {error}
           </div>
         )}
@@ -56,7 +56,7 @@ export function ReferenceDataPage() {
           <div className="mt-6 grid gap-5 lg:grid-cols-2">
             <section className="overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
               <div className="flex items-center gap-3 border-b border-border bg-muted/30 p-5">
-                <span className="grid size-10 place-items-center rounded-xl bg-primary/10 text-primary">
+                <span className="grid size-10 place-items-center rounded-xl bg-primary/10 text-primary-text">
                   <GraduationCap className="size-5" />
                 </span>
                 <div>
@@ -82,7 +82,7 @@ export function ReferenceDataPage() {
 
             <section className="overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
               <div className="flex items-center gap-3 border-b border-border bg-muted/30 p-5">
-                <span className="grid size-10 place-items-center rounded-xl bg-primary/10 text-primary">
+                <span className="grid size-10 place-items-center rounded-xl bg-primary/10 text-primary-text">
                   <Grid3X3 className="size-5" />
                 </span>
                 <div>

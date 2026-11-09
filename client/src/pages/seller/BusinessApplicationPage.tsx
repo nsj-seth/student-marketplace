@@ -291,10 +291,10 @@ export function BusinessApplicationPage() {
     return (
       <main className="min-h-screen bg-background pb-16">
         <section className="mx-auto mt-8 w-[min(720px,calc(100%-32px))] rounded-2xl border border-border bg-card p-8 text-center shadow-sm">
-          <Building2 className="mx-auto size-8 text-primary" />
+          <Building2 className="mx-auto size-8 text-primary-text" />
           <h1 className="mt-4 text-2xl font-bold">Application not found</h1>
           <Link
-            className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-primary"
+            className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-primary-text"
             to="/sell"
           >
             <ArrowLeft className="size-4" />
@@ -308,7 +308,7 @@ export function BusinessApplicationPage() {
   return (
     <main className="min-h-screen bg-background pb-16 text-foreground">
       <div className="mx-auto mt-5 w-[min(1080px,calc(100%-32px))]">
-        <section className="flex flex-col gap-5 rounded-[1.75rem] border border-border bg-gradient-to-br from-violet-50 via-white to-fuchsia-50 p-6 shadow-sm sm:flex-row sm:items-end sm:justify-between sm:p-8">
+        <section className="flex flex-col gap-5 rounded-[1.75rem] border border-border bg-gradient-to-br from-accent/60 via-card to-background p-6 shadow-sm sm:flex-row sm:items-end sm:justify-between sm:p-8">
           <div>
             <Badge variant="secondary" className="mb-3 gap-1.5">
               <Building2 className="size-3.5" />
@@ -329,17 +329,17 @@ export function BusinessApplicationPage() {
 
         {application.business_type === "STUDENT_BUSINESS" &&
           studentVerified === false && (
-            <div className="mt-5 flex gap-3 rounded-xl border border-red-200 bg-red-50 p-4">
-              <BadgeCheck className="mt-0.5 size-4 shrink-0 text-red-600" />
+            <div className="mt-5 flex gap-3 rounded-xl border border-danger-border bg-danger-soft p-4">
+              <BadgeCheck className="mt-0.5 size-4 shrink-0 text-danger-foreground" />
               <div>
-                <strong className="text-sm text-red-800">
+                <strong className="text-sm text-danger-foreground">
                   Student verification required
                 </strong>
-                <p className="mt-1 text-sm text-red-700">
+                <p className="mt-1 text-sm text-danger-foreground">
                   Verify your student email before submitting this application.
                 </p>
                 <Link
-                  className="mt-2 inline-flex text-sm font-semibold text-red-800 underline"
+                  className="mt-2 inline-flex text-sm font-semibold text-danger-foreground underline"
                   to={
                     "/sell/applications/" +
                     application.id +
@@ -353,13 +353,13 @@ export function BusinessApplicationPage() {
           )}
 
         {message && (
-          <div className="mt-5 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700">
+          <div className="mt-5 rounded-xl border border-success-border bg-success-soft px-4 py-3 text-sm text-success-foreground">
             {message}
           </div>
         )}
 
         {error && (
-          <div className="mt-5 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+          <div className="mt-5 rounded-xl border border-danger-border bg-danger-soft px-4 py-3 text-sm text-danger-foreground">
             {error}
           </div>
         )}
@@ -392,7 +392,7 @@ export function BusinessApplicationPage() {
                     disabled={!isDraft}
                     rows={5}
                     required
-                    className="w-full rounded-xl border border-input bg-background px-3 py-2.5 text-sm text-foreground outline-none transition focus:border-ring focus:ring-4 focus:ring-ring/15 disabled:opacity-60"
+                    className="w-full rounded-xl border border-input bg-background px-3 py-2.5 text-sm text-foreground outline-none transition focus:border-ring focus:ring-4 focus:ring-ring/15 disabled:saturate-50"
                   />
                   <span className="font-normal">
                     At least 20 characters.
@@ -542,7 +542,7 @@ export function BusinessApplicationPage() {
           <aside className="space-y-5 lg:sticky lg:top-[92px] lg:self-start">
             <section className="rounded-2xl border border-border bg-card p-5 shadow-sm">
               <div className="flex items-center gap-2">
-                <ImageIcon className="size-5 text-primary" />
+                <ImageIcon className="size-5 text-primary-text" />
                 <h2 className="text-lg font-semibold">Business logo</h2>
               </div>
 
@@ -574,7 +574,7 @@ export function BusinessApplicationPage() {
             </section>
 
             <section className="rounded-2xl border border-border bg-card p-5 shadow-sm">
-              <span className="text-xs font-bold uppercase tracking-[.14em] text-primary">
+              <span className="text-xs font-bold uppercase tracking-[.14em] text-primary-text">
                 Submission readiness
               </span>
 
@@ -591,7 +591,7 @@ export function BusinessApplicationPage() {
                       className={
                         "size-4 " +
                         (item.ready
-                          ? "text-emerald-600"
+                          ? "text-success-foreground"
                           : "text-muted-foreground/30")
                       }
                     />
@@ -605,7 +605,7 @@ export function BusinessApplicationPage() {
                     data-ui="application-save"
                     type="submit"
                     disabled={saving || uploading}
-                    className="mt-5 inline-flex h-11 w-full items-center justify-center gap-2 rounded-xl border border-border bg-background px-4 text-sm font-semibold text-foreground disabled:opacity-50"
+                    className="mt-5 inline-flex h-11 w-full items-center justify-center gap-2 rounded-xl border border-border bg-background px-4 text-sm font-semibold text-foreground disabled:saturate-50"
                   >
                     <Save className="size-4" />
                     {saving ? "Saving..." : "Save details"}
@@ -618,7 +618,7 @@ export function BusinessApplicationPage() {
                     disabled={
                       !canSubmit || submitting || saving || uploading
                     }
-                    className="mt-3 inline-flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-primary px-4 text-sm font-semibold text-primary-foreground disabled:opacity-50"
+                    className="mt-3 inline-flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-primary px-4 text-sm font-semibold text-primary-foreground disabled:saturate-50"
                   >
                     <Send className="size-4" />
                     {submitting
@@ -635,7 +635,7 @@ export function BusinessApplicationPage() {
           data-ui="application-back"
           type="button"
           onClick={() => navigate("/sell")}
-          className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-primary"
+          className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-primary-text"
         >
           <ArrowLeft className="size-4" />
           Back to seller registration

@@ -83,7 +83,7 @@ export function AdminMarketplacePage() {
         icon={<Sparkles className="size-3.5" />}
       />
 
-      {error && <div className="mt-5 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">{error}</div>}
+      {error && <div className="mt-5 rounded-xl border border-danger-border bg-danger-soft px-4 py-3 text-sm text-danger-foreground">{error}</div>}
 
       {loading ? (
         <div className="mt-5 grid gap-5 xl:grid-cols-2">
@@ -96,7 +96,7 @@ export function AdminMarketplacePage() {
             <div className="border-b border-border p-5">
               <div className="flex items-center justify-between gap-3">
                 <div>
-                  <span className="text-xs font-bold uppercase tracking-[.14em] text-primary">Businesses</span>
+                  <span className="text-xs font-bold uppercase tracking-[.14em] text-primary-text">Businesses</span>
                   <h2 className="mt-1 text-lg font-semibold">Featured stores</h2>
                 </div>
                 <Badge variant="secondary">
@@ -130,10 +130,10 @@ export function AdminMarketplacePage() {
                     disabled={savingId === business.id || (!business.is_featured && business.status !== "ACTIVE")}
                     onClick={() => void toggleBusiness(business.id, !business.is_featured)}
                     className={
-                      "h-9 shrink-0 rounded-xl border px-3 text-xs font-semibold disabled:opacity-40 " +
+                      "h-9 shrink-0 rounded-xl border px-3 text-xs font-semibold disabled:saturate-50 " +
                       (business.is_featured
-                        ? "border-red-200 bg-red-50 text-red-700"
-                        : "border-primary/20 bg-primary/5 text-primary")
+                        ? "border-danger-border bg-danger-soft text-danger-foreground"
+                        : "border-primary/20 bg-primary/5 text-primary-text")
                     }
                   >
                     {savingId === business.id ? "Saving..." : business.is_featured ? "Remove featured" : "Feature"}
@@ -147,7 +147,7 @@ export function AdminMarketplacePage() {
             <div className="border-b border-border p-5">
               <div className="flex items-center justify-between gap-3">
                 <div>
-                  <span className="text-xs font-bold uppercase tracking-[.14em] text-primary">Products</span>
+                  <span className="text-xs font-bold uppercase tracking-[.14em] text-primary-text">Products</span>
                   <h2 className="mt-1 text-lg font-semibold">Featured products</h2>
                 </div>
                 <Badge variant="secondary">
@@ -187,10 +187,10 @@ export function AdminMarketplacePage() {
                       disabled={savingId === product.id || (!product.is_featured && !publicEligible)}
                       onClick={() => void toggleProduct(product.id, !product.is_featured)}
                       className={
-                        "h-9 shrink-0 rounded-xl border px-3 text-xs font-semibold disabled:opacity-40 " +
+                        "h-9 shrink-0 rounded-xl border px-3 text-xs font-semibold disabled:saturate-50 " +
                         (product.is_featured
-                          ? "border-red-200 bg-red-50 text-red-700"
-                          : "border-primary/20 bg-primary/5 text-primary")
+                          ? "border-danger-border bg-danger-soft text-danger-foreground"
+                          : "border-primary/20 bg-primary/5 text-primary-text")
                       }
                     >
                       {savingId === product.id ? "Saving..." : product.is_featured ? "Remove featured" : "Feature"}

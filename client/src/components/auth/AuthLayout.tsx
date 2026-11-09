@@ -41,20 +41,17 @@ export function AuthLayout({
   return (
     <main className="min-h-screen bg-background text-foreground">
       <div className="mx-auto grid min-h-[calc(100vh-72px)] w-[min(1180px,calc(100%-32px))] items-stretch gap-6 py-6 lg:grid-cols-[1.05fr_.95fr]">
-        <section className="relative overflow-hidden rounded-[2rem] bg-[#17111f] p-7 text-white shadow-2xl shadow-violet-950/10 sm:p-10 lg:p-12">
-          <div className="absolute -left-16 top-16 size-56 rounded-full bg-violet-600/20 blur-3xl" />
-          <div className="absolute -right-16 bottom-6 size-64 rounded-full bg-fuchsia-500/15 blur-3xl" />
-
+        <section className="relative overflow-hidden rounded-[2rem] hero-surface p-7 text-hero-foreground shadow-2xl shadow-violet-950/10 sm:p-10 lg:p-12">
           <div className="relative flex h-full flex-col">
-            <Link className="inline-flex w-fit items-center gap-2 text-sm font-semibold text-white" to="/">
-              <span className="grid size-9 place-items-center rounded-xl bg-white/10">
+            <Link className="inline-flex w-fit items-center gap-2 text-sm font-semibold text-hero-foreground" to="/">
+              <span className="grid size-9 place-items-center rounded-xl bg-card/70">
                 <ShoppingBag className="size-4" />
               </span>
               Student Marketplace
             </Link>
 
             <div className="my-auto py-10">
-              <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/10 px-3 py-1.5 text-xs font-semibold text-violet-100 backdrop-blur">
+              <span className="inline-flex items-center gap-2 rounded-full border border-border bg-card/70 px-3 py-1.5 text-xs font-semibold text-hero-muted backdrop-blur">
                 <Sparkles className="size-3.5" />
                 {eyebrow}
               </span>
@@ -63,7 +60,7 @@ export function AuthLayout({
                 {title}
               </h1>
 
-              <p className="mt-5 max-w-xl text-sm leading-7 text-violet-100 sm:text-base">
+              <p className="mt-5 max-w-xl text-sm leading-7 text-hero-muted sm:text-base">
                 {description}
               </p>
 
@@ -73,14 +70,14 @@ export function AuthLayout({
                   return (
                     <div
                       key={point.title}
-                      className="flex gap-3 rounded-2xl border border-white/10 bg-white/[.06] p-4 backdrop-blur"
+                      className="flex gap-3 rounded-2xl border border-border bg-card/60 p-4 backdrop-blur"
                     >
-                      <span className="grid size-10 shrink-0 place-items-center rounded-xl bg-white/10 text-violet-200">
+                      <span className="grid size-10 shrink-0 place-items-center rounded-xl bg-card/70 text-hero-accent">
                         <Icon className="size-4" />
                       </span>
                       <div>
                         <strong className="block text-sm">{point.title}</strong>
-                        <span className="mt-1 block text-xs leading-5 text-violet-100">
+                        <span className="mt-1 block text-xs leading-5 text-hero-muted">
                           {point.description}
                         </span>
                       </div>
@@ -90,7 +87,7 @@ export function AuthLayout({
               </div>
             </div>
 
-            <p className="m-0 text-xs text-violet-100">
+            <p className="m-0 text-xs text-hero-muted">
               Student Marketplace · Local discovery, made simple.
             </p>
           </div>

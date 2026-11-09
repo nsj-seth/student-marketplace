@@ -112,8 +112,8 @@ export function AdminReferenceDataPage() {
         icon={<Grid3X3 className="size-3.5" />}
       />
 
-      {error && <div className="mt-5 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">{error}</div>}
-      {message && <div className="mt-5 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700">{message}</div>}
+      {error && <div className="mt-5 rounded-xl border border-danger-border bg-danger-soft px-4 py-3 text-sm text-danger-foreground">{error}</div>}
+      {message && <div className="mt-5 rounded-xl border border-success-border bg-success-soft px-4 py-3 text-sm text-success-foreground">{message}</div>}
 
       {loading ? (
         <div className="mt-5 grid gap-5 xl:grid-cols-2">
@@ -125,7 +125,7 @@ export function AdminReferenceDataPage() {
           <section className="overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
             <div className="border-b border-border p-5">
               <div className="flex items-center gap-2">
-                <GraduationCap className="size-5 text-primary" />
+                <GraduationCap className="size-5 text-primary-text" />
                 <h2 className="text-lg font-semibold">Universities</h2>
               </div>
 
@@ -165,7 +165,7 @@ export function AdminReferenceDataPage() {
           <section className="overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
             <div className="border-b border-border p-5">
               <div className="flex items-center gap-2">
-                <Grid3X3 className="size-5 text-primary" />
+                <Grid3X3 className="size-5 text-primary-text" />
                 <h2 className="text-lg font-semibold">Categories</h2>
               </div>
 

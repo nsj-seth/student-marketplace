@@ -80,7 +80,7 @@ export function MyBusinessesPage() {
       </section>
 
       {error && (
-        <div className="mt-5 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+        <div className="mt-5 rounded-xl border border-danger-border bg-danger-soft px-4 py-3 text-sm text-danger-foreground">
           {error}
         </div>
       )}
@@ -93,7 +93,7 @@ export function MyBusinessesPage() {
         </div>
       ) : businesses.length === 0 ? (
         <div className="mt-5 grid place-items-center rounded-2xl border border-dashed border-border bg-muted/25 px-6 py-14 text-center">
-          <Building2 className="size-7 text-primary" />
+          <Building2 className="size-7 text-primary-text" />
           <h2 className="mt-4 text-xl font-semibold">No approved business yet</h2>
           <p className="mt-2 max-w-md text-sm text-muted-foreground">
             Start or continue a seller application to create your first storefront.
@@ -114,7 +114,7 @@ export function MyBusinessesPage() {
             >
               <div className="flex items-start justify-between gap-4 border-b border-border bg-muted/30 p-5">
                 <div className="flex min-w-0 items-center gap-3">
-                  <span className="grid size-11 shrink-0 place-items-center rounded-xl bg-primary/10 text-base font-bold text-primary">
+                  <span className="grid size-11 shrink-0 place-items-center rounded-xl bg-primary/10 text-base font-bold text-primary-text">
                     {business.name.slice(0, 1).toUpperCase()}
                   </span>
                   <div className="min-w-0">
@@ -181,7 +181,7 @@ export function MyBusinessesPage() {
                     type="button"
                     disabled={busyId === business.id}
                     onClick={() => void toggleAvailability(business)}
-                    className="inline-flex h-10 items-center gap-2 rounded-xl border border-border bg-background px-4 text-sm font-semibold text-foreground transition hover:bg-muted disabled:opacity-50"
+                    className="inline-flex h-10 items-center gap-2 rounded-xl border border-border bg-background px-4 text-sm font-semibold text-foreground transition hover:bg-muted disabled:saturate-50"
                   >
                     <Power className="size-4" />
                     {busyId === business.id
@@ -193,7 +193,7 @@ export function MyBusinessesPage() {
                 </div>
 
                 <Link
-                  className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-primary"
+                  className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-primary-text"
                   to={"/businesses/" + business.slug}
                 >
                   View public storefront <ArrowRight className="size-4" />

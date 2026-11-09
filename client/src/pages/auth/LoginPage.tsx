@@ -45,7 +45,7 @@ export function LoginPage() {
         className="rounded-[1.75rem] border border-border bg-card p-6 shadow-xl shadow-primary/5 sm:p-8"
       >
         <div>
-          <span className="text-xs font-bold uppercase tracking-[.14em] text-primary">
+          <span className="text-xs font-bold uppercase tracking-[.14em] text-primary-text">
             Sign in
           </span>
           <h2 className="mt-2 text-3xl font-bold tracking-[-.04em]">Welcome back</h2>
@@ -95,13 +95,13 @@ export function LoginPage() {
         </div>
 
         <div className="mt-3 flex justify-end">
-          <Link className="text-xs font-semibold text-primary" to="/forgot-password">
+          <Link className="text-xs font-semibold text-primary-text" to="/forgot-password">
             Forgot password?
           </Link>
         </div>
 
         {error && (
-          <div className="mt-4 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+          <div className="mt-4 rounded-xl border border-danger-border bg-danger-soft px-4 py-3 text-sm text-danger-foreground">
             {error}
           </div>
         )}
@@ -110,7 +110,7 @@ export function LoginPage() {
           data-ui="auth-submit"
           type="submit"
           disabled={submitting}
-          className="mt-6 inline-flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-primary px-4 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90 disabled:opacity-50"
+          className="mt-6 inline-flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-primary px-4 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90 disabled:saturate-50"
         >
           <ShieldCheck className="size-4" />
           {submitting ? "Signing in..." : "Sign in"}
@@ -118,7 +118,7 @@ export function LoginPage() {
 
         <p className="mt-6 text-center text-sm text-muted-foreground">
           New to Student Marketplace?{" "}
-          <Link className="font-semibold text-primary" to="/register">
+          <Link className="font-semibold text-primary-text" to="/register">
             Create an account
           </Link>
         </p>
