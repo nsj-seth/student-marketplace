@@ -1,0 +1,61 @@
+# Free first launch: existing Supabase data/auth/storage remain in place.
+# Supply secrets in Render; never commit them to this file.
+services:
+  - type: web
+    name: student-marketplace-api
+    runtime: node
+    plan: free
+    branch: main
+    rootDir: server
+    buildCommand: npm ci --include=dev && npm run check
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_VERSION
+        value: 24.22.1
+      - key: NODE_ENV
+        value: production
+      - key: FRONTEND_URL
+        sync: false
+      - key: SUPABASE_URL
+        value: https://jychudjmxldvjbhedmnb.supabase.co
+      - key: SUPABASE_PUBLISHABLE_KEY
+        sync: false
+      - key: SUPABASE_SECRET_KEY
+        sync: false
+      - key: VERIFICATION_CODE_SECRET
+        generateValue: true
+      # Add RESEND_API_KEY and a verified EMAIL_FROM in Render before testing
+      # student-email verification. Production never displays verification codes.
+
+  - type: web
+    name: student-marketplace-web
+    runtime: static
+    branch: main
+    rootDir: client
+    buildCommand: npm ci --include=dev && npm run check
+    staticPublishPath: dist
+    envVars:
+      - key: NODE_VERSION
+        value: 24.22.1
+      - key: SKIP_INSTALL_DEPS
+        value: "true"
+      - key: VITE_API_URL
+        sync: false
+      - key: VITE_SUPABASE_URL
+        value: https://jychudjmxldvjbhedmnb.supabase.co
+      - key: VITE_SUPABASE_PUBLISHABLE_KEY
+        sync: false
+      - key: VITE_GOOGLE_AUTH_ENABLED
+        value: "true"
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    headers:
+      - path: /*
+        name: X-Content-Type-Options
+        value: nosniff
+      - path: /*
+        name: Referrer-Policy
+        value: strict-origin-when-cross-origin

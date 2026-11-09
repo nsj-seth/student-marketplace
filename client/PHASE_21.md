@@ -1,6 +1,8 @@
 # Phase 21 — Deployment Preparation (Frontend)
 
-The React/Vite application is prepared for Vercel deployment.
+For the current free launch using Render for both the frontend and API, follow [the Render deployment guide](../docs/RENDER_DEPLOYMENT.md). The root `render.yaml` contains the current service configuration.
+
+The Vercel instructions below are retained as an alternative; use a plan whose terms permit this marketplace.
 
 ## Local production build
 
@@ -39,8 +41,8 @@ Never add a Supabase secret/service-role key to Vercel frontend variables.
 After you know the final Vercel/custom-domain URL, configure Supabase Auth:
 
 - Site URL: `https://YOUR_FRONTEND_DOMAIN`
-- Additional redirect: `https://YOUR_FRONTEND_DOMAIN/**`
-- Optional development redirect: `http://localhost:5173/**`
+- Additional redirect: `https://YOUR_FRONTEND_DOMAIN/auth/callback` and `https://YOUR_FRONTEND_DOMAIN/reset-password`
+- Optional development redirect: `http://localhost:5173`, `http://localhost:5173/auth/callback`, and `http://localhost:5173/reset-password`
 
 The app uses the browser origin when generating email confirmation and password-reset redirect URLs, so the same auth code works locally and in production.
 
