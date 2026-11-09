@@ -2,12 +2,13 @@ import { useState, type FormEvent } from "react";
 import { Eye, EyeOff, LockKeyhole, Mail, UserRound, UserPlus } from "lucide-react";
 import { Link, Navigate } from "react-router-dom";
 import { AuthLayout } from "../../components/auth/AuthLayout";
+import { GoogleSignIn } from "../../components/auth/GoogleSignIn";
 import { Input } from "@/components/ui/input";
 import { useAuth } from "../../context/AuthContext";
 import { registerWithEmail } from "../../services/auth.service";
 
 export function RegisterPage() {
-  const { user } = useAuth();
+  const { user, loading } = useAuth();
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -15,8 +16,9 @@ export function RegisterPage() {
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
   const [submitting, setSubmitting] = useState(false);
+  const [googlePending, setGooglePending] = useState(false);
 
-  if (user) return <Navigate to="/" replace />;
+  if (user && !loading) return <Navigate to="/" replace />;
 
   async function handleSubmit(event: FormEvent) {
     event.preventDefault();
@@ -67,6 +69,8 @@ export function RegisterPage() {
             Create your customer account in a few seconds.
           </p>
         </div>
+
+        <GoogleSignIn disabled={submitting || loading} onPendingChange={setGooglePending} />
 
         <div className="mt-6 space-y-4">
           <label className="grid gap-1.5 text-xs font-semibold text-muted-foreground">
@@ -138,7 +142,7 @@ export function RegisterPage() {
         <button
           data-ui="auth-submit"
           type="submit"
-          disabled={submitting}
+          disabled={submitting || loading || googlePending}
           className="mt-6 inline-flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-primary px-4 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90 disabled:saturate-50"
         >
           <UserPlus className="size-4" />

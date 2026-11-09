@@ -1006,6 +1006,18 @@ button.secondary-button:hover, .button-link--secondary:hover {
   .workspace-content > main { padding: 24px 16px; }
 }
 
+/* Google keeps its standard neutral button and unmodified multicolour mark. */
+.google-sign-in {
+  display: flex; width: 100%; min-height: 44px; align-items: center;
+  justify-content: center; gap: 10px; padding: 10px 12px; border-radius: 12px;
+  border: 1px solid #747775; background: #ffffff; color: #1f1f1f;
+  font-family: "Google Sans", var(--ds-font-sans); font-size: 14px; font-weight: 500;
+  cursor: pointer; transition: box-shadow .15s;
+}
+.google-sign-in:hover { box-shadow: 0 0 0 2px var(--ds-accent); }
+.google-sign-in:disabled { cursor: not-allowed; }
+.dark .google-sign-in { border-color: #8e918f; background: #131314; color: #e3e3e3; }
+
 } /* components */
 
 /* Keep a visible keyboard outline even on controls with outline-none utilities. */

@@ -7,3 +7,7 @@ After starting a Student Business draft at `/sell`, use the **Verify student ema
 ## Production deployment
 
 See `PHASE_21.md`, `.env.production.example`, and `vercel.json` for the Vercel deployment configuration.
+
+## Google sign-in
+
+See [Google sign-in setup](../docs/GOOGLE_SIGN_IN.md) for provider configuration, redirect URLs, enabling the button, and live account-linking checks.

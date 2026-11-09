@@ -1,4 +1,5 @@
 import { Route, Routes } from "react-router-dom";
+import { AuthCallbackPage } from "./pages/auth/AuthCallbackPage";
 import { AppShell } from "./components/layout/AppShell";
 import { ProtectedRoute } from "./components/auth/ProtectedRoute";
 import { RoleRoute } from "./components/auth/RoleRoute";
@@ -59,6 +60,7 @@ export default function App() {
       <Route path="/products/:id/:slug?" element={<ProductDetailsPage />} />
       <Route path="/register" element={<RegisterPage />} />
       <Route path="/login" element={<LoginPage />} />
+      <Route path="/auth/callback" element={<AuthCallbackPage />} />
       <Route path="/forgot-password" element={<ForgotPasswordPage />} />
       <Route path="/reset-password" element={<ResetPasswordPage />} />
       <Route path="/forbidden" element={<ForbiddenPage />} />

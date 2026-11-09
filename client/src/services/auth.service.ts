@@ -1,4 +1,24 @@
 import { supabase } from "../lib/supabase";
+import { clearOAuthReturnPath, saveOAuthReturnPath } from "../lib/auth-redirect";
+
+export async function signInWithGoogle(returnTo: string = "/") {
+  saveOAuthReturnPath(returnTo);
+  try {
+    const result = await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: {
+        redirectTo: `${window.location.origin}/auth/callback`,
+        scopes: "openid email profile",
+        queryParams: { prompt: "select_account" }
+      }
+    });
+    if (result.error) clearOAuthReturnPath();
+    return result;
+  } catch (error) {
+    clearOAuthReturnPath();
+    throw error;
+  }
+}
 
 export async function registerWithEmail(input: {
   fullName: string;

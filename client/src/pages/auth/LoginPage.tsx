@@ -2,12 +2,14 @@ import { useState, type FormEvent } from "react";
 import { Eye, EyeOff, LockKeyhole, Mail, ShieldCheck } from "lucide-react";
 import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import { AuthLayout } from "../../components/auth/AuthLayout";
+import { GoogleSignIn } from "../../components/auth/GoogleSignIn";
+import { safeReturnPath } from "../../lib/auth-redirect";
 import { Input } from "@/components/ui/input";
 import { useAuth } from "../../context/AuthContext";
 import { loginWithEmail } from "../../services/auth.service";
 
 export function LoginPage() {
-  const { user } = useAuth();
+  const { user, loading } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   const [email, setEmail] = useState("");
@@ -15,8 +17,10 @@ export function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
   const [submitting, setSubmitting] = useState(false);
+  const [googlePending, setGooglePending] = useState(false);
 
-  if (user) return <Navigate to="/" replace />;
+  const destination = safeReturnPath((location.state as { from?: string } | null)?.from);
+  if (user && !loading) return <Navigate to={destination} replace />;
 
   async function handleSubmit(event: FormEvent) {
     event.preventDefault();
@@ -30,8 +34,7 @@ export function LoginPage() {
       return;
     }
 
-    const from = (location.state as { from?: string } | null)?.from ?? "/";
-    navigate(from, { replace: true });
+    navigate(destination, { replace: true });
   }
 
   return (
@@ -53,6 +56,8 @@ export function LoginPage() {
             Enter your account details to continue.
           </p>
         </div>
+
+        <GoogleSignIn returnTo={destination} disabled={submitting || loading} onPendingChange={setGooglePending} />
 
         <div className="mt-6 space-y-4">
           <label className="grid gap-1.5 text-xs font-semibold text-muted-foreground">
@@ -109,7 +114,7 @@ export function LoginPage() {
         <button
           data-ui="auth-submit"
           type="submit"
-          disabled={submitting}
+          disabled={submitting || loading || googlePending}
           className="mt-6 inline-flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-primary px-4 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90 disabled:saturate-50"
         >
           <ShieldCheck className="size-4" />
